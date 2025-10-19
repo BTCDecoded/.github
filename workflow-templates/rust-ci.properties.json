@@ -1,0 +1,12 @@
+{
+  "name": "Rust CI",
+  "description": "Comprehensive Rust CI workflow with testing, linting, security audit, and documentation",
+  "iconName": "rust",
+  "categories": ["Rust"],
+  "filePatterns": [
+    "Cargo.toml",
+    "Cargo.lock",
+    "src/**/*.rs"
+  ]
+}
+
