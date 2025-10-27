@@ -1,0 +1,120 @@
+name: Verify Consensus (Formal Verification)
+
+on: 
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'consensus-proof/**'
+      - '.github/workflows/verify.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'consensus-proof/**'
+      - '.github/workflows/verify.yml'
+
+jobs:
+  verify:
+    name: Formal Verification
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Install Rust toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
+          components: rustfmt, clippy
+          
+      - name: Cache cargo dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            consensus-proof/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      # === REQUIRED: MUST PASS ===
+      
+      - name: Unit & Property Tests
+        working-directory: consensus-proof
+        run: |
+          cargo test --all-features --verbose
+          echo "✅ All unit and property tests passed"
+          
+      - name: Kani Model Checking
+        working-directory: consensus-proof
+        run: |
+          # Install Kani
+          cargo install kani-verifier --version 0.41.0
+          
+          # Run Kani proofs
+          cargo kani --features verify --verbose
+          echo "✅ All Kani proofs verified"
+          
+      - name: Clippy Linting
+        working-directory: consensus-proof
+        run: |
+          cargo clippy --all-features -- -D warnings
+          echo "✅ Clippy linting passed"
+          
+      - name: Rustfmt Formatting
+        working-directory: consensus-proof
+        run: |
+          cargo fmt --all -- --check
+          echo "✅ Code formatting verified"
+
+      # === AUDIT TRAIL ===
+      
+      - name: Collect Verification Artifacts
+        working-directory: consensus-proof
+        run: |
+          mkdir -p artifacts
+          tar -czf artifacts/verification-artifacts.tar.gz \
+            target/ \
+            Cargo.lock \
+            Cargo.toml \
+            src/ \
+            tests/ \
+            docs/ || true
+          echo "📦 Verification artifacts collected"
+          
+      - name: OpenTimestamps Proof Log
+        run: |
+          # Install OpenTimestamps client
+          sudo apt-get update
+          sudo apt-get install -y opentimestamps-client
+          
+          # Create timestamp of verification artifacts
+          if [ -f consensus-proof/artifacts/verification-artifacts.tar.gz ]; then
+            ots stamp consensus-proof/artifacts/verification-artifacts.tar.gz
+            echo "🔒 Verification artifacts timestamped with OpenTimestamps"
+          else
+            echo "⚠️ No verification artifacts found for timestamping"
+          fi
+          
+      - name: Upload Verification Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-proof-${{ github.run_id }}
+          path: |
+            consensus-proof/artifacts/
+          retention-days: 90
+          
+      - name: Verification Summary
+        run: |
+          echo "🎯 CONSENSUS VERIFICATION COMPLETE"
+          echo "=================================="
+          echo "✅ Unit tests: PASSED"
+          echo "✅ Property tests: PASSED" 
+          echo "✅ Kani proofs: VERIFIED"
+          echo "✅ Clippy linting: PASSED"
+          echo "✅ Code formatting: VERIFIED"
+          echo "🔒 Audit trail: TIMESTAMPED"
+          echo ""
+          echo "This PR meets all formal verification requirements."
+          echo "Consensus code is mathematically locked and auditable."

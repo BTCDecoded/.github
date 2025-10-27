@@ -1,52 +1,75 @@
 # BTCDecoded Organization
 
-This repository contains shared resources for the BTCDecoded organization, including:
+Welcome to the BTCDecoded organization, home to the next generation of Bitcoin governance infrastructure.
 
-- **Shared Documentation**: Contribution guidelines, code of conduct, security policies
-- **Workflow Templates**: Reusable GitHub Actions workflows for Rust projects
-- **Configuration**: Standard formatting and linting configurations
-- **Governance**: Project governance and decision-making processes
+## ⚠️ IMPORTANT DISCLAIMER
 
-## Repository Structure
+**This governance system is currently UNRELEASED and UNTESTED in production.**
 
-- `profile/` - Organization profile page (shown on github.com/BTCDecoded)
-- `CONTRIBUTING.md` - Shared contribution guidelines
-- `CODE_OF_CONDUCT.md` - Community code of conduct
-- `SECURITY.md` - Organization-wide security policy
-- `GOVERNANCE.md` - Project governance model
-- `workflow-templates/` - Reusable GitHub Actions workflows
-- `config/` - Shared configuration files
+### Current Status: Phase 1 (Infrastructure Building)
 
-## BTCDecoded Projects
+- ✅ **Infrastructure Complete**: All core components implemented
+- ⚠️ **Not Yet Activated**: Governance rules are not enforced
+- 🔧 **Test Keys Only**: No real cryptographic enforcement
+- 📋 **Development Phase**: System is in rapid AI-assisted development
 
-The BTCDecoded organization consists of five tiers plus governance infrastructure:
+### What This Means
 
-### Core Implementation Tiers
+- **Production Quality**: The codebase is production-quality in many respects
+- **Not Battle-Tested**: Has not been tested in real-world scenarios
+- **Expect Changes**: Rapid development means frequent updates
+- **Use at Your Own Risk**: This is experimental software
 
-1. **[Orange Paper](https://github.com/BTCDecoded/the-orange-paper)** - Mathematical foundation
-2. **[consensus-proof](https://github.com/BTCDecoded/consensus-proof)** - Pure math implementation
-3. **[protocol-engine](https://github.com/BTCDecoded/protocol-engine)** - Bitcoin abstraction
-4. **[reference-node](https://github.com/BTCDecoded/reference-node)** - Full node implementation
-5. **[developer-sdk](https://github.com/BTCDecoded/developer-sdk)** - Governance infrastructure & composition framework
+### Timeline
 
-### Governance Infrastructure
+- **Phase 2 Activation**: 3-6 months (governance enforcement begins)
+- **Phase 3 Full Operation**: 12+ months (mature, stable system)
+- **Current Phase**: Infrastructure building and testing
 
-- **[governance](https://github.com/BTCDecoded/governance)** - Central governance configuration and rules
-- **[governance-app](https://github.com/BTCDecoded/governance-app)** - GitHub App for cryptographic governance enforcement
+### For Developers
+
+If you're working on this system:
+
+1. **Test Environment Only**: Never use production keys
+2. **Expect Breaking Changes**: APIs and interfaces may change
+3. **Follow Development Guidelines**: See individual repository READMEs
+4. **Report Issues**: Use GitHub issues for bugs and feature requests
+
+### For Organizations Considering Adoption
+
+- **Wait for Phase 2**: Do not deploy in production yet
+- **Monitor Development**: Follow our progress and updates
+- **Provide Feedback**: Your input shapes the final system
+- **Stay Informed**: Subscribe to updates and announcements
+
+## Repositories
+
+### Core Infrastructure
+- [`governance-app`](../governance-app/) - GitHub App for governance enforcement
+- [`developer-sdk`](../developer-sdk/) - Cryptographic primitives and CLI tools
+- [`governance`](../governance/) - Governance configuration and documentation
+
+### Documentation
+- [`governance-system-review.plan.md`](../governance-system-review.plan.md) - Development roadmap
+- [`governance/GOVERNANCE.md`](../governance/GOVERNANCE.md) - Governance process documentation
 
 ## Getting Started
 
-Visit our [organization profile](https://github.com/BTCDecoded) to learn more about the BTCDecoded ecosystem and how to get involved.
+1. **Read the Documentation**: Start with the governance documentation
+2. **Understand the System**: Review the architecture and design
+3. **Follow Development**: Monitor progress and updates
+4. **Wait for Phase 2**: Do not deploy until officially released
 
-## Contributing
+## Support
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on contributing to any BTCDecoded project.
-
-## Security
-
-See [SECURITY.md](SECURITY.md) for our security policy and how to report vulnerabilities.
+- **Issues**: Use GitHub issues for bug reports and feature requests
+- **Discussions**: Use GitHub discussions for questions and feedback
+- **Security**: Report security issues privately to maintainers
 
 ## License
 
-All BTCDecoded projects are licensed under the MIT License.
+This project is licensed under the MIT License - see individual repository LICENSE files for details.
 
+---
+
+**Remember**: This is experimental software in active development. Use at your own risk and do not deploy in production until Phase 2 activation.
