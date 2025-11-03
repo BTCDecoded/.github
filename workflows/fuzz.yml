@@ -1,0 +1,107 @@
+name: Fuzzing
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'consensus-proof/**'
+      - '.github/workflows/fuzz.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'consensus-proof/**'
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  fuzz:
+    name: Fuzz Target
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        # On PRs, run critical targets only. On schedule, run all targets.
+        target:
+          - transaction_validation
+          - block_validation
+          - script_execution
+          - serialization
+          - pow_validation
+          - economic_validation
+          # Additional targets on schedule only (handled in step)
+          - segwit_validation
+          - mempool_operations
+          - utxo_commitments
+          - compact_block_reconstruction
+          - script_opcodes
+          - differential_fuzzing
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+          components: rustfmt, clippy
+
+      - name: Install cargo-fuzz
+        run: |
+          cargo install cargo-fuzz --force
+          cargo fuzz --version
+
+      - name: Initialize corpus
+        working-directory: consensus-proof/fuzz
+        run: |
+          chmod +x init_corpus.sh
+          ./init_corpus.sh || true
+
+      - name: Run fuzzing campaign
+        working-directory: consensus-proof/fuzz
+        env:
+          RUSTFLAGS: "-Cpasses=sancov-module -Cllvm-args=-sanitizer-coverage-level=4"
+        run: |
+          # On PRs, skip non-critical targets
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            case "${{ matrix.target }}" in
+              segwit_validation|mempool_operations|utxo_commitments|compact_block_reconstruction|script_opcodes|differential_fuzzing)
+                echo "Skipping ${{ matrix.target }} on PR"
+                exit 0
+                ;;
+            esac
+          fi
+          
+          # Run target for 5 minutes (300 seconds)
+          echo "Running ${{ matrix.target }} for 300 seconds..."
+          timeout 360 cargo +nightly fuzz run "${{ matrix.target }}" -- -max_total_time=300 -timeout=10 -max_len=100000 || true
+
+      - name: Collect crashes
+        if: failure()
+        working-directory: consensus-proof/fuzz
+        run: |
+          mkdir -p crashes
+          find artifacts -name "crash-*" -exec cp {} crashes/ \; || true
+          find artifacts -name "leak-*" -exec cp {} crashes/ \; || true
+          find artifacts -name "timeout-*" -exec cp {} crashes/ \; || true
+
+      - name: Upload crash artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzz-crashes-${{ matrix.target }}
+          path: consensus-proof/fuzz/crashes/
+          retention-days: 7
+
+      - name: Upload corpus
+        if: github.event_name == 'schedule'
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzz-corpus-${{ matrix.target }}
+          path: consensus-proof/fuzz/corpus/
+          retention-days: 30
+
