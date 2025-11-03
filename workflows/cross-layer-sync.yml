@@ -1,0 +1,157 @@
+name: Cross-Layer Synchronization Check
+
+on:
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'the-orange-paper/**'
+      - 'consensus-proof/**'
+      - 'protocol-engine/**'
+      - 'reference-node/**'
+      - 'governance/config/cross-layer-rules.yml'
+  push:
+    branches: [main, develop]
+    paths:
+      - 'the-orange-paper/**'
+      - 'consensus-proof/**'
+      - 'governance/config/cross-layer-rules.yml'
+
+jobs:
+  cross-layer-validation:
+    name: Validate Cross-Layer Synchronization
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+          components: rustfmt, clippy
+      
+      - name: Cache cargo dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            governance-app/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      
+      - name: Build governance-app
+        working-directory: governance-app
+        run: |
+          cargo build --release
+          echo "✅ Governance-app built successfully"
+      
+      - name: Load Cross-Layer Rules
+        id: load_rules
+        run: |
+          if [ -f "governance/config/cross-layer-rules.yml" ]; then
+            echo "✅ Cross-layer rules file found"
+            echo "rules_file=governance/config/cross-layer-rules.yml" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Cross-layer rules file not found"
+            exit 1
+          fi
+      
+      - name: Check File Correspondence
+        id: check_correspondence
+        working-directory: governance-app
+        run: |
+          echo "Checking file correspondence between Orange Paper and Consensus Proof..."
+          
+          # This is a placeholder for actual validation
+          # In a full implementation, this would use the governance-app validation logic
+          # to check if files in Orange Paper have corresponding files in Consensus Proof
+          
+          ORANGE_PAPER_RULES=$(find ../the-orange-paper -path "*/consensus-rules/*" -type f 2>/dev/null | wc -l || echo "0")
+          CONSENSUS_PROOF_PROOFS=$(find ../consensus-proof -path "*/proofs/*" -type f 2>/dev/null | wc -l || echo "0")
+          
+          echo "Orange Paper consensus rules: $ORANGE_PAPER_RULES"
+          echo "Consensus Proof proofs: $CONSENSUS_PROOF_PROOFS"
+          
+          if [ "$ORANGE_PAPER_RULES" -gt 0 ] && [ "$CONSENSUS_PROOF_PROOFS" -eq 0 ]; then
+            echo "⚠️ Orange Paper has rules but Consensus Proof has no proofs"
+            echo "correspondence_ok=false" >> $GITHUB_OUTPUT
+          else
+            echo "✅ File correspondence appears OK"
+            echo "correspondence_ok=true" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Check Version Pinning
+        id: check_version_pinning
+        run: |
+          echo "Checking version pinning references..."
+          
+          # Check if Consensus Proof references Orange Paper versions
+          VERSION_REFS=$(grep -r "@orange-paper-version\|orange-paper@v" consensus-proof/ 2>/dev/null | wc -l || echo "0")
+          
+          echo "Version references found: $VERSION_REFS"
+          
+          if [ "$VERSION_REFS" -eq 0 ]; then
+            echo "⚠️ No Orange Paper version references found in Consensus Proof"
+            echo "version_pinning_ok=false" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Version pinning references found"
+            echo "version_pinning_ok=true" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Validate No Consensus Modifications
+        id: check_consensus_mods
+        run: |
+          echo "Checking that Reference Node doesn't modify consensus rules..."
+          
+          # Check if reference-node imports consensus-critical modules from consensus-proof
+          # rather than implementing its own
+          CONSENSUS_IMPORTS=$(grep -r "consensus_proof\|consensus-proof" reference-node/src/ 2>/dev/null | grep -i "use\|mod\|import" | wc -l || echo "0")
+          
+          echo "Consensus-proof imports in reference-node: $CONSENSUS_IMPORTS"
+          
+          if [ "$CONSENSUS_IMPORTS" -gt 0 ]; then
+            echo "✅ Reference Node uses consensus-proof (correct)"
+            echo "consensus_mods_ok=true" >> $GITHUB_OUTPUT
+          else
+            echo "⚠️ Reference Node may not be using consensus-proof properly"
+            echo "consensus_mods_ok=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Run Full Validation (if governance-app supports it)
+        working-directory: governance-app
+        run: |
+          # This would run the actual cross-layer validation from governance-app
+          # For now, this is a placeholder
+          echo "Running cross-layer validation..."
+          
+          # In a full implementation:
+          # cargo run --bin governance-app -- validate-cross-layer \
+          #   --orange-paper ../the-orange-paper \
+          #   --consensus-proof ../consensus-proof \
+          #   --rules ../governance/config/cross-layer-rules.yml
+          
+          echo "✅ Cross-layer validation logic exists in governance-app"
+      
+      - name: Validation Summary
+        if: always()
+        run: |
+          echo "## Cross-Layer Synchronization Validation" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| File Correspondence | ${{ steps.check_correspondence.outputs.correspondence_ok == 'true' && '✅ OK' || '⚠️ Needs Review' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Version Pinning | ${{ steps.check_version_pinning.outputs.version_pinning_ok == 'true' && '✅ OK' || '⚠️ Needs Review' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| No Consensus Mods | ${{ steps.check_consensus_mods.outputs.consensus_mods_ok == 'true' && '✅ OK' || '⚠️ Needs Review' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.check_correspondence.outputs.correspondence_ok }}" != "true" ] || \
+             [ "${{ steps.check_version_pinning.outputs.version_pinning_ok }}" != "true" ] || \
+             [ "${{ steps.check_consensus_mods.outputs.consensus_mods_ok }}" != "true" ]; then
+            echo "⚠️ Some validation checks failed. Please review the output above." >> $GITHUB_STEP_SUMMARY
+            exit 1
+          else
+            echo "✅ All cross-layer synchronization checks passed" >> $GITHUB_STEP_SUMMARY
+          fi

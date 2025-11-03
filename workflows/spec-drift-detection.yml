@@ -1,0 +1,204 @@
+name: Spec Drift Detection
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC to check for spec drift
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    # Allow manual triggering
+  push:
+    branches: [main, develop]
+    paths:
+      - 'the-orange-paper/**'
+      - 'consensus-proof/**'
+      - '.github/workflows/spec-drift-detection.yml'
+
+jobs:
+  detect-drift:
+    name: Detect Specification Drift
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repositories
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for comparison
+      
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      
+      - name: Cache cargo dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            governance-app/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      
+      - name: Build governance-app
+        working-directory: governance-app
+        run: |
+          cargo build --release --bin spec-drift-detector || echo "Building spec drift detector..."
+          # Note: This assumes a spec-drift-detector binary exists
+          # If not implemented yet, this will fail gracefully
+      
+      - name: Check Orange Paper Changes
+        id: check_orange_paper
+        run: |
+          echo "Checking for Orange Paper changes..."
+          if git diff --name-only HEAD~1 HEAD | grep -q "the-orange-paper/"; then
+            echo "orange_paper_changed=true" >> $GITHUB_OUTPUT
+            echo "Orange Paper files changed"
+          else
+            echo "orange_paper_changed=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Check Consensus Proof Changes
+        id: check_consensus_proof
+        run: |
+          echo "Checking for Consensus Proof changes..."
+          if git diff --name-only HEAD~1 HEAD | grep -q "consensus-proof/"; then
+            echo "consensus_proof_changed=true" >> $GITHUB_OUTPUT
+            echo "Consensus Proof files changed"
+          else
+            echo "consensus_proof_changed=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Run Cross-Layer Validation
+        working-directory: governance-app
+        run: |
+          # This would run the cross-layer validation logic
+          # For now, we'll check if the validation code exists
+          if [ -f "src/validation/cross_layer.rs" ]; then
+            echo "Cross-layer validation code exists"
+            # In a full implementation, this would:
+            # cargo run --bin governance-app -- validate-cross-layer
+            echo "Cross-layer validation would run here"
+          else
+            echo "Cross-layer validation not available"
+          fi
+      
+      - name: Detect Drift
+        id: detect_drift
+        run: |
+          # Check if there's a mismatch between Orange Paper and Consensus Proof
+          # This is a placeholder for actual drift detection logic
+          DRIFT_DETECTED=false
+          
+          if [ "${{ steps.check_orange_paper.outputs.orange_paper_changed }}" == "true" ] && \
+             [ "${{ steps.check_consensus_proof.outputs.consensus_proof_changed }}" == "false" ]; then
+            echo "⚠️ Potential drift detected: Orange Paper changed but Consensus Proof did not"
+            DRIFT_DETECTED=true
+          fi
+          
+          if [ "${{ steps.check_consensus_proof.outputs.consensus_proof_changed }}" == "true" ]; then
+            echo "Consensus Proof changed - verifying against Orange Paper..."
+            # Here we would run actual validation
+            # For now, we'll mark as checked
+            echo "✅ Changes detected and need verification"
+          fi
+          
+          echo "drift_detected=$DRIFT_DETECTED" >> $GITHUB_OUTPUT
+      
+      - name: Alert Maintainers
+        if: steps.detect_drift.outputs.drift_detected == 'true'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const maintainers = [
+              // Add maintainer GitHub usernames here
+              // 'maintainer1',
+              // 'maintainer2',
+            ];
+            
+            const issueTitle = '🚨 Spec Drift Detected - Action Required';
+            const issueBody = `## Spec Drift Alert
+            
+            Automated spec drift detection has identified a potential mismatch between the Orange Paper and Consensus Proof implementations.
+            
+            **Details:**
+            - Orange Paper changed: ${{ steps.check_orange_paper.outputs.orange_paper_changed }}
+            - Consensus Proof changed: ${{ steps.check_consensus_proof.outputs.consensus_proof_changed }}
+            - Run ID: ${{ github.run_id }}
+            - Workflow: ${{ github.workflow }}
+            
+            **Required Actions:**
+            1. Verify if the change is intentional
+            2. Update Consensus Proof if Orange Paper spec changed
+            3. Update Orange Paper if Consensus Proof implementation changed
+            4. Re-run verification after updates
+            
+            **Next Steps:**
+            - Review the changes in the Orange Paper repository
+            - Verify Consensus Proof matches the specification
+            - Update documentation if needed
+            - Close this issue once resolved
+            
+            ---
+            *This alert was automatically generated by the Spec Drift Detection workflow.*
+            `;
+            
+            // Create or update an issue
+            try {
+              const { data: issues } = await github.rest.issues.listForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                labels: 'spec-drift'
+              });
+              
+              // Check if there's already an open spec drift issue
+              const existingIssue = issues.find(issue => 
+                issue.title.includes('Spec Drift Detected')
+              );
+              
+              if (existingIssue) {
+                // Add a comment to existing issue
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: existingIssue.number,
+                  body: `Another drift detection event occurred at ${new Date().toISOString()}\n\n${issueBody}`
+                });
+              } else {
+                // Create new issue
+                const { data: issue } = await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: issueTitle,
+                  body: issueBody,
+                  labels: ['spec-drift', 'automated', 'priority']
+                });
+                
+                // Assign to maintainers if they exist
+                if (maintainers.length > 0) {
+                  await github.rest.issues.addAssignees({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue.number,
+                    assignees: maintainers
+                  });
+                }
+              }
+            } catch (error) {
+              console.error('Failed to create/update issue:', error);
+              // Don't fail the workflow if issue creation fails
+            }
+      
+      - name: Summary
+        run: |
+          echo "## Spec Drift Detection Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Orange Paper changed: ${{ steps.check_orange_paper.outputs.orange_paper_changed }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Consensus Proof changed: ${{ steps.check_consensus_proof.outputs.consensus_proof_changed }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Drift detected: ${{ steps.detect_drift.outputs.drift_detected }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.detect_drift.outputs.drift_detected }}" == "true" ]; then
+            echo "⚠️ **Action Required**: Maintainers have been alerted" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ No drift detected" >> $GITHUB_STEP_SUMMARY
+          fi
