@@ -68,7 +68,6 @@ If you're working on this system:
 - **[SYSTEM_STATUS.md](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)** - ⭐ **Master status document** with verified implementation status
 - **[thebitcoincommons.org](https://thebitcoincommons.org)** - Learn about the governance framework, principles, and why it's designed this way
 - [`governance/GOVERNANCE.md`](https://github.com/BTCDecoded/governance/blob/main/GOVERNANCE.md) - Technical governance process documentation
-- [`SYSTEM_OVERVIEW.md`](https://github.com/BTCDecoded/BTCDecoded/blob/main/SYSTEM_OVERVIEW.md) - Technical architecture details
 
 ## Getting Started
 
