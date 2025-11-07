@@ -1,102 +1,100 @@
-# BTCDecoded
+# Bitcoin Commons
 
-**Direct mathematical implementation of Bitcoin consensus rules from the Orange Paper.**
+> ## 🚨 **WARNING: UNRELEASED SOFTWARE**
+> 
+> **This governance system is currently UNRELEASED and UNTESTED in production.**
+> 
+> - ⚠️ **Not Yet Activated**: Governance rules are not enforced
+> - 🔧 **Test Keys Only**: No real cryptographic enforcement  
+> - 📋 **Development Phase**: System is in rapid AI-assisted development
+> - ⚡ **Use at Your Own Risk**: This is experimental software
+> 
+> **Do not deploy in production until Phase 2 activation.** See [System Status](../SYSTEM_STATUS.md) for details.
 
-BTCDecoded is a comprehensive Bitcoin implementation ecosystem consisting of five tiers that build upon the Orange Paper's mathematical specifications. The system provides direct mathematical implementation of consensus rules, protocol abstraction, a minimal reference implementation, and a developer-friendly SDK.
+Welcome to the Bitcoin Commons project - the next generation of Bitcoin governance infrastructure built on the BLLVM technology stack.
 
-## 5-Tier Architecture
+**🌐 [Learn more at thebitcoincommons.org](https://thebitcoincommons.org)** - Understand the governance system, why it's designed this way, and the principles behind it.
 
-```
-1. bllvm-spec (Orange Paper - mathematical foundation)
-    ↓ (direct mathematical implementation)
-2. bllvm-consensus (pure math: CheckTransaction, ConnectBlock, etc.)
-    ↓ (protocol abstraction)
-3. bllvm-protocol (Bitcoin abstraction: mainnet, testnet, regtest)
-    ↓ (full node implementation)
-4. bllvm-node (validation, storage, mining, RPC)
-    ↓ (ergonomic API)
-5. bllvm-sdk (governance infrastructure)
-    ↓ (cryptographic governance)
-6. governance + governance-app (enforcement engine)
-```
+**📊 [System Status](../SYSTEM_STATUS.md)** - Verified implementation status and component details.
 
-## Repositories
+## Architecture
 
-### Core Implementation
+![BLLVM Stack Architecture](./stack.png)
+*Figure: BLLVM architecture showing bllvm-spec (Orange Paper) as the foundation, bllvm-consensus as the core implementation with verification paths (Kani proofs, spec drift detection, hash verification), and dependent components (bllvm-protocol, bllvm-node, bllvm-sdk) building on the verified consensus layer.*
 
-- **[bllvm-consensus](https://github.com/BTCDecoded/bllvm-consensus)** - Direct mathematical implementation of Bitcoin consensus rules from the Orange Paper
-- **[bllvm-protocol](https://github.com/BTCDecoded/bllvm-protocol)** - Bitcoin protocol abstraction layer for multiple variants and evolution
-- **[bllvm-node](https://github.com/BTCDecoded/bllvm-node)** - Minimal Bitcoin node implementation using bllvm-protocol and bllvm-consensus
+## Current Status: Phase 1 (Infrastructure Building)
 
-### Documentation
+- ✅ **Infrastructure Complete**: All core components implemented
+- ⚠️ **Not Yet Activated**: Governance rules are not enforced
+- 🔧 **Test Keys Only**: No real cryptographic enforcement
+- 📋 **Development Phase**: System is in rapid AI-assisted development
 
-- **[bllvm-spec](https://github.com/BTCDecoded/bllvm-spec)** - Mathematical Bitcoin specification (Orange Paper)
-- **[bllvm-sdk](https://github.com/BTCDecoded/bllvm-sdk)** - Governance infrastructure & composition framework
+**What This Means:**
+- **Production Quality**: The codebase is production-quality in many respects
+- **Not Battle-Tested**: Has not been tested in real-world scenarios
+- **Expect Changes**: Rapid development means frequent updates
+- **Use at Your Own Risk**: This is experimental software
 
-### Governance Infrastructure
+### Timeline
 
-- **[governance](https://github.com/BTCDecoded/governance)** - Central governance configuration and rules
-- **[governance-app](https://github.com/BTCDecoded/governance-app)** - GitHub App for cryptographic governance enforcement
-
-## Getting Started
+- **Phase 2 Activation**: 3-6 months (governance enforcement begins)
+- **Phase 3 Full Operation**: 12+ months (mature, stable system)
+- **Current Phase**: Infrastructure building and testing
 
 ### For Developers
 
-1. **Start with bllvm-consensus**: Understand the mathematical foundation
-2. **Explore bllvm-protocol**: Learn about Bitcoin protocol variants
-3. **Build with bllvm-node**: Create Bitcoin applications
-4. **Use bllvm-sdk**: Governance infrastructure for Bitcoin governance operations
+If you're working on this system:
 
-### For Researchers
+1. **Test Environment Only**: Never use production keys
+2. **Expect Breaking Changes**: APIs and interfaces may change
+3. **Follow Development Guidelines**: See individual repository READMEs
+4. **Report Issues**: Use GitHub issues for bugs and feature requests
 
-- **bllvm-spec (Orange Paper)**: Mathematical specifications and proofs
-- **bllvm-consensus**: Direct implementation of mathematical functions
-- **bllvm-protocol**: Protocol evolution and variant support
+### For Organizations Considering Adoption
 
-### For Bitcoin Users
+- **Wait for Phase 2**: Do not deploy in production yet
+- **Monitor Development**: Follow our progress and updates
+- **Provide Feedback**: Your input shapes the final system
+- **Stay Informed**: Subscribe to updates and announcements
 
-- **bllvm-node**: Run your own Bitcoin node
-- **bllvm-sdk**: Build Bitcoin governance applications
+## Repositories
 
-### For Governance Participants
+### Core Infrastructure
+- [`governance-app`](../../governance-app/) - GitHub App for governance enforcement
+- [`bllvm-sdk`](../../bllvm-sdk/) - Cryptographic primitives and CLI tools (package: bllvm-sdk, directory: developer-sdk/)
+- [`governance`](../../governance/) - Governance configuration and documentation
 
-- **governance**: Understand governance rules and processes
-- **governance-app**: Technical enforcement of governance requirements
+### Documentation
+- **[SYSTEM_STATUS.md](../SYSTEM_STATUS.md)** - ⭐ **Master status document** with verified implementation status
+- **[thebitcoincommons.org](https://thebitcoincommons.org)** - Learn about the governance framework, principles, and why it's designed this way
+- [`governance/GOVERNANCE.md`](../../governance/GOVERNANCE.md) - Technical governance process documentation
+- [`governance-system-review.plan.md`](../../governance-system-review.plan.md) - Development roadmap
 
-## Key Features
+## Getting Started
 
-- **Mathematical Accuracy**: Direct implementation of Orange Paper specifications
-- **Protocol Evolution**: Support for multiple Bitcoin variants and future evolution
-- **Production Ready**: Full Bitcoin node implementation
-- **Developer Friendly**: Clean APIs and comprehensive documentation
-- **Security First**: Exact version pinning and comprehensive testing
-- **Cryptographic Governance**: Multi-signature requirements and transparent audit trails
+1. **Learn About the Governance System**: Visit [thebitcoincommons.org](https://thebitcoincommons.org) to understand why Bitcoin Commons exists, how the governance model works, and the principles behind it
+2. **Review the Architecture**: See [SYSTEM_OVERVIEW.md](../../SYSTEM_OVERVIEW.md) for technical architecture details
+3. **Check Implementation Status**: See [SYSTEM_STATUS.md](../SYSTEM_STATUS.md) for verified component status
+4. **Explore the Code**: Browse individual repository READMEs for component-specific documentation
+5. **Follow Development**: Monitor progress and updates
+6. **Wait for Phase 2**: Do not deploy until officially released
 
-## Design Principles
+## Learn More
 
-1. **Pure Functions**: All consensus functions are deterministic and side-effect-free
-2. **Mathematical Accuracy**: Direct implementation of Orange Paper specifications
-3. **Protocol Abstraction**: Support for multiple Bitcoin variants and evolution
-4. **Production Ready**: Full Bitcoin node functionality
-5. **Developer Experience**: Clean APIs and comprehensive documentation
-6. **Cryptographic Governance**: Multi-signature enforcement and transparent audit trails
+- **🌐 Website**: [thebitcoincommons.org](https://thebitcoincommons.org) - Learn about the governance framework and principles
+- **📊 System Status**: [SYSTEM_STATUS.md](../SYSTEM_STATUS.md) - Verified implementation status
+- **📖 Documentation**: Individual repository READMEs for component-specific details
 
-## Contributing
+## Support
 
-We welcome contributions! See our [contribution guidelines](https://github.com/BTCDecoded/.github/blob/main/CONTRIBUTING.md) for details.
-
-## Security
-
-Security is paramount in Bitcoin software. See our [security policy](https://github.com/BTCDecoded/.github/blob/main/SECURITY.md) for how to report vulnerabilities.
+- **Issues**: Use GitHub issues for bug reports and feature requests
+- **Discussions**: Use GitHub discussions for questions and feedback
+- **Security**: Report security issues privately to maintainers
 
 ## License
 
-All BTCDecoded projects are licensed under the MIT License.
+This project is licensed under the MIT License - see individual repository LICENSE files for details.
 
-## Links
+---
 
-- **Website**: [btcdecoded.org](https://btcdecoded.org)
-- **Documentation**: [docs.btcdecoded.org](https://docs.btcdecoded.org)
-- **Discussions**: [GitHub Discussions](https://github.com/BTCDecoded/.github/discussions)
-- **Issues**: [GitHub Issues](https://github.com/BTCDecoded/.github/issues)
-
+**Remember**: This is experimental software in active development. Use at your own risk and do not deploy in production until Phase 2 activation.
