@@ -23,7 +23,7 @@ This project and everyone participating in it is governed by our [Code of Conduc
 
 ### Submitting Code
 
-1. **Fork the repository**
+1. **Fork the repository** (GitHub fork for code contributions)
 2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
 3. **Make your changes**: Follow our coding standards
 4. **Add tests**: Ensure your changes are tested
@@ -31,6 +31,8 @@ This project and everyone participating in it is governed by our [Code of Conduc
 6. **Commit your changes**: Use conventional commit messages
 7. **Push to your fork**: `git push origin feature/amazing-feature`
 8. **Open a Pull Request**: Provide a clear description
+
+> **Note**: This is about code forking (GitHub contributions). For information about the governance fork system (choosing different governance rulesets), see the [Governance Fork Guide](https://github.com/BTCDecoded/BTCDecoded/blob/main/docs/GOVERNANCE_FORK_GUIDE.md).
 
 ## Development Standards
 
