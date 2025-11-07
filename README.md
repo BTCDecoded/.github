@@ -52,6 +52,11 @@ If you're working on this system:
 - **Provide Feedback**: Your input shapes the final system
 - **Stay Informed**: Subscribe to updates and announcements
 
+## Architecture
+
+![BLLVM Stack Architecture](../btcdecoded-book/images7/stack.png)
+*Figure: BLLVM architecture showing bllvm-spec (Orange Paper) as the foundation, bllvm-consensus as the core implementation with verification paths (Kani proofs, spec drift detection, hash verification), and dependent components (bllvm-protocol, bllvm-node, bllvm-sdk) building on the verified consensus layer.*
+
 ## Repositories
 
 ### Core Infrastructure
