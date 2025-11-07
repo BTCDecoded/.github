@@ -72,7 +72,7 @@ If you're working on this system:
 ## Getting Started
 
 1. **Learn About the Governance System**: Visit [thebitcoincommons.org](https://thebitcoincommons.org) to understand why Bitcoin Commons exists, how the governance model works, and the principles behind it
-2. **Review the Architecture**: See [SYSTEM_OVERVIEW.md](https://github.com/BTCDecoded/BTCDecoded/blob/main/SYSTEM_OVERVIEW.md) for technical architecture details
+2. **Review the Architecture**: See individual repository READMEs and [SYSTEM_STATUS.md](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md) for technical architecture details
 3. **Check Implementation Status**: See [SYSTEM_STATUS.md](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md) for verified component status
 4. **Explore the Code**: Browse individual repository READMEs for component-specific documentation
 5. **Follow Development**: Monitor progress and updates
