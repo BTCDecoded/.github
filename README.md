@@ -1,14 +1,21 @@
 # Bitcoin Commons
 
+> ## 🚨 **WARNING: UNRELEASED SOFTWARE**
+> 
+> **This governance system is currently UNRELEASED and UNTESTED in production.**
+> 
+> - ⚠️ **Not Yet Activated**: Governance rules are not enforced
+> - 🔧 **Test Keys Only**: No real cryptographic enforcement  
+> - 📋 **Development Phase**: System is in rapid AI-assisted development
+> - ⚡ **Use at Your Own Risk**: This is experimental software
+> 
+> **Do not deploy in production until Phase 2 activation.** See [System Status](./SYSTEM_STATUS.md) for details.
+
 Welcome to the Bitcoin Commons project - the next generation of Bitcoin governance infrastructure built on the BLLVM technology stack.
 
 **🌐 [Learn more at thebitcoincommons.org](https://thebitcoincommons.org)** - Understand the governance system, why it's designed this way, and the principles behind it.
 
 **📊 [System Status](./SYSTEM_STATUS.md)** - Verified implementation status and component details.
-
-## ⚠️ IMPORTANT DISCLAIMER
-
-**This governance system is currently UNRELEASED and UNTESTED in production.**
 
 ### Current Status: Phase 1 (Infrastructure Building)
 
@@ -17,8 +24,7 @@ Welcome to the Bitcoin Commons project - the next generation of Bitcoin governan
 - 🔧 **Test Keys Only**: No real cryptographic enforcement
 - 📋 **Development Phase**: System is in rapid AI-assisted development
 
-### What This Means
-
+**What This Means:**
 - **Production Quality**: The codebase is production-quality in many respects
 - **Not Battle-Tested**: Has not been tested in real-world scenarios
 - **Expect Changes**: Rapid development means frequent updates
