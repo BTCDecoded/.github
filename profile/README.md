@@ -61,7 +61,7 @@ If you're working on this system:
 
 ### Core Infrastructure
 - [`governance-app`](https://github.com/BTCDecoded/governance-app) - GitHub App for governance enforcement
-- [`bllvm-sdk`](https://github.com/BTCDecoded/bllvm-sdk) - Cryptographic primitives and CLI tools (package: bllvm-sdk, directory: developer-sdk/)
+- [`bllvm-sdk`](https://github.com/BTCDecoded/bllvm-sdk) - Developer toolkit for building alternative Bitcoin implementations (module composition framework + governance cryptographic primitives)
 - [`governance`](https://github.com/BTCDecoded/governance) - Governance configuration and documentation
 
 ### Documentation
