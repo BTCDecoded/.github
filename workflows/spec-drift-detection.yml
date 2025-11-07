@@ -9,8 +9,8 @@ on:
   push:
     branches: [main, develop]
     paths:
-      - 'the-orange-paper/**'
-      - 'consensus-proof/**'
+      - 'bllvm-spec/**'
+      - 'bllvm-consensus/**'
       - '.github/workflows/spec-drift-detection.yml'
 
 jobs:
@@ -45,24 +45,24 @@ jobs:
           # Note: This assumes a spec-drift-detector binary exists
           # If not implemented yet, this will fail gracefully
       
-      - name: Check Orange Paper Changes
+      - name: Check bllvm-spec (Orange Paper) Changes
         id: check_orange_paper
         run: |
-          echo "Checking for Orange Paper changes..."
-          if git diff --name-only HEAD~1 HEAD | grep -q "the-orange-paper/"; then
+          echo "Checking for bllvm-spec (Orange Paper) changes..."
+          if git diff --name-only HEAD~1 HEAD | grep -q "bllvm-spec/"; then
             echo "orange_paper_changed=true" >> $GITHUB_OUTPUT
-            echo "Orange Paper files changed"
+            echo "bllvm-spec files changed"
           else
             echo "orange_paper_changed=false" >> $GITHUB_OUTPUT
           fi
       
-      - name: Check Consensus Proof Changes
+      - name: Check bllvm-consensus Changes
         id: check_consensus_proof
         run: |
-          echo "Checking for Consensus Proof changes..."
-          if git diff --name-only HEAD~1 HEAD | grep -q "consensus-proof/"; then
+          echo "Checking for bllvm-consensus changes..."
+          if git diff --name-only HEAD~1 HEAD | grep -q "bllvm-consensus/"; then
             echo "consensus_proof_changed=true" >> $GITHUB_OUTPUT
-            echo "Consensus Proof files changed"
+            echo "bllvm-consensus files changed"
           else
             echo "consensus_proof_changed=false" >> $GITHUB_OUTPUT
           fi
@@ -84,18 +84,18 @@ jobs:
       - name: Detect Drift
         id: detect_drift
         run: |
-          # Check if there's a mismatch between Orange Paper and Consensus Proof
+          # Check if there's a mismatch between bllvm-spec (Orange Paper) and bllvm-consensus
           # This is a placeholder for actual drift detection logic
           DRIFT_DETECTED=false
           
           if [ "${{ steps.check_orange_paper.outputs.orange_paper_changed }}" == "true" ] && \
              [ "${{ steps.check_consensus_proof.outputs.consensus_proof_changed }}" == "false" ]; then
-            echo "⚠️ Potential drift detected: Orange Paper changed but Consensus Proof did not"
+            echo "⚠️ Potential drift detected: bllvm-spec changed but bllvm-consensus did not"
             DRIFT_DETECTED=true
           fi
           
           if [ "${{ steps.check_consensus_proof.outputs.consensus_proof_changed }}" == "true" ]; then
-            echo "Consensus Proof changed - verifying against Orange Paper..."
+            echo "bllvm-consensus changed - verifying against bllvm-spec..."
             # Here we would run actual validation
             # For now, we'll mark as checked
             echo "✅ Changes detected and need verification"
@@ -121,20 +121,20 @@ jobs:
             Automated spec drift detection has identified a potential mismatch between the Orange Paper and Consensus Proof implementations.
             
             **Details:**
-            - Orange Paper changed: ${{ steps.check_orange_paper.outputs.orange_paper_changed }}
-            - Consensus Proof changed: ${{ steps.check_consensus_proof.outputs.consensus_proof_changed }}
+            - bllvm-spec (Orange Paper) changed: ${{ steps.check_orange_paper.outputs.orange_paper_changed }}
+            - bllvm-consensus changed: ${{ steps.check_consensus_proof.outputs.consensus_proof_changed }}
             - Run ID: ${{ github.run_id }}
             - Workflow: ${{ github.workflow }}
             
             **Required Actions:**
             1. Verify if the change is intentional
-            2. Update Consensus Proof if Orange Paper spec changed
-            3. Update Orange Paper if Consensus Proof implementation changed
+            2. Update bllvm-consensus if bllvm-spec changed
+            3. Update bllvm-spec if bllvm-consensus implementation changed
             4. Re-run verification after updates
             
             **Next Steps:**
-            - Review the changes in the Orange Paper repository
-            - Verify Consensus Proof matches the specification
+            - Review the changes in the bllvm-spec repository
+            - Verify bllvm-consensus matches the specification
             - Update documentation if needed
             - Close this issue once resolved
             
@@ -193,8 +193,8 @@ jobs:
         run: |
           echo "## Spec Drift Detection Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- Orange Paper changed: ${{ steps.check_orange_paper.outputs.orange_paper_changed }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Consensus Proof changed: ${{ steps.check_consensus_proof.outputs.consensus_proof_changed }}" >> $GITHUB_STEP_SUMMARY
+          echo "- bllvm-spec (Orange Paper) changed: ${{ steps.check_orange_paper.outputs.orange_paper_changed }}" >> $GITHUB_STEP_SUMMARY
+          echo "- bllvm-consensus changed: ${{ steps.check_consensus_proof.outputs.consensus_proof_changed }}" >> $GITHUB_STEP_SUMMARY
           echo "- Drift detected: ${{ steps.detect_drift.outputs.drift_detected }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ "${{ steps.detect_drift.outputs.drift_detected }}" == "true" ]; then

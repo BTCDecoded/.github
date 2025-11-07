@@ -1,6 +1,6 @@
 # BTCDecoded Organization
 
-Welcome to the BTCDecoded organization, home to the next generation of Bitcoin governance infrastructure.
+Welcome to the BTCDecoded GitHub organization, home to the Bitcoin Commons project - the next generation of Bitcoin governance infrastructure built on the BLLVM technology stack.
 
 ## ⚠️ IMPORTANT DISCLAIMER
 
@@ -46,7 +46,7 @@ If you're working on this system:
 
 ### Core Infrastructure
 - [`governance-app`](../governance-app/) - GitHub App for governance enforcement
-- [`developer-sdk`](../developer-sdk/) - Cryptographic primitives and CLI tools
+- [`bllvm-sdk`](../developer-sdk/) - Cryptographic primitives and CLI tools (package: bllvm-sdk, directory: developer-sdk/)
 - [`governance`](../governance/) - Governance configuration and documentation
 
 ### Documentation

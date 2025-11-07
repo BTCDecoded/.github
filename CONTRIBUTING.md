@@ -70,26 +70,26 @@ type(scope): description
 Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 
 Examples:
-- `feat(consensus): add new validation function`
-- `fix(network): resolve connection timeout issue`
+- `feat(bllvm-consensus): add new validation function`
+- `fix(bllvm-node): resolve connection timeout issue`
 - `docs(readme): update installation instructions`
 
 ## Repository-Specific Guidelines
 
-### consensus-proof
+### bllvm-consensus
 
 - **Exact Version Pinning**: All consensus-critical dependencies must be pinned to exact versions
 - **Mathematical Accuracy**: Changes must maintain mathematical correctness
 - **Pure Functions**: All functions must remain side-effect-free
 - **Comprehensive Testing**: All mathematical functions must be thoroughly tested
 
-### protocol-engine
+### bllvm-protocol
 
 - **Protocol Abstraction**: Changes must maintain clean abstraction
 - **Variant Support**: Ensure all Bitcoin variants continue to work
 - **Backward Compatibility**: Avoid breaking changes to protocol interfaces
 
-### reference-node
+### bllvm-node
 
 - **Consensus Integrity**: Never modify consensus rules
 - **Production Readiness**: Consider production deployment implications

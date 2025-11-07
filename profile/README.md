@@ -7,15 +7,15 @@ BTCDecoded is a comprehensive Bitcoin implementation ecosystem consisting of fiv
 ## 5-Tier Architecture
 
 ```
-1. Orange Paper (mathematical foundation)
+1. bllvm-spec (Orange Paper - mathematical foundation)
     ↓ (direct mathematical implementation)
-2. consensus-proof (pure math: CheckTransaction, ConnectBlock, etc.)
+2. bllvm-consensus (pure math: CheckTransaction, ConnectBlock, etc.)
     ↓ (protocol abstraction)
-3. protocol-engine (Bitcoin abstraction: mainnet, testnet, regtest)
+3. bllvm-protocol (Bitcoin abstraction: mainnet, testnet, regtest)
     ↓ (full node implementation)
-4. reference-node (validation, storage, mining, RPC)
+4. bllvm-node (validation, storage, mining, RPC)
     ↓ (ergonomic API)
-5. developer-sdk (governance infrastructure)
+5. bllvm-sdk (governance infrastructure)
     ↓ (cryptographic governance)
 6. governance + governance-app (enforcement engine)
 ```
@@ -24,14 +24,14 @@ BTCDecoded is a comprehensive Bitcoin implementation ecosystem consisting of fiv
 
 ### Core Implementation
 
-- **[consensus-proof](https://github.com/BTCDecoded/consensus-proof)** - Direct mathematical implementation of Bitcoin consensus rules from the Orange Paper
-- **[protocol-engine](https://github.com/BTCDecoded/protocol-engine)** - Bitcoin protocol abstraction layer for multiple variants and evolution
-- **[reference-node](https://github.com/BTCDecoded/reference-node)** - Minimal Bitcoin node implementation using protocol-engine and consensus-proof
+- **[bllvm-consensus](https://github.com/BTCDecoded/bllvm-consensus)** - Direct mathematical implementation of Bitcoin consensus rules from the Orange Paper
+- **[bllvm-protocol](https://github.com/BTCDecoded/bllvm-protocol)** - Bitcoin protocol abstraction layer for multiple variants and evolution
+- **[bllvm-node](https://github.com/BTCDecoded/bllvm-node)** - Minimal Bitcoin node implementation using bllvm-protocol and bllvm-consensus
 
 ### Documentation
 
-- **[the-orange-paper](https://github.com/BTCDecoded/the-orange-paper)** - Mathematical Bitcoin specification
-- **[developer-sdk](https://github.com/BTCDecoded/developer-sdk)** - Governance infrastructure & composition framework
+- **[bllvm-spec](https://github.com/BTCDecoded/bllvm-spec)** - Mathematical Bitcoin specification (Orange Paper)
+- **[bllvm-sdk](https://github.com/BTCDecoded/bllvm-sdk)** - Governance infrastructure & composition framework
 
 ### Governance Infrastructure
 
@@ -42,21 +42,21 @@ BTCDecoded is a comprehensive Bitcoin implementation ecosystem consisting of fiv
 
 ### For Developers
 
-1. **Start with consensus-proof**: Understand the mathematical foundation
-2. **Explore protocol-engine**: Learn about Bitcoin protocol variants
-3. **Build with reference-node**: Create Bitcoin applications
-4. **Use developer-sdk**: Governance infrastructure for Bitcoin governance operations
+1. **Start with bllvm-consensus**: Understand the mathematical foundation
+2. **Explore bllvm-protocol**: Learn about Bitcoin protocol variants
+3. **Build with bllvm-node**: Create Bitcoin applications
+4. **Use bllvm-sdk**: Governance infrastructure for Bitcoin governance operations
 
 ### For Researchers
 
-- **Orange Paper**: Mathematical specifications and proofs
-- **consensus-proof**: Direct implementation of mathematical functions
-- **protocol-engine**: Protocol evolution and variant support
+- **bllvm-spec (Orange Paper)**: Mathematical specifications and proofs
+- **bllvm-consensus**: Direct implementation of mathematical functions
+- **bllvm-protocol**: Protocol evolution and variant support
 
 ### For Bitcoin Users
 
-- **reference-node**: Run your own Bitcoin node
-- **developer-sdk**: Build Bitcoin governance applications
+- **bllvm-node**: Run your own Bitcoin node
+- **bllvm-sdk**: Build Bitcoin governance applications
 
 ### For Governance Participants
 

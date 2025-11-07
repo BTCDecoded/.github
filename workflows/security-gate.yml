@@ -19,7 +19,7 @@ jobs:
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: 1.70.0
           components: rustfmt, clippy
           
       - name: Cache cargo dependencies
@@ -149,7 +149,7 @@ jobs:
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: 1.70.0
           
       - name: Check Security Control Status
         run: |
@@ -189,6 +189,12 @@ jobs:
                 labels: ['security', 'status-report']
               });
             }
+
+
+
+
+
+
 
 
 

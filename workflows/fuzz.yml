@@ -4,12 +4,12 @@ on:
   push:
     branches: [ main, develop ]
     paths:
-      - 'consensus-proof/**'
+      - 'bllvm-consensus/**'
       - '.github/workflows/fuzz.yml'
   pull_request:
     branches: [ main, develop ]
     paths:
-      - 'consensus-proof/**'
+      - 'bllvm-consensus/**'
   schedule:
     # Run daily at 2 AM UTC
     - cron: '0 2 * * *'
@@ -56,13 +56,13 @@ jobs:
           cargo fuzz --version
 
       - name: Initialize corpus
-        working-directory: consensus-proof/fuzz
+        working-directory: bllvm-consensus/fuzz
         run: |
           chmod +x init_corpus.sh
           ./init_corpus.sh || true
 
       - name: Run fuzzing campaign
-        working-directory: consensus-proof/fuzz
+        working-directory: bllvm-consensus/fuzz
         env:
           RUSTFLAGS: "-Cpasses=sancov-module -Cllvm-args=-sanitizer-coverage-level=4"
         run: |
@@ -82,7 +82,7 @@ jobs:
 
       - name: Collect crashes
         if: failure()
-        working-directory: consensus-proof/fuzz
+        working-directory: bllvm-consensus/fuzz
         run: |
           mkdir -p crashes
           find artifacts -name "crash-*" -exec cp {} crashes/ \; || true
@@ -94,7 +94,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: fuzz-crashes-${{ matrix.target }}
-          path: consensus-proof/fuzz/crashes/
+          path: bllvm-consensus/fuzz/crashes/
           retention-days: 7
 
       - name: Upload corpus
@@ -102,6 +102,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: fuzz-corpus-${{ matrix.target }}
-          path: consensus-proof/fuzz/corpus/
+          path: bllvm-consensus/fuzz/corpus/
           retention-days: 30
 

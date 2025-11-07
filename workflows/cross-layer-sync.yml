@@ -4,16 +4,16 @@ on:
   pull_request:
     branches: [main, develop]
     paths:
-      - 'the-orange-paper/**'
-      - 'consensus-proof/**'
-      - 'protocol-engine/**'
-      - 'reference-node/**'
+      - 'bllvm-spec/**'
+      - 'bllvm-consensus/**'
+      - 'bllvm-protocol/**'
+      - 'bllvm-node/**'
       - 'governance/config/cross-layer-rules.yml'
   push:
     branches: [main, develop]
     paths:
-      - 'the-orange-paper/**'
-      - 'consensus-proof/**'
+      - 'bllvm-spec/**'
+      - 'bllvm-consensus/**'
       - 'governance/config/cross-layer-rules.yml'
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: stable
+          toolchain: 1.70.0
           components: rustfmt, clippy
       
       - name: Cache cargo dependencies
@@ -69,14 +69,14 @@ jobs:
           # In a full implementation, this would use the governance-app validation logic
           # to check if files in Orange Paper have corresponding files in Consensus Proof
           
-          ORANGE_PAPER_RULES=$(find ../the-orange-paper -path "*/consensus-rules/*" -type f 2>/dev/null | wc -l || echo "0")
-          CONSENSUS_PROOF_PROOFS=$(find ../consensus-proof -path "*/proofs/*" -type f 2>/dev/null | wc -l || echo "0")
+          ORANGE_PAPER_RULES=$(find ../bllvm-spec -path "*/consensus-rules/*" -type f 2>/dev/null | wc -l || echo "0")
+          CONSENSUS_PROOF_PROOFS=$(find ../bllvm-consensus -path "*/proofs/*" -type f 2>/dev/null | wc -l || echo "0")
           
-          echo "Orange Paper consensus rules: $ORANGE_PAPER_RULES"
-          echo "Consensus Proof proofs: $CONSENSUS_PROOF_PROOFS"
+          echo "bllvm-spec (Orange Paper) consensus rules: $ORANGE_PAPER_RULES"
+          echo "bllvm-consensus proofs: $CONSENSUS_PROOF_PROOFS"
           
           if [ "$ORANGE_PAPER_RULES" -gt 0 ] && [ "$CONSENSUS_PROOF_PROOFS" -eq 0 ]; then
-            echo "⚠️ Orange Paper has rules but Consensus Proof has no proofs"
+            echo "⚠️ bllvm-spec has rules but bllvm-consensus has no proofs"
             echo "correspondence_ok=false" >> $GITHUB_OUTPUT
           else
             echo "✅ File correspondence appears OK"
@@ -88,13 +88,13 @@ jobs:
         run: |
           echo "Checking version pinning references..."
           
-          # Check if Consensus Proof references Orange Paper versions
-          VERSION_REFS=$(grep -r "@orange-paper-version\|orange-paper@v" consensus-proof/ 2>/dev/null | wc -l || echo "0")
+          # Check if bllvm-consensus references bllvm-spec (Orange Paper) versions
+          VERSION_REFS=$(grep -r "@bllvm-spec-version\|bllvm-spec@v\|@orange-paper-version\|orange-paper@v" bllvm-consensus/ 2>/dev/null | wc -l || echo "0")
           
           echo "Version references found: $VERSION_REFS"
           
           if [ "$VERSION_REFS" -eq 0 ]; then
-            echo "⚠️ No Orange Paper version references found in Consensus Proof"
+            echo "⚠️ No bllvm-spec (Orange Paper) version references found in bllvm-consensus"
             echo "version_pinning_ok=false" >> $GITHUB_OUTPUT
           else
             echo "✅ Version pinning references found"
@@ -106,17 +106,17 @@ jobs:
         run: |
           echo "Checking that Reference Node doesn't modify consensus rules..."
           
-          # Check if reference-node imports consensus-critical modules from consensus-proof
+          # Check if bllvm-node imports consensus-critical modules from bllvm-consensus
           # rather than implementing its own
-          CONSENSUS_IMPORTS=$(grep -r "consensus_proof\|consensus-proof" reference-node/src/ 2>/dev/null | grep -i "use\|mod\|import" | wc -l || echo "0")
+          CONSENSUS_IMPORTS=$(grep -r "bllvm_consensus\|bllvm-consensus" bllvm-node/src/ 2>/dev/null | grep -i "use\|mod\|import" | wc -l || echo "0")
           
-          echo "Consensus-proof imports in reference-node: $CONSENSUS_IMPORTS"
+          echo "bllvm-consensus imports in bllvm-node: $CONSENSUS_IMPORTS"
           
           if [ "$CONSENSUS_IMPORTS" -gt 0 ]; then
-            echo "✅ Reference Node uses consensus-proof (correct)"
+            echo "✅ bllvm-node uses bllvm-consensus (correct)"
             echo "consensus_mods_ok=true" >> $GITHUB_OUTPUT
           else
-            echo "⚠️ Reference Node may not be using consensus-proof properly"
+            echo "⚠️ bllvm-node may not be using bllvm-consensus properly"
             echo "consensus_mods_ok=false" >> $GITHUB_OUTPUT
           fi
       
@@ -129,8 +129,8 @@ jobs:
           
           # In a full implementation:
           # cargo run --bin governance-app -- validate-cross-layer \
-          #   --orange-paper ../the-orange-paper \
-          #   --consensus-proof ../consensus-proof \
+          #   --bllvm-spec ../bllvm-spec \
+          #   --bllvm-consensus ../bllvm-consensus \
           #   --rules ../governance/config/cross-layer-rules.yml
           
           echo "✅ Cross-layer validation logic exists in governance-app"
