@@ -1,6 +1,10 @@
-# BTCDecoded Organization
+# Bitcoin Commons
 
-Welcome to the BTCDecoded GitHub organization, home to the Bitcoin Commons project - the next generation of Bitcoin governance infrastructure built on the BLLVM technology stack.
+Welcome to the Bitcoin Commons project - the next generation of Bitcoin governance infrastructure built on the BLLVM technology stack.
+
+**🌐 [Learn more at thebitcoincommons.org](https://thebitcoincommons.org)** - Understand the governance system, why it's designed this way, and the principles behind it.
+
+**📊 [System Status](./SYSTEM_STATUS.md)** - Verified implementation status and component details.
 
 ## ⚠️ IMPORTANT DISCLAIMER
 
@@ -50,15 +54,25 @@ If you're working on this system:
 - [`governance`](../governance/) - Governance configuration and documentation
 
 ### Documentation
+- **[SYSTEM_STATUS.md](./SYSTEM_STATUS.md)** - ⭐ **Master status document** with verified implementation status
+- **[thebitcoincommons.org](https://thebitcoincommons.org)** - Learn about the governance framework, principles, and why it's designed this way
+- [`governance/GOVERNANCE.md`](../governance/GOVERNANCE.md) - Technical governance process documentation
 - [`governance-system-review.plan.md`](../governance-system-review.plan.md) - Development roadmap
-- [`governance/GOVERNANCE.md`](../governance/GOVERNANCE.md) - Governance process documentation
 
 ## Getting Started
 
-1. **Read the Documentation**: Start with the governance documentation
-2. **Understand the System**: Review the architecture and design
-3. **Follow Development**: Monitor progress and updates
-4. **Wait for Phase 2**: Do not deploy until officially released
+1. **Learn About the Governance System**: Visit [thebitcoincommons.org](https://thebitcoincommons.org) to understand why Bitcoin Commons exists, how the governance model works, and the principles behind it
+2. **Review the Architecture**: See [SYSTEM_OVERVIEW.md](../SYSTEM_OVERVIEW.md) for technical architecture details
+3. **Check Implementation Status**: See [SYSTEM_STATUS.md](./SYSTEM_STATUS.md) for verified component status
+4. **Explore the Code**: Browse individual repository READMEs for component-specific documentation
+5. **Follow Development**: Monitor progress and updates
+6. **Wait for Phase 2**: Do not deploy until officially released
+
+## Learn More
+
+- **🌐 Website**: [thebitcoincommons.org](https://thebitcoincommons.org) - Learn about the governance framework and principles
+- **📊 System Status**: [SYSTEM_STATUS.md](./SYSTEM_STATUS.md) - Verified implementation status
+- **📖 Documentation**: Individual repository READMEs for component-specific details
 
 ## Support
 
