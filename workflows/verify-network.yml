@@ -1,0 +1,85 @@
+name: Verify Network Protocol (Formal Verification)
+
+on: 
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'bllvm-node/**'
+      - '.github/workflows/verify-network.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'bllvm-node/**'
+      - '.github/workflows/verify-network.yml'
+
+jobs:
+  verify-network:
+    name: Network Protocol Verification
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Install Rust toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain-file: rust-toolchain.toml
+          components: rustfmt, clippy
+          
+      - name: Cache cargo dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            bllvm-node/target
+          key: ${{ runner.os }}-cargo-network-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-network-
+
+      # === REQUIRED: MUST PASS ===
+      
+      - name: Unit & Property Tests
+        working-directory: bllvm-node
+        run: |
+          cargo test --all-features --verbose
+          echo "✅ All unit and property tests passed"
+          
+      - name: Kani Model Checking
+        working-directory: bllvm-node
+        run: |
+          # Install Kani
+          cargo install kani-verifier --version 0.41.0
+          
+          # Run Kani proofs
+          cargo kani --features verify --verbose
+          echo "✅ All network protocol Kani proofs verified"
+          
+      - name: Clippy Linting
+        working-directory: bllvm-node
+        run: |
+          cargo clippy --all-features -- -D warnings
+          echo "✅ Clippy linting passed"
+          
+      - name: Rustfmt Formatting
+        working-directory: bllvm-node
+        run: |
+          cargo fmt --all -- --check
+          echo "✅ Code formatting verified"
+
+      # === VERIFICATION SUMMARY ===
+      
+      - name: Verification Summary
+        run: |
+          echo "🎯 NETWORK PROTOCOL VERIFICATION COMPLETE"
+          echo "======================================"
+          echo "✅ Unit tests: PASSED"
+          echo "✅ Property tests: PASSED" 
+          echo "✅ Kani proofs: VERIFIED"
+          echo "✅ Clippy linting: PASSED"
+          echo "✅ Code formatting: VERIFIED"
+          echo ""
+          echo "This PR meets all formal verification requirements."
+          echo "Network protocol code is mathematically verified."
+
