@@ -60,16 +60,18 @@ If you're working on this system:
 - [`governance`](https://github.com/BTCDecoded/governance) - Governance configuration and documentation
 
 ### Documentation
-- **[SYSTEM_STATUS.md](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)** - ⭐ **Master status document** with verified implementation status
+- **[📚 Unified Documentation](https://docs.thebitcoincommons.org)** - ⭐ **Complete technical documentation** (installation, architecture, API reference, troubleshooting)
+- **[SYSTEM_STATUS.md](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)** - Master status document with verified implementation status
 - **[thebitcoincommons.org](https://thebitcoincommons.org)** - Learn about the governance framework, principles, and why it's designed this way
 - [`governance/GOVERNANCE.md`](https://github.com/BTCDecoded/governance/blob/main/GOVERNANCE.md) - Technical governance process documentation
 
 ## Getting Started
 
 1. **Learn About the Governance System**: Visit [thebitcoincommons.org](https://thebitcoincommons.org) to understand why Bitcoin Commons exists, how the governance model works, and the principles behind it
-2. **Review the Architecture**: See individual repository READMEs and [SYSTEM_STATUS.md](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md) for technical architecture details and verified implementation status
-3. **Explore the Code**: Browse individual repository READMEs for component-specific documentation
-4. **Follow Development**: Monitor progress and updates
+2. **Read the Documentation**: Visit [docs.thebitcoincommons.org](https://docs.thebitcoincommons.org) for complete technical documentation including installation, architecture, API reference, and troubleshooting
+3. **Review the Architecture**: See individual repository READMEs and [SYSTEM_STATUS.md](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md) for technical architecture details and verified implementation status
+4. **Explore the Code**: Browse individual repository READMEs for component-specific documentation
+5. **Follow Development**: Monitor progress and updates
 
 ## Support
 
