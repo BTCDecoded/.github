@@ -55,9 +55,14 @@ If you're working on this system:
 ## Repositories
 
 ### Core Infrastructure
-- [`governance-app`](https://github.com/BTCDecoded/governance-app) - GitHub App for governance enforcement
+- [`bllvm-commons`](https://github.com/BTCDecoded/bllvm-commons) - GitHub App for cryptographic governance enforcement
 - [`bllvm-sdk`](https://github.com/BTCDecoded/bllvm-sdk) - Developer toolkit for building alternative Bitcoin implementations (module composition framework + governance cryptographic primitives)
-- [`governance`](https://github.com/BTCDecoded/governance) - Governance configuration and documentation
+- [`governance`](https://github.com/BTCDecoded/governance) - Governance configuration, documentation, and fork registry
+- [`bllvm-spec`](https://github.com/BTCDecoded/bllvm-spec) - Orange Paper (mathematical foundation)
+- [`bllvm-consensus`](https://github.com/BTCDecoded/bllvm-consensus) - Pure mathematical implementation with formal verification
+- [`bllvm-protocol`](https://github.com/BTCDecoded/bllvm-protocol) - Protocol abstraction layer
+- [`bllvm-node`](https://github.com/BTCDecoded/bllvm-node) - Full Bitcoin node implementation
+- [`bllvm`](https://github.com/BTCDecoded/bllvm) - Binary wrapper for bllvm-node
 
 ### Documentation
 - **[📚 Unified Documentation](https://docs.thebitcoincommons.org)** - ⭐ **Complete technical documentation** (installation, architecture, API reference, troubleshooting)
