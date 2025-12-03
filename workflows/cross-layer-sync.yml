@@ -30,7 +30,7 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: 1.70.0
+          toolchain-file: rust-toolchain.toml
           components: rustfmt, clippy
       
       - name: Cache cargo dependencies
@@ -39,14 +39,14 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            governance-app/target
+            bllvm-commons/target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       
-      - name: Build governance-app
-        working-directory: governance-app
+      - name: Build bllvm-commons
+        working-directory: bllvm-commons
         run: |
           cargo build --release
-          echo "✅ Governance-app built successfully"
+          echo "✅ bllvm-commons built successfully"
       
       - name: Load Cross-Layer Rules
         id: load_rules
@@ -61,12 +61,12 @@ jobs:
       
       - name: Check File Correspondence
         id: check_correspondence
-        working-directory: governance-app
+        working-directory: bllvm-commons
         run: |
           echo "Checking file correspondence between Orange Paper and Consensus Proof..."
           
           # This is a placeholder for actual validation
-          # In a full implementation, this would use the governance-app validation logic
+          # In a full implementation, this would use the bllvm-commons validation logic
           # to check if files in Orange Paper have corresponding files in Consensus Proof
           
           ORANGE_PAPER_RULES=$(find ../bllvm-spec -path "*/consensus-rules/*" -type f 2>/dev/null | wc -l || echo "0")
@@ -120,20 +120,20 @@ jobs:
             echo "consensus_mods_ok=false" >> $GITHUB_OUTPUT
           fi
       
-      - name: Run Full Validation (if governance-app supports it)
-        working-directory: governance-app
+      - name: Run Full Validation (if bllvm-commons supports it)
+        working-directory: bllvm-commons
         run: |
-          # This would run the actual cross-layer validation from governance-app
+          # This would run the actual cross-layer validation from bllvm-commons
           # For now, this is a placeholder
           echo "Running cross-layer validation..."
           
           # In a full implementation:
-          # cargo run --bin governance-app -- validate-cross-layer \
+          # cargo run --bin bllvm-commons -- validate-cross-layer \
           #   --bllvm-spec ../bllvm-spec \
           #   --bllvm-consensus ../bllvm-consensus \
           #   --rules ../governance/config/cross-layer-rules.yml
           
-          echo "✅ Cross-layer validation logic exists in governance-app"
+          echo "✅ Cross-layer validation logic exists in bllvm-commons"
       
       - name: Validation Summary
         if: always()

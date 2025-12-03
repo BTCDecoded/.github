@@ -27,7 +27,7 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: stable
+          toolchain-file: rust-toolchain.toml
       
       - name: Cache cargo dependencies
         uses: actions/cache@v3
@@ -35,11 +35,11 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            governance-app/target
+            bllvm-commons/target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       
-      - name: Build governance-app
-        working-directory: governance-app
+      - name: Build bllvm-commons
+        working-directory: bllvm-commons
         run: |
           cargo build --release --bin spec-drift-detector || echo "Building spec drift detector..."
           # Note: This assumes a spec-drift-detector binary exists
@@ -68,14 +68,14 @@ jobs:
           fi
       
       - name: Run Cross-Layer Validation
-        working-directory: governance-app
+        working-directory: bllvm-commons
         run: |
           # This would run the cross-layer validation logic
           # For now, we'll check if the validation code exists
           if [ -f "src/validation/cross_layer.rs" ]; then
             echo "Cross-layer validation code exists"
             # In a full implementation, this would:
-            # cargo run --bin governance-app -- validate-cross-layer
+            # cargo run --bin bllvm-commons -- validate-cross-layer
             echo "Cross-layer validation would run here"
           else
             echo "Cross-layer validation not available"
