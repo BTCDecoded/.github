@@ -27,7 +27,7 @@ Together, they solve Bitcoin's governance asymmetry: making development governan
 
 ## Architecture
 
-![BLVM Stack Architecture](./stack.png)
+![BLVM Stack Architecture](https://thebitcoincommons.org/assets/images/stack.png)
 
 **6-Tier Architecture:**
 1. **Orange Paper** (blvm-spec) - Mathematical foundation
