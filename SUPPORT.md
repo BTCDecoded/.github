@@ -14,22 +14,22 @@ For general questions, discussions, and community support:
 ### GitHub Issues
 
 For bug reports and feature requests:
-- **[bllvm-consensus Issues](https://github.com/BTCDecoded/bllvm-consensus/issues)**
-- **[bllvm-protocol Issues](https://github.com/BTCDecoded/bllvm-protocol/issues)**
-- **[bllvm-node Issues](https://github.com/BTCDecoded/bllvm-node/issues)**
+- **[blvm-consensus Issues](https://github.com/BTCDecoded/blvm-consensus/issues)**
+- **[blvm-protocol Issues](https://github.com/BTCDecoded/blvm-protocol/issues)**
+- **[blvm-node Issues](https://github.com/BTCDecoded/blvm-node/issues)**
 
 ## Documentation
 
 ### Project Documentation
 
-- **[bllvm-consensus Documentation](https://docs.rs/bllvm-consensus)**
-- **[bllvm-protocol Documentation](https://docs.rs/bllvm-protocol)**
-- **[bllvm-node Documentation](https://docs.rs/bllvm-node)**
+- **[blvm-consensus Documentation](https://docs.rs/blvm-consensus)**
+- **[blvm-protocol Documentation](https://docs.rs/blvm-protocol)**
+- **[blvm-node Documentation](https://docs.rs/blvm-node)**
 
 ### Architecture Documentation
 
 - **[BTCDecoded Design Document](https://github.com/BTCDecoded/.github/blob/main/DESIGN.md)**
-- **[bllvm-spec (Orange Paper)](https://github.com/BTCDecoded/bllvm-spec)**
+- **[blvm-spec (Orange Paper)](https://github.com/BTCDecoded/blvm-spec)**
 
 ## Getting Started
 
@@ -42,9 +42,9 @@ For bug reports and feature requests:
 
 ### For Researchers
 
-1. **Read bllvm-spec (Orange Paper)**: Understand the mathematical foundation
-2. **Study bllvm-consensus**: See the direct implementation
-3. **Explore bllvm-protocol**: Understand protocol abstraction
+1. **Read blvm-spec (Orange Paper)**: Understand the mathematical foundation
+2. **Study blvm-consensus**: See the direct implementation
+3. **Explore blvm-protocol**: Understand protocol abstraction
 4. **Contact Maintainers**: For research collaboration
 
 ## Troubleshooting
@@ -123,7 +123,7 @@ For security vulnerabilities:
 
 - **Rust Documentation**: [doc.rust-lang.org](https://doc.rust-lang.org/)
 - **Bitcoin Documentation**: [bitcoin.org/developer](https://bitcoin.org/en/developer-documentation)
-- **bllvm-spec (Orange Paper)**: [github.com/BTCDecoded/bllvm-spec](https://github.com/BTCDecoded/bllvm-spec)
+- **blvm-spec (Orange Paper)**: [github.com/BTCDecoded/blvm-spec](https://github.com/BTCDecoded/blvm-spec)
 
 ### Development Tools
 

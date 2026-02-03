@@ -42,7 +42,7 @@ Include the following information:
 
 ## Security Boundaries
 
-### bllvm-consensus
+### blvm-consensus
 
 **Security Scope**: Mathematical consensus rule implementation
 - **In Scope**: Consensus rule correctness, mathematical accuracy
@@ -50,13 +50,13 @@ Include the following information:
 
 **Critical Dependencies**: All consensus-critical dependencies are pinned to exact versions
 
-### bllvm-protocol
+### blvm-protocol
 
 **Security Scope**: Protocol abstraction and variant support
 - **In Scope**: Protocol parameter validation, variant isolation
 - **Out of Scope**: Network security, consensus rule implementation
 
-### bllvm-node
+### blvm-node
 
 **Security Scope**: Bitcoin node implementation
 - **In Scope**: Node security, RPC security, storage security
@@ -68,9 +68,9 @@ Include the following information:
 
 ### Production Use
 
-- **bllvm-consensus**: Production-ready for consensus validation
-- **bllvm-protocol**: Production-ready for protocol abstraction
-- **bllvm-node**: Pre-production testing only (see SECURITY.md in repository)
+- **blvm-consensus**: Production-ready for consensus validation
+- **blvm-protocol**: Production-ready for protocol abstraction
+- **blvm-node**: Pre-production testing only (see SECURITY.md in repository)
 
 ### Development Use
 

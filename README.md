@@ -9,9 +9,6 @@ This repository contains organization-wide configuration and documentation for t
 
 ### Organization-Wide Documentation
 - **[SYSTEM_STATUS.md](./SYSTEM_STATUS.md)** - Master status document with verified implementation status
-- **[DOCUMENTATION_AUDIT_CATALOG.md](./DOCUMENTATION_AUDIT_CATALOG.md)** - Catalog of all status/progress documents
-- **[DOCUMENTATION_AUDIT_REPORT.md](./DOCUMENTATION_AUDIT_REPORT.md)** - Documentation audit findings
-- **[GAP_ANALYSIS.md](./GAP_ANALYSIS.md)** - Gap analysis between claimed and actual status
 
 ### Organization Policies
 - **[CONTRIBUTING.md](./CONTRIBUTING.md)** - Contribution guidelines for all repositories

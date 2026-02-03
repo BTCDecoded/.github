@@ -1,6 +1,5 @@
 # Bitcoin Commons System Status
 
-**Last Verified**: 2025-01-XX  
 **Status**: Phase 1 (Infrastructure Building) - Not Yet Activated
 
 ## Executive Summary
@@ -15,23 +14,20 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - 📋 **Development Phase**: System is in rapid AI-assisted development
 
 **Timeline:**
-- **Phase 2 Activation**: 3-6 months (governance enforcement begins)
-- **Phase 3 Full Operation**: 12+ months (mature, stable system)
+- **Phase 2 Activation**: Governance enforcement begins
+- **Phase 3 Full Operation**: Mature, stable system
 
 ---
 
 ## Component Status
 
-### 1. bllvm-consensus (Consensus Proof)
+### 1. blvm-consensus (Consensus Proof)
 
 **Status**: ✅ **Implemented** - Core consensus functions complete
 
 **Implementation Details:**
-- **Source Files**: 38 Rust files
-- **Test Files**: 97 Rust test files
-- **Modules Exported**: 20+ modules (constants, script, transaction, block, economic, pow, mempool, mining, segwit, taproot, utxo_commitments, etc.)
-- **Kani Proofs**: 176 `kani::proof` calls found (verified count)
-- **Formal Verification**: Active with Kani model checking
+- **Modules**: Core consensus modules (constants, script, transaction, block, economic, pow, mempool, mining, segwit, taproot, utxo_commitments, etc.)
+- **Formal Verification**: Active with blvm-spec-lock verification linking code to Orange Paper specifications
 
 **Key Features:**
 - ✅ Transaction validation (CheckTransaction)
@@ -44,6 +40,11 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Chain reorganization
 - ✅ SegWit and Taproot support
 - ✅ UTXO commitments (feature-gated)
+- ✅ blvm-spec-lock formal verification - All consensus-critical functions linked to Orange Paper specifications
+- ✅ BIP validation (BIP30, BIP34, BIP66, BIP90, BIP147, BIP119, BIP65, BIP113)
+- ✅ Peer consensus protocol (section 13.4)
+- ✅ Spam filtering
+- ✅ Optimization passes (constant folding, memory layout, SIMD vectorization)
 
 **Test Coverage:**
 - Unit tests: Comprehensive
@@ -51,18 +52,15 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - Property-based tests: Using proptest
 - Fuzzing: Multiple fuzzing targets
 
-**Note**: Documentation claims vary (13 vs 51 vs 60 proofs). Verified actual count: **176 kani::proof calls** in source code.
 
 ---
 
-### 2. bllvm-protocol (Protocol Engine)
+### 2. blvm-protocol (Protocol Engine)
 
 **Status**: ✅ **Implemented** - Protocol abstraction layer complete
 
 **Implementation Details:**
-- **Source Files**: 7 Rust files
-- **Test Files**: 2 Rust test files
-- **Modules Exported**: 7 modules (economic, features, genesis, network_params, validation, variants, plus re-exports from consensus)
+- **Modules**: Protocol abstraction modules (economic, features, genesis, network_params, validation, variants, plus re-exports from consensus)
 
 **Key Features:**
 - ✅ Protocol variants (BitcoinV1/mainnet, Testnet3, Regtest)
@@ -70,32 +68,40 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Feature activation (SegWit, Taproot, RBF, CTV)
 - ✅ Economic parameters abstraction
 - ✅ Protocol-specific validation rules
+- ✅ FIBRE protocol support
+- ✅ Commons-specific extensions (UTXO commitments, ban list sharing)
+- ✅ Governance messages via P2P protocol
+- ✅ BIP support (BIP152, BIP157, BIP158, BIP173/350/351)
 
 **Dependencies:**
-- bllvm-consensus (exact version pinning)
+- blvm-consensus (exact version pinning)
 
 ---
 
-### 3. bllvm-node (Reference Node)
+### 3. blvm-node (Reference Node)
 
 **Status**: ✅ **Implemented** - Full node implementation complete
 
 **Implementation Details:**
-- **Source Files**: 92 Rust files
-- **Test Files**: 29 Rust test files
-- **Modules Exported**: 10+ modules (storage, network, rpc, node, config, module, bip21, bech32m, bip157, bip158, bip70)
+- **Modules**: Full node modules (storage, network, rpc, node, config, module, bip21, bech32m, bip157, bip158, bip70)
 
 **Key Features:**
-- ✅ Block validation (uses bllvm-consensus)
-- ✅ Storage layer (sled database)
+- ✅ Block validation (uses blvm-consensus)
+- ✅ Storage layer (multiple backends: redb, sled, rocksdb)
 - ✅ P2P networking (TCP, Iroh/QUIC transport abstraction)
-- ✅ RPC interface (JSON-RPC 2.0)
+- ✅ RPC interface (JSON-RPC 2.0, Bitcoin Core compatible)
 - ✅ Mining coordination
-- ✅ Module system (sandboxed, secure module loading)
+- ✅ Module system (process-isolated, sandboxed module loading)
 - ✅ BIP support (BIP21, BIP70, BIP157, BIP158)
 - ✅ Compact blocks
 - ✅ Stratum V2 support (feature-gated)
 - ✅ Dandelion++ privacy relay (feature-gated)
+- ✅ RBF support (4 configurable modes)
+- ✅ Mempool policies (5 eviction strategies)
+- ✅ CTV (CheckTemplateVerify) payment processing
+- ✅ Advanced indexing (address and value range)
+- ✅ P2P governance message relay
+- ✅ QUIC RPC support
 
 **Network Features:**
 - ✅ Transport abstraction (TCP, Quinn QUIC, Iroh)
@@ -105,20 +111,18 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Erlay transaction relay
 
 **Dependencies:**
-- bllvm-protocol (exact version)
-- bllvm-consensus (transitive via protocol)
+- blvm-protocol (exact version)
+- blvm-consensus (transitive via protocol)
 
 ---
 
-### 4. bllvm-sdk (Developer SDK)
+### 4. blvm-sdk (Developer SDK)
 
 **Status**: ✅ **Implemented** - Governance infrastructure complete
 
 **Implementation Details:**
-- **Source Files**: 28 Rust files
-- **Test Files**: 9 Rust test files
-- **Modules Exported**: 3 modules (cli, governance, composition)
-- **CLI Tools**: 4 binaries (bllvm-keygen, bllvm-sign, bllvm-verify, bllvm-compose)
+- **Modules**: SDK modules (cli, governance, composition)
+- **CLI Tools**: Governance and composition tools (blvm-keygen, blvm-sign, blvm-verify, blvm-compose, blvm-sign-binary, blvm-verify-binary, blvm-aggregate-signatures)
 
 **Key Features:**
 - ✅ Cryptographic key management (BIP32, BIP39, BIP44)
@@ -127,6 +131,9 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Governance message formats
 - ✅ Composition framework (module registry, lifecycle management)
 - ✅ PSBT support
+- ✅ Binary signing and verification (blvm-sign-binary, blvm-verify-binary)
+- ✅ Signature aggregation (blvm-aggregate-signatures)
+- ✅ Nested multisig support
 
 **Test Coverage:**
 - 77.30% test coverage (verified)
@@ -138,35 +145,37 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 
 ---
 
-### 5. governance-app (GitHub App)
+### 5. blvm-commons (Governance Enforcement)
 
 **Status**: ✅ **Implemented** - Governance enforcement engine complete
 
 **Implementation Details:**
-- **Source Files**: 80 Rust files
-- **Test Files**: 17 Rust test files
-- **Modules Exported**: 12+ modules (config, crypto, database, enforcement, github, validation, webhooks, nostr, ots, audit, authorization, economic_nodes, fork)
-- **Database Migrations**: 9 SQL migration files
+- **Modules**: Governance enforcement modules (config, crypto, database, enforcement, github, validation, webhooks, nostr, ots, audit, authorization, fork)
+- **Database**: SQLite (development/testnet), PostgreSQL (production) with schema migrations
 
 **Key Features:**
 - ✅ GitHub webhook integration
-- ✅ Signature verification (uses bllvm-sdk)
+- ✅ Signature verification (uses blvm-sdk)
 - ✅ Status check posting
 - ✅ Merge blocking logic
-- ✅ Economic node registry and veto system
 - ✅ Governance fork capability
 - ✅ Audit logging (tamper-evident hash chains)
 - ✅ Nostr integration (real-time transparency)
 - ✅ OpenTimestamps anchoring (Bitcoin blockchain proof)
 - ✅ Server authorization system
+- ✅ Layer + Tier governance enforcement
+- ✅ Review period tracking
+- ✅ Multisig threshold validation
+- ✅ Tier classification automation
+- ✅ PR status management
 
 **Database:**
 - SQLite (development/testnet)
 - PostgreSQL (production)
-- 9 migrations covering: initial schema, emergency mode, audit log, economic nodes, governance fork, key metadata, tier overrides, signature reasoning
+- Schema migrations covering: initial schema, emergency mode, audit log, governance fork, key metadata, tier overrides, signature reasoning
 
 **Dependencies:**
-- bllvm-sdk (exact version)
+- blvm-sdk (exact version)
 
 ---
 
@@ -180,7 +189,6 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Repository-specific configurations
 - ✅ Maintainer configurations by layer
 - ✅ Emergency tier system
-- ✅ Economic node configuration
 - ✅ Governance fork configuration
 - ✅ Cross-layer dependency rules
 
@@ -198,38 +206,27 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Deterministic builds
 - ✅ Artifact management
 
-**Current Versions** (from `versions.toml`):
-- All components: v0.1.0
+**Version Coordination**: All components use coordinated versioning via `versions.toml` for consistent releases.
 
 ---
 
 ## Test Infrastructure
 
-### Test File Counts (Verified)
+### Testing Approach
 
-| Component | Source Files | Test Files | Total Files |
-|-----------|--------------|------------|-------------|
-| bllvm-consensus | 38 | 97 | 135 |
-| bllvm-protocol | 7 | 2 | 9 |
-| bllvm-node | 92 | 29 | 121 |
-| bllvm-sdk | 28 | 9 | 37 |
-| governance-app | 80 | 17 | 97 |
-| **Total** | **245** | **154** | **399** |
+All components include comprehensive testing:
+- **Unit tests**: Component-level validation
+- **Integration tests**: Cross-component validation, historical block replay, differential testing
+- **Property-based tests**: Randomized testing with proptest
+- **Fuzzing**: Multiple fuzzing targets for security-critical paths
+- **Formal verification**: blvm-spec-lock for consensus-critical functions
 
 ### Formal Verification
 
-**Kani Proofs** (Verified):
-- **Actual Count**: 176 `kani::proof` calls in bllvm-consensus source code
-- **Documentation Claims**: Vary (13, 51, 60, 99% coverage)
-- **Status**: Active formal verification with Kani model checking
-
-**Note**: Documentation contains conflicting claims about formal verification coverage. Verified actual implementation shows 176 proof calls, significantly more than most documentation claims.
 
 ### Test Coverage
 
-- **bllvm-consensus**: 95%+ target (consensus-critical)
-- **bllvm-sdk**: 77.30% verified
-- **Other components**: Comprehensive test coverage
+All components maintain comprehensive test coverage with consensus-critical components targeting high coverage thresholds.
 
 ---
 
@@ -238,15 +235,15 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 ### Dependency Graph (Verified)
 
 ```
-bllvm-consensus (no dependencies)
+blvm-consensus (no dependencies)
     ↓
-bllvm-protocol (depends on bllvm-consensus)
+blvm-protocol (depends on blvm-consensus)
     ↓
-bllvm-node (depends on bllvm-protocol + bllvm-consensus)
+blvm-node (depends on blvm-protocol + blvm-consensus)
 
-bllvm-sdk (no dependencies)
+blvm-sdk (no dependencies)
     ↓
-governance-app (depends on bllvm-sdk)
+blvm-commons (depends on blvm-sdk)
 ```
 
 ### Version Coordination
@@ -264,9 +261,8 @@ governance-app (depends on bllvm-sdk)
 **Status**: ✅ Infrastructure complete, not activated
 
 **What's Implemented:**
-- ✅ All governance components (governance-app, governance config)
+- ✅ All governance components (blvm-commons, governance config)
 - ✅ Database schema and migrations
-- ✅ Economic node system
 - ✅ GitHub integration
 - ✅ Signature verification
 - ✅ Status checks
@@ -284,7 +280,7 @@ governance-app (depends on bllvm-sdk)
 
 1. **Tier 1**: Routine Maintenance (3-of-5, 7 days)
 2. **Tier 2**: Feature Changes (4-of-5, 30 days)
-3. **Tier 3**: Consensus-Adjacent (5-of-5, 90 days + economic node veto)
+3. **Tier 3**: Consensus-Adjacent (5-of-5, 90 days)
 4. **Tier 4**: Emergency Actions (4-of-5, 0 days)
 5. **Tier 5**: Governance Changes (5-of-7 + 2-of-3, 180 days)
 
@@ -301,16 +297,16 @@ governance-app (depends on bllvm-sdk)
 
 ### Incomplete Features
 
-1. **UTXO Commitments** (bllvm-consensus)
+1. **UTXO Commitments** (blvm-consensus)
    - Core implementation: ✅ Complete
    - Network integration: ⏳ In progress (async response routing remaining)
    - Status: 90% complete
 
-2. **Stratum V2** (bllvm-node)
+2. **Stratum V2** (blvm-node)
    - Implementation: ✅ Complete
    - Status: Feature-gated, ready for use
 
-3. **Module System** (bllvm-node)
+3. **Module System** (blvm-node)
    - Core: ✅ Complete
    - Some TODOs remain in lifecycle management
 
@@ -358,7 +354,7 @@ governance-app (depends on bllvm-sdk)
 - Battle testing
 - Community validation
 
-**Timeline**: 3-6 months
+**Timeline**: Phase 2 activation pending
 
 ---
 
@@ -367,19 +363,13 @@ governance-app (depends on bllvm-sdk)
 This status document was created by:
 
 1. **Codebase Verification**: Direct examination of source code
-   - Counted actual Rust files per component
    - Verified module exports in `lib.rs` files
-   - Counted test files
-   - Counted Kani proofs by searching source code
+   - Verified spec_locked annotations link to Orange Paper sections
 
-2. **Documentation Audit**: Reviewed all status/progress documents
-   - Found 22+ status documents
-   - Found 5+ progress documents
-   - Found 24+ formal verification documents
-   - Identified conflicts and discrepancies
+2. **Documentation Audit**: Reviewed status/progress documents and identified conflicts and discrepancies
 
 3. **Cross-Reference**: Compared documentation claims with actual code
-   - Resolved formal verification count conflicts
+   - Verified formal verification system integration
    - Verified component implementation status
    - Identified gaps between claims and reality
 

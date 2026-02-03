@@ -13,13 +13,13 @@
 
 **Coordination Without Authority: An Architectural Solution**
 
-Bitcoin Commons applies cryptographic enforcement to Bitcoin development governance, making it as robust as Bitcoin's consensus layer. Built on the BLLVM technology stack with formal verification and forkable governance.
+Bitcoin Commons applies cryptographic enforcement to Bitcoin development governance, making it as robust as Bitcoin's consensus layer. Built on the BLVM technology stack with formal verification and forkable governance.
 
 **🌐 [thebitcoincommons.org](https://thebitcoincommons.org)** | **📚 [Documentation](https://docs.thebitcoincommons.org)** | **📊 [System Status](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)**
 
 ## What We're Building
 
-**BLLVM** - Mathematical rigor through the Orange Paper specification and formal verification (Kani proofs). Enables safe alternative Bitcoin implementations.
+**BLVM** - Mathematical rigor through the Orange Paper specification and formal verification using blvm-spec-lock. Enables safe alternative Bitcoin implementations.
 
 **Bitcoin Commons** - Forkable governance framework applying Elinor Ostrom's commons management principles. Enables coordination without civil war.
 
@@ -27,33 +27,40 @@ Together, they solve Bitcoin's governance asymmetry: making development governan
 
 ## Architecture
 
-![BLLVM Stack Architecture](./stack.png)
+![BLVM Stack Architecture](./stack.png)
 
 **6-Tier Architecture:**
-1. **Orange Paper** (bllvm-spec) - Mathematical foundation
-2. **Consensus Proof** (bllvm-consensus) - Formally verified implementation
-3. **Protocol Engine** (bllvm-protocol) - Core protocol abstraction
-4. **Reference Node** (bllvm-node) - Full Bitcoin node
-5. **Developer SDK** (bllvm-sdk) - Tools and primitives
+1. **Orange Paper** (blvm-spec) - Mathematical foundation
+2. **Consensus** (blvm-consensus) - Formally verified implementation with blvm-spec-lock
+3. **Protocol** (blvm-protocol) - Core protocol abstraction
+4. **Node** (blvm-node) - Full Bitcoin node
+5. **SDK** (blvm-sdk) - Tools and primitives
 6. **Governance** (governance) - Forkable governance framework
 
 ## Current Status
 
 **Phase 1: Infrastructure Complete** ✅
 
-All core components implemented. Governance not yet activated. Production deployment pending Phase 2 activation (3-6 months).
+All core components implemented. Governance not yet activated. Production deployment pending Phase 2 activation.
 
 ## Repositories
 
 ### Core Infrastructure
-- [`bllvm-commons`](https://github.com/BTCDecoded/bllvm-commons) - Cryptographic governance enforcement
-- [`bllvm-sdk`](https://github.com/BTCDecoded/bllvm-sdk) - Developer toolkit
+- [`blvm-spec`](https://github.com/BTCDecoded/blvm-spec) - Orange Paper (mathematical foundation)
+- [`blvm-spec-lock`](https://github.com/BTCDecoded/blvm-spec-lock) - Formal verification tooling
+- [`blvm-consensus`](https://github.com/BTCDecoded/blvm-consensus) - Formally verified consensus implementation
+- [`blvm-protocol`](https://github.com/BTCDecoded/blvm-protocol) - Protocol abstraction layer
+- [`blvm-node`](https://github.com/BTCDecoded/blvm-node) - Full Bitcoin node implementation
+- [`blvm-sdk`](https://github.com/BTCDecoded/blvm-sdk) - Developer toolkit
+- [`blvm-commons`](https://github.com/BTCDecoded/blvm-commons) - Cryptographic governance enforcement
 - [`governance`](https://github.com/BTCDecoded/governance) - Governance configuration and fork registry
-- [`bllvm-spec`](https://github.com/BTCDecoded/bllvm-spec) - Orange Paper (mathematical foundation)
-- [`bllvm-consensus`](https://github.com/BTCDecoded/bllvm-consensus) - Formally verified consensus implementation
-- [`bllvm-protocol`](https://github.com/BTCDecoded/bllvm-protocol) - Protocol abstraction layer
-- [`bllvm-node`](https://github.com/BTCDecoded/bllvm-node) - Full Bitcoin node implementation
-- [`bllvm`](https://github.com/BTCDecoded/bllvm) - Binary wrapper
+- [`blvm`](https://github.com/BTCDecoded/blvm) - Binary wrapper
+
+### Official Modules
+- [`blvm-governance`](https://github.com/BTCDecoded/blvm-governance) - Governance module ([docs](https://docs.thebitcoincommons.org/modules/governance.html))
+- [`blvm-lightning`](https://github.com/BTCDecoded/blvm-lightning) - Lightning Network integration ([docs](https://docs.thebitcoincommons.org/modules/lightning.html))
+- [`blvm-mesh`](https://github.com/BTCDecoded/blvm-mesh) - Mesh networking module ([docs](https://docs.thebitcoincommons.org/modules/mesh.html))
+- [`blvm-stratum-v2`](https://github.com/BTCDecoded/blvm-stratum-v2) - Stratum V2 mining protocol ([docs](https://docs.thebitcoincommons.org/modules/stratum-v2.html))
 
 ## Getting Started
 

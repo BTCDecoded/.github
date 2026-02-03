@@ -4,16 +4,16 @@ on:
   pull_request:
     branches: [main, develop]
     paths:
-      - 'bllvm-spec/**'
-      - 'bllvm-consensus/**'
-      - 'bllvm-protocol/**'
-      - 'bllvm-node/**'
+      - 'blvm-spec/**'
+      - 'blvm-consensus/**'
+      - 'blvm-protocol/**'
+      - 'blvm-node/**'
       - 'governance/config/cross-layer-rules.yml'
   push:
     branches: [main, develop]
     paths:
-      - 'bllvm-spec/**'
-      - 'bllvm-consensus/**'
+      - 'blvm-spec/**'
+      - 'blvm-consensus/**'
       - 'governance/config/cross-layer-rules.yml'
 
 jobs:
@@ -39,14 +39,14 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            bllvm-commons/target
+            blvm-commons/target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       
-      - name: Build bllvm-commons
-        working-directory: bllvm-commons
+      - name: Build blvm-commons
+        working-directory: blvm-commons
         run: |
           cargo build --release
-          echo "✅ bllvm-commons built successfully"
+          echo "✅ blvm-commons built successfully"
       
       - name: Load Cross-Layer Rules
         id: load_rules
@@ -61,22 +61,22 @@ jobs:
       
       - name: Check File Correspondence
         id: check_correspondence
-        working-directory: bllvm-commons
+        working-directory: blvm-commons
         run: |
           echo "Checking file correspondence between Orange Paper and Consensus Proof..."
           
           # This is a placeholder for actual validation
-          # In a full implementation, this would use the bllvm-commons validation logic
+          # In a full implementation, this would use the blvm-commons validation logic
           # to check if files in Orange Paper have corresponding files in Consensus Proof
           
-          ORANGE_PAPER_RULES=$(find ../bllvm-spec -path "*/consensus-rules/*" -type f 2>/dev/null | wc -l || echo "0")
-          CONSENSUS_PROOF_PROOFS=$(find ../bllvm-consensus -path "*/proofs/*" -type f 2>/dev/null | wc -l || echo "0")
+          ORANGE_PAPER_RULES=$(find ../blvm-spec -path "*/consensus-rules/*" -type f 2>/dev/null | wc -l || echo "0")
+          CONSENSUS_PROOF_PROOFS=$(find ../blvm-consensus -path "*/proofs/*" -type f 2>/dev/null | wc -l || echo "0")
           
-          echo "bllvm-spec (Orange Paper) consensus rules: $ORANGE_PAPER_RULES"
-          echo "bllvm-consensus proofs: $CONSENSUS_PROOF_PROOFS"
+          echo "blvm-spec (Orange Paper) consensus rules: $ORANGE_PAPER_RULES"
+          echo "blvm-consensus proofs: $CONSENSUS_PROOF_PROOFS"
           
           if [ "$ORANGE_PAPER_RULES" -gt 0 ] && [ "$CONSENSUS_PROOF_PROOFS" -eq 0 ]; then
-            echo "⚠️ bllvm-spec has rules but bllvm-consensus has no proofs"
+            echo "⚠️ blvm-spec has rules but blvm-consensus has no proofs"
             echo "correspondence_ok=false" >> $GITHUB_OUTPUT
           else
             echo "✅ File correspondence appears OK"
@@ -88,13 +88,13 @@ jobs:
         run: |
           echo "Checking version pinning references..."
           
-          # Check if bllvm-consensus references bllvm-spec (Orange Paper) versions
-          VERSION_REFS=$(grep -r "@bllvm-spec-version\|bllvm-spec@v\|@orange-paper-version\|orange-paper@v" bllvm-consensus/ 2>/dev/null | wc -l || echo "0")
+          # Check if blvm-consensus references blvm-spec (Orange Paper) versions
+          VERSION_REFS=$(grep -r "@blvm-spec-version\|blvm-spec@v\|@orange-paper-version\|orange-paper@v" blvm-consensus/ 2>/dev/null | wc -l || echo "0")
           
           echo "Version references found: $VERSION_REFS"
           
           if [ "$VERSION_REFS" -eq 0 ]; then
-            echo "⚠️ No bllvm-spec (Orange Paper) version references found in bllvm-consensus"
+            echo "⚠️ No blvm-spec (Orange Paper) version references found in blvm-consensus"
             echo "version_pinning_ok=false" >> $GITHUB_OUTPUT
           else
             echo "✅ Version pinning references found"
@@ -106,34 +106,34 @@ jobs:
         run: |
           echo "Checking that Reference Node doesn't modify consensus rules..."
           
-          # Check if bllvm-node imports consensus-critical modules from bllvm-consensus
+          # Check if blvm-node imports consensus-critical modules from blvm-consensus
           # rather than implementing its own
-          CONSENSUS_IMPORTS=$(grep -r "bllvm_consensus\|bllvm-consensus" bllvm-node/src/ 2>/dev/null | grep -i "use\|mod\|import" | wc -l || echo "0")
+          CONSENSUS_IMPORTS=$(grep -r "blvm_consensus\|blvm-consensus" blvm-node/src/ 2>/dev/null | grep -i "use\|mod\|import" | wc -l || echo "0")
           
-          echo "bllvm-consensus imports in bllvm-node: $CONSENSUS_IMPORTS"
+          echo "blvm-consensus imports in blvm-node: $CONSENSUS_IMPORTS"
           
           if [ "$CONSENSUS_IMPORTS" -gt 0 ]; then
-            echo "✅ bllvm-node uses bllvm-consensus (correct)"
+            echo "✅ blvm-node uses blvm-consensus (correct)"
             echo "consensus_mods_ok=true" >> $GITHUB_OUTPUT
           else
-            echo "⚠️ bllvm-node may not be using bllvm-consensus properly"
+            echo "⚠️ blvm-node may not be using blvm-consensus properly"
             echo "consensus_mods_ok=false" >> $GITHUB_OUTPUT
           fi
       
-      - name: Run Full Validation (if bllvm-commons supports it)
-        working-directory: bllvm-commons
+      - name: Run Full Validation (if blvm-commons supports it)
+        working-directory: blvm-commons
         run: |
-          # This would run the actual cross-layer validation from bllvm-commons
+          # This would run the actual cross-layer validation from blvm-commons
           # For now, this is a placeholder
           echo "Running cross-layer validation..."
           
           # In a full implementation:
-          # cargo run --bin bllvm-commons -- validate-cross-layer \
-          #   --bllvm-spec ../bllvm-spec \
-          #   --bllvm-consensus ../bllvm-consensus \
+          # cargo run --bin blvm-commons -- validate-cross-layer \
+          #   --blvm-spec ../blvm-spec \
+          #   --blvm-consensus ../blvm-consensus \
           #   --rules ../governance/config/cross-layer-rules.yml
           
-          echo "✅ Cross-layer validation logic exists in bllvm-commons"
+          echo "✅ Cross-layer validation logic exists in blvm-commons"
       
       - name: Validation Summary
         if: always()

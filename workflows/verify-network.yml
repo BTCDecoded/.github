@@ -4,12 +4,12 @@ on:
   push:
     branches: [ main, develop ]
     paths:
-      - 'bllvm-node/**'
+      - 'blvm-node/**'
       - '.github/workflows/verify-network.yml'
   pull_request:
     branches: [ main, develop ]
     paths:
-      - 'bllvm-node/**'
+      - 'blvm-node/**'
       - '.github/workflows/verify-network.yml'
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            bllvm-node/target
+            blvm-node/target
           key: ${{ runner.os }}-cargo-network-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-network-
@@ -41,29 +41,26 @@ jobs:
       # === REQUIRED: MUST PASS ===
       
       - name: Unit & Property Tests
-        working-directory: bllvm-node
+        working-directory: blvm-node
         run: |
           cargo test --all-features --verbose
           echo "✅ All unit and property tests passed"
           
-      - name: Kani Model Checking
-        working-directory: bllvm-node
+      - name: blvm-spec-lock Verification
+        working-directory: blvm-node
         run: |
-          # Install Kani
-          cargo install kani-verifier --version 0.41.0
-          
-          # Run Kani proofs
-          cargo kani --features verify --verbose
-          echo "✅ All network protocol Kani proofs verified"
+          # Run blvm-spec-lock verification
+          cargo spec-lock verify --verbose
+          echo "✅ All network protocol blvm-spec-lock proofs verified"
           
       - name: Clippy Linting
-        working-directory: bllvm-node
+        working-directory: blvm-node
         run: |
           cargo clippy --all-features -- -D warnings
           echo "✅ Clippy linting passed"
           
       - name: Rustfmt Formatting
-        working-directory: bllvm-node
+        working-directory: blvm-node
         run: |
           cargo fmt --all -- --check
           echo "✅ Code formatting verified"
@@ -76,7 +73,7 @@ jobs:
           echo "======================================"
           echo "✅ Unit tests: PASSED"
           echo "✅ Property tests: PASSED" 
-          echo "✅ Kani proofs: VERIFIED"
+            echo "✅ blvm-spec-lock proofs: VERIFIED"
           echo "✅ Clippy linting: PASSED"
           echo "✅ Code formatting: VERIFIED"
           echo ""
