@@ -28,7 +28,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Install Rust
-      uses: dtolnay/rust-toolchain@master
+      uses: BTCDecoded/rust-ci/install-rust-toolchain@main
       with:
         toolchain: ${{ matrix.rust }}
 
@@ -48,7 +48,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: target
-        key: ${{ runner.os }}-cargo-build-target-${{ matrix.cache-key }}-${{ hashFiles('**/Cargo.lock') }}
+        key: ${{ runner.os }}-cargo-build-target-${{ matrix.cache-key }}-${{ hashFiles('**/Cargo.toml') }}
 
     - name: Install cargo-tarpaulin
       if: matrix.rust == 'stable'
@@ -76,10 +76,10 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Install Rust
-      uses: dtolnay/rust-toolchain@master
+      uses: BTCDecoded/rust-ci/install-rust-toolchain@main
       with:
         toolchain: stable
-        components: rustfmt, clippy
+        components: rustfmt clippy
 
     - name: Cache cargo registry
       uses: actions/cache@v3
@@ -97,7 +97,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: target
-        key: ${{ runner.os }}-cargo-build-target-stable-${{ hashFiles('**/Cargo.lock') }}
+        key: ${{ runner.os }}-cargo-build-target-stable-${{ hashFiles('**/Cargo.toml') }}
 
     - name: Run clippy
       run: cargo clippy --all-targets --all-features -- -D warnings
@@ -112,7 +112,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Install Rust
-      uses: dtolnay/rust-toolchain@master
+      uses: BTCDecoded/rust-ci/install-rust-toolchain@main
       with:
         toolchain: stable
 
@@ -129,7 +129,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Install Rust
-      uses: dtolnay/rust-toolchain@master
+      uses: BTCDecoded/rust-ci/install-rust-toolchain@main
       with:
         toolchain: stable
 
@@ -149,7 +149,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: target
-        key: ${{ runner.os }}-cargo-build-target-stable-${{ hashFiles('**/Cargo.lock') }}
+        key: ${{ runner.os }}-cargo-build-target-stable-${{ hashFiles('**/Cargo.toml') }}
 
     - name: Build documentation
       run: cargo doc --no-deps --document-private-items

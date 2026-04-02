@@ -13,6 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+
+      - name: Strip [patch.crates-io] for crates.io-only CI
+        uses: BTCDecoded/rust-ci/strip-patch-crates-io@main
       - name: Setup Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -33,6 +36,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+
+      - name: Strip [patch.crates-io] for crates.io-only CI
+        uses: BTCDecoded/rust-ci/strip-patch-crates-io@main
       - name: Setup Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -53,6 +59,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+
+      - name: Strip [patch.crates-io] for crates.io-only CI
+        uses: BTCDecoded/rust-ci/strip-patch-crates-io@main
       - name: Setup Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -73,6 +82,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+
+      - name: Strip [patch.crates-io] for crates.io-only CI
+        uses: BTCDecoded/rust-ci/strip-patch-crates-io@main
       - name: Setup Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -93,6 +105,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+
+      - name: Strip [patch.crates-io] for crates.io-only CI
+        uses: BTCDecoded/rust-ci/strip-patch-crates-io@main
       - name: Setup Rust
         uses: actions-rs/toolchain@v1
         with:

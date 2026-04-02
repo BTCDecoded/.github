@@ -21,6 +21,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         
+
+      - name: Strip [patch.crates-io] for crates.io-only CI
+        uses: BTCDecoded/rust-ci/strip-patch-crates-io@main
       - name: Install Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
@@ -34,7 +37,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             blvm-node/target
-          key: ${{ runner.os }}-cargo-network-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-network-${{ hashFiles('**/Cargo.toml') }}
           restore-keys: |
             ${{ runner.os }}-cargo-network-
 
