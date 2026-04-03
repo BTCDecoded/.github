@@ -15,13 +15,13 @@
 
 Bitcoin Commons applies cryptographic enforcement to Bitcoin development governance, making it as robust as Bitcoin's consensus layer. Built on the BLVM technology stack with formal verification and forkable governance.
 
-**🌐 [thebitcoincommons.org](https://thebitcoincommons.org)** | **📚 [Documentation](https://docs.thebitcoincommons.org)** | **📊 [System Status](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)**
+**🌐 [thebitcoincommons.org](https://thebitcoincommons.org)** | **📚 [Documentation](https://docs.thebitcoincommons.org)** | **📜 [Compact](https://github.com/BTCDecoded/governance/blob/main/COMPACT.md)** | **📊 [System Status](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)**
 
 ## What We're Building
 
 **BLVM** - Mathematical rigor through the Orange Paper specification and formal verification using blvm-spec-lock. Enables safe alternative Bitcoin implementations.
 
-**Bitcoin Commons** - Forkable governance framework applying Elinor Ostrom's commons management principles. Enables coordination without civil war.
+**Bitcoin Commons** - Forkable governance framework applying Elinor Ostrom's commons management principles. Enables coordination without civil war. Normative principles and legitimacy model: **[Bitcoin Commons Compact](https://github.com/BTCDecoded/governance/blob/main/COMPACT.md)** (technical rules live in the [governance](https://github.com/BTCDecoded/governance) repo).
 
 Together, they solve Bitcoin's governance asymmetry: making development governance 6x harder to capture than Bitcoin Core's current model, with complete transparency and user-protective mechanisms.
 
