@@ -9,7 +9,6 @@
 ### Phase 1: Infrastructure Building (Current)
 - ✅ **Core Infrastructure**: All major components implemented
 - ✅ **Database Schema**: Complete with migrations
-- ✅ **Economic Node System**: Registry and veto mechanism
 - ✅ **Governance Fork**: Export and adoption tracking
 - ✅ **GitHub Integration**: Status checks and merge blocking
 - ✅ **Comprehensive Testing**: Full test suite implemented
@@ -75,8 +74,6 @@
 ## What's Working
 
 ### Infrastructure Components
-- ✅ Economic node registry and qualification system
-- ✅ Veto signal collection and threshold calculation
 - ✅ Governance configuration export and versioning
 - ✅ GitHub status check integration
 - ✅ Merge blocking and enforcement logic
@@ -144,12 +141,6 @@
 **IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.**
 
 **USE AT YOUR OWN RISK. THIS IS EXPERIMENTAL SOFTWARE IN ACTIVE DEVELOPMENT.**
-
----
-
-**Last Updated**: December 2024  
-**Version**: Phase 1 (Infrastructure Building)  
-**Status**: UNRELEASED - DO NOT USE IN PRODUCTION
 
 
 
