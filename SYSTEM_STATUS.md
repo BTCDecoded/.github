@@ -135,8 +135,7 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Erlay transaction relay
 
 **Dependencies:**
-- blvm-protocol (exact version)
-- blvm-consensus (transitive via protocol)
+- blvm-protocol, blvm-consensus (crates.io semver ranges in `Cargo.toml`; workspace patches for monorepo dev)
 
 ---
 
@@ -198,13 +197,15 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - Schema migrations covering: initial schema, emergency mode, audit log, governance fork, key metadata, tier overrides, signature reasoning
 
 **Dependencies:**
-- blvm-sdk (exact version)
+- blvm-sdk (crates.io semver in `Cargo.toml`; workspace patches when developed alongside SDK)
 
 ---
 
 ### 6. governance (Configuration)
 
 **Status**: ✅ **Implemented** - Governance configuration complete
+
+**Source of truth:** YAML under `governance/config/` in repo **`governance`**—especially `action-tiers.yml`, `repository-layers.yml`, `emergency-tiers.yml`. Numbers below are a **summary**; if they drift, fix the YAML first, then this doc.
 
 **Key Features:**
 - ✅ 5-tier governance model configuration
@@ -228,6 +229,16 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Release automation
 - ✅ Deterministic builds
 - ✅ Artifact management
+
+---
+
+### 8. Published docs, web, and benchmarks
+
+| Deliverable | Repo | Notes |
+|-------------|------|--------|
+| BLVM book (mdBook) | **blvm-docs** | Architecture, consensus, protocol, development (fuzzing, differential testing, etc.); published **docs.thebitcoincommons.org**. |
+| Public site | **commons-website** | **thebitcoincommons.org** — positioning, FAQ, embedded spec viz, links to docs/status. |
+| Benchmarks + differential guides | **blvm-bench** | Perf vs reference node, differential testing docs; CI publishes JSON / **benchmarks.thebitcoincommons.org** (per bench repo README). |
 
 ---
 
@@ -266,6 +277,10 @@ blvm-commons (depends on blvm-sdk)
 
 **Satellite:** `blvm-spec` (Orange Paper), `blvm-spec-lock`, `blvm-bench` (differential / replay vs reference RPC). **`blvm-primitives`** shared types (published **0.1.7**).
 
+**Shared CI:** **`rust-ci`** — composite GitHub Actions (`install-rust-toolchain`, `strip-patch-crates-io`, `setup-blvm-spec`, verify composites, etc.) used across BTCDecoded repos.
+
+**Extended product repos (outside the minimal runtime graph):** `blvm-lightning`, `blvm-mesh`, `blvm-miningos`, `blvm-selective-sync`, `blvm-datum` — active; depend on or extend the stack (e.g. mesh routing, selective sync). Track releases separately.
+
 ### Version coordination
 
 - Manifest: `blvm/versions.toml` (often **behind** crate patch releases—see crate version table at top).
@@ -300,11 +315,17 @@ blvm-commons (depends on blvm-sdk)
 2. **Tier 2**: Feature Changes (4-of-5, 30 days)
 3. **Tier 3**: Consensus-Adjacent (5-of-5, 90 days)
 4. **Tier 4**: Emergency Actions (4-of-5, 0 days)
-5. **Tier 5**: Governance Changes (5-of-7 + 2-of-3, 180 days)
+5. **Tier 5**: Governance Changes (**5-of-5**, **180 days**) — see `action-tiers.yml` → `tier_5_governance`.
+
+**Additional action classes** (same file): e.g. **security_critical** (7-of-7, 180d), **cryptographic** (6-of-7, 90d) for high-risk paths—not the same as the five numbered routine tiers.
+
+**Emergency response** (separate): `emergency-tiers.yml` — e.g. critical path **4-of-7** signatures, **0-day** initial review window when emergency tier activated (distinct from routine Tier 4 “Emergency Actions” above).
 
 ### Governance Layers
 
-1. **Layer 1-2** (Constitutional): 6-of-7 maintainers, 180 days
+**Repos per layer** (`repository-layers.yml`): **L1** `blvm-spec`, **L2** `blvm-consensus`, **L3** `blvm-protocol`, **L4** `blvm-node` + `blvm`, **L5** `blvm-sdk`.
+
+1. **Layer 1–2** (Constitutional): 6-of-7 maintainers, 180 days (L1/L2 also define longer **consensus_review_period_days** in YAML for spec/consensus-class changes)
 2. **Layer 3** (Implementation): 4-of-5 maintainers, 90 days
 3. **Layer 4** (Application): 3-of-5 maintainers, 60 days
 4. **Layer 5** (Extension): 2-of-3 maintainers, 14 days
@@ -315,10 +336,9 @@ blvm-commons (depends on blvm-sdk)
 
 ### Incomplete Features
 
-1. **UTXO Commitments** (blvm-consensus)
-   - Core implementation: ✅ Complete
-   - Network integration: ⏳ In progress (async response routing remaining)
-   - Status: 90% complete
+1. **UTXO commitments** (consensus + protocol + node)
+   - Consensus / protocol logic: ✅ in tree; **integration tests** in **blvm-protocol** and **blvm-node** (2026).
+   - **Remaining:** live-network edge cases (e.g. async response / routing polish)—treat %-complete estimates as stale; use issues and tests as ground truth.
 
 2. **Stratum V2** (`blvm-stratum-v2`, integrated with `blvm-node`)
    - Implementation: ✅ Complete
@@ -386,13 +406,7 @@ blvm-commons (depends on blvm-sdk)
 
 ## Summary
 
-**Overall Status**: ✅ **Infrastructure Complete** (Phase 1)
+**Phase 1:** Runtime stack, spec, fuzz/CI gates, governance **code**, and **governance** YAML are in place; **enforcement not activated** (test keys).
 
-- **Code**: All components implemented and functional
-- **Tests**: Comprehensive test coverage
-- **Governance**: Complete but not activated
-- **Documentation**: Needs consolidation (conflicting information)
-- **Production Readiness**: Not ready (Phase 1, test keys only)
-
-**Key Achievement**: Complete Bitcoin implementation ecosystem with cryptographic governance infrastructure, ready for Phase 2 activation after security audit and key ceremony.
+**Follow:** crate table + **Recent engineering** above; **`governance/config/*.yml`** for thresholds; **`VERIFICATION.md`** for proof scope; **docs.thebitcoincommons.org** + **thebitcoincommons.org** for public narrative.
 
