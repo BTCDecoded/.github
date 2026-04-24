@@ -17,6 +17,31 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - **Phase 2 Activation**: Governance enforcement begins
 - **Phase 3 Full Operation**: Mature, stable system
 
+### Crate versions (source: each repo `Cargo.toml`, 2026-04)
+
+| Crate | Version |
+|-------|---------|
+| blvm-consensus | 0.1.10 |
+| blvm-protocol | 0.1.4 |
+| blvm-primitives | 0.1.7 |
+| blvm-spec-lock | 0.1.5 |
+| blvm-node | 0.1.0 |
+| blvm-sdk | 0.1.0 |
+| blvm-commons | 0.1.0 |
+
+`blvm/versions.toml` is still pinned at **0.1.0** for several names—treat the table above as **what is actually released on crates.io** until the manifest is bumped in a coordinated release sweep.
+
+### Recent engineering (git history, ~Jan–Apr 2026)
+
+- **blvm-consensus:** Shipped **0.1.9 → 0.1.10**. Fuzz targets expanded (incl. sequence locks, sigop validation, economic validation edge cases); **release workflow gated on fuzz-build**. **Removed vendored Orange Paper tree**—canonical spec is repo **`blvm-spec`**. CI uses **BTCDecoded/rust-ci** compositing and spec-lock install paths.
+- **blvm-protocol:** **BIP155 (addrv2)**, **BIP324** v2 encrypted transport, **framed TCP P2P** refactor. **`economic-node` P2P messages and wire paths removed** (breaking cleanup). **Protocol fuzz crate** + sharded fuzz CI. UTXO commitments **integration tests** live here; dependency alignment (e.g. smallvec) for hyper stack.
+- **blvm-node:** **`economic-node` governance handlers and IPC hooks removed** (matches protocol). **RocksDB 0.24**, P2P parity fixes, IPC length codec. **Node fuzz crate** + sharded CI. UTXO commitments **integration tests** (Redb in tests). P2P **getdata**, selective withhold, module IPC policy. RPC/ZMQ and **QUIC JSON-RPC** docs; book links → **docs.thebitcoincommons.org**.
+- **blvm-stratum-v2:** Separate crate; integrates with node via NodeAPI (Stratum still **feature-gated** on `blvm-node`).
+- **blvm-sdk:** **Composition/macros** path, **WASM** modules, registry/tar tooling; **SDK fuzz** + CI. Crates.io deps on BLVM crates use **`>=0.1, <1`** with sibling patches for dev.
+- **blvm-commons:** **`economic-node` and `economic-veto` enforcement surfaces removed**; rust-ci alignment; manifest-only lockfile policy matches other repos.
+- **blvm-spec:** Orange Paper **TOC / display-math / spec-lock ID** hardening; **governance narrative removed from Orange Paper** (spec focuses on consensus/protocol); PROTOCOL sections expanded.
+- **governance:** Ruleset/docs aligned with **maintainer-only** governance narrative; Bitcoin Commons **Compact** doc; canonical links to tier repos and BLVM book.
+
 ---
 
 ## Component Status
@@ -46,12 +71,9 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Spam filtering
 - ✅ Optimization passes (constant folding, memory layout, SIMD vectorization)
 
-**Test Coverage:**
-- Unit tests: Comprehensive
-- Integration tests: Historical block replay, differential testing
-- Property-based tests: Using proptest
-- Fuzzing: Multiple fuzzing targets
+**Tests / CI:** Unit + integration (historical replay, differential harnesses in **blvm-bench**). Proptest. **Fuzz:** many `cargo-fuzz` targets; **release gated on fuzz-build** in CI.
 
+**Repo layout:** Spec markdown is **not** vendored here; clone **`blvm-spec`** for Orange Paper / PROTOCOL.
 
 ---
 
@@ -70,11 +92,13 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Protocol-specific validation rules
 - ✅ FIBRE protocol support
 - ✅ Commons-specific extensions (UTXO commitments, ban list sharing)
-- ✅ Governance messages via P2P protocol
+- ✅ **BIP155 (addrv2)**, **BIP324** (v2 encrypted transport), framed TCP P2P stack
+- ✅ NODE_GOVERNANCE / governance-related P2P capability flags ( **`economic-node` wire removed** in 2026 )
 - ✅ BIP support (BIP152, BIP157, BIP158, BIP173/350/351)
+- ✅ **Protocol fuzz** crate + sharded fuzz CI
 
 **Dependencies:**
-- blvm-consensus (exact version pinning)
+- blvm-consensus (crates.io semver; workspace uses `patch.crates-io` for siblings)
 
 ---
 
@@ -94,14 +118,14 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Module system (process-isolated, sandboxed module loading)
 - ✅ BIP support (BIP21, BIP70, BIP157, BIP158)
 - ✅ Compact blocks
-- ✅ Stratum V2 support (feature-gated)
+- ✅ **Stratum V2:** separate **`blvm-stratum-v2`** crate; **`stratum-v2`** feature on node
 - ✅ Dandelion++ privacy relay (feature-gated)
 - ✅ RBF support (4 configurable modes)
 - ✅ Mempool policies (5 eviction strategies)
 - ✅ CTV (CheckTemplateVerify) payment processing
 - ✅ Advanced indexing (address and value range)
-- ✅ P2P governance message relay
-- ✅ QUIC RPC support
+- ✅ Governance-related P2P surfaces ( **`economic-node` IPC/handlers removed** in 2026 )
+- ✅ QUIC JSON-RPC support (documented alongside TCP RPC)
 
 **Network Features:**
 - ✅ Transport abstraction (TCP, Quinn QUIC, Iroh)
@@ -135,7 +159,7 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Signature aggregation (blvm-aggregate-signatures)
 - ✅ Nested multisig support
 
-**Test coverage:** `blvm-sdk` publishes line coverage via CI → Codecov; governance crypto tests in-repo.
+**Tests / CI:** Governance crypto tests; **fuzz crate**; line coverage → **Codecov** via tarpaulin workflow. Composition **macros** crate; **WASM** module path for composition/registry tooling.
 
 **Dependencies:**
 - Standalone (no consensus dependencies)
@@ -166,6 +190,7 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Multisig threshold validation
 - ✅ Tier classification automation
 - ✅ PR status management
+- **`economic-node` / `economic-veto` surfaces removed** (2026); enforcement is tier/layer + GitHub integration only
 
 **Database:**
 - SQLite (development/testnet)
@@ -204,8 +229,6 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Deterministic builds
 - ✅ Artifact management
 
-**Version coordination:** Manifest in `blvm/versions.toml`; crate `Cargo.toml` patch versions may run ahead until the next coordinated release.
-
 ---
 
 ## Test Infrastructure
@@ -241,10 +264,11 @@ blvm-sdk (no dependencies)
 blvm-commons (depends on blvm-sdk)
 ```
 
+**Satellite:** `blvm-spec` (Orange Paper), `blvm-spec-lock`, `blvm-bench` (differential / replay vs reference RPC). **`blvm-primitives`** shared types (published **0.1.7**).
+
 ### Version coordination
 
-- **Manifest**: `versions.toml` in the **`blvm`** repository (BTCDecoded/blvm).
-- **Reality check**: Open each component’s `Cargo.toml` for the **published** crate version; the manifest may still list an older coordinated set until the next release sweep.
+- Manifest: `blvm/versions.toml` (often **behind** crate patch releases—see crate version table at top).
 
 ---
 
@@ -351,13 +375,12 @@ blvm-commons (depends on blvm-sdk)
 
 ---
 
-## Next Steps
+## Next steps
 
-1. **Resolve Documentation Conflicts**: Consolidate formal verification status
-2. **Archive Historical Documents**: Move session summaries to history
-3. **Update Primary Documentation**: Fix README.md and SYSTEM_OVERVIEW.md
-4. **Complete Remaining Features**: Finish UTXO commitments network integration
-5. **Prepare for Phase 2**: Security audit, key ceremony planning
+1. Refresh **`blvm/versions.toml`** to match published crate set (or document intentional lag).
+2. Finish **UTXO commitments** network/async path (see Known Gaps).
+3. Reconcile any remaining **proof-count** mentions with `VERIFICATION.md` only.
+4. **Phase 2:** security review, production keys, turn on enforcement in `blvm-commons` deployments.
 
 ---
 
