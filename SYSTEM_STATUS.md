@@ -135,9 +135,7 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - ✅ Signature aggregation (blvm-aggregate-signatures)
 - ✅ Nested multisig support
 
-**Test Coverage:**
-- 77.30% test coverage (verified)
-- Comprehensive governance crypto tests
+**Test coverage:** `blvm-sdk` publishes line coverage via CI → Codecov; governance crypto tests in-repo.
 
 **Dependencies:**
 - Standalone (no consensus dependencies)
@@ -194,19 +192,19 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 
 ---
 
-### 7. commons (Build Orchestration)
+### 7. blvm (Build orchestration / release set)
 
-**Status**: ✅ **Implemented** - Build system complete
+**Status**: ✅ **Implemented** - Meta-repo for coordinated releases
 
 **Key Features:**
-- ✅ Version coordination (`versions.toml`)
+- ✅ Version coordination manifest (`versions.toml`)
 - ✅ Unified build scripts
 - ✅ Reusable GitHub Actions workflows
 - ✅ Release automation
 - ✅ Deterministic builds
 - ✅ Artifact management
 
-**Version Coordination**: All components use coordinated versioning via `versions.toml` for consistent releases.
+**Version coordination:** Manifest in `blvm/versions.toml`; crate `Cargo.toml` patch versions may run ahead until the next coordinated release.
 
 ---
 
@@ -221,12 +219,9 @@ All components include comprehensive testing:
 - **Fuzzing**: Multiple fuzzing targets for security-critical paths
 - **Formal verification**: blvm-spec-lock for consensus-critical functions
 
-### Formal Verification
+### Formal verification & coverage
 
-
-### Test Coverage
-
-All components maintain comprehensive test coverage with consensus-critical components targeting high coverage thresholds.
+Scope, limits, and methodology: `blvm-consensus/docs/VERIFICATION.md`. Spec-lock CLI/macros: `blvm-spec-lock`. Proof counts: use that repo’s docs, not ad-hoc numbers here.
 
 ---
 
@@ -246,11 +241,10 @@ blvm-sdk (no dependencies)
 blvm-commons (depends on blvm-sdk)
 ```
 
-### Version Coordination
+### Version coordination
 
-- **File**: `commons/versions.toml`
-- **Current Version**: v0.1.0 for all components
-- **Status**: All components at v0.1.0
+- **Manifest**: `versions.toml` in the **`blvm`** repository (BTCDecoded/blvm).
+- **Reality check**: Open each component’s `Cargo.toml` for the **published** crate version; the manifest may still list an older coordinated set until the next release sweep.
 
 ---
 
@@ -302,9 +296,9 @@ blvm-commons (depends on blvm-sdk)
    - Network integration: ⏳ In progress (async response routing remaining)
    - Status: 90% complete
 
-2. **Stratum V2** (blvm-node)
+2. **Stratum V2** (`blvm-stratum-v2`, integrated with `blvm-node`)
    - Implementation: ✅ Complete
-   - Status: Feature-gated, ready for use
+   - Status: Feature-gated on node; server crate is separate repo
 
 3. **Module System** (blvm-node)
    - Core: ✅ Complete
@@ -315,11 +309,10 @@ blvm-commons (depends on blvm-sdk)
 - **Dandelion++**: Privacy relay (feature-gated, experimental)
 - **Iroh Transport**: QUIC-based P2P (production-ready but optional)
 
-### Documentation Gaps
+### Documentation gaps
 
-- **Formal Verification**: Conflicting documentation (13 vs 51 vs 60 vs 176 proofs)
-- **Status Documents**: Multiple conflicting status documents need consolidation
-- **Test Coverage**: Some components lack published coverage reports
+- Formal verification: historical proof-count chatter; use `VERIFICATION.md` as source of truth.
+- Some components lack a pinned public coverage badge (SDK uses Codecov).
 
 ---
 
@@ -355,23 +348,6 @@ blvm-commons (depends on blvm-sdk)
 - Community validation
 
 **Timeline**: Phase 2 activation pending
-
----
-
-## Verification Methodology
-
-This status document was created by:
-
-1. **Codebase Verification**: Direct examination of source code
-   - Verified module exports in `lib.rs` files
-   - Verified spec_locked annotations link to Orange Paper sections
-
-2. **Documentation Audit**: Reviewed status/progress documents and identified conflicts and discrepancies
-
-3. **Cross-Reference**: Compared documentation claims with actual code
-   - Verified formal verification system integration
-   - Verified component implementation status
-   - Identified gaps between claims and reality
 
 ---
 
