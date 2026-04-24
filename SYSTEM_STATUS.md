@@ -27,16 +27,17 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 | Coordinated release set for the meta-repo | **`blvm/versions.toml`** (may lag individual repos until a release sweep—compare to each crate’s own `Cargo.toml` if in doubt) |
 | Dependency pins inside a crate | That crate’s **`Cargo.toml`** `[dependencies]` (including exact pins on third-party crypto libs) |
 
-### Recent engineering (git history, ~Jan–Apr 2026)
+### Engineering trajectory (stable summary)
 
-- **blvm-consensus:** Ongoing **crates.io** patch releases; fuzz targets expanded (incl. sequence locks, sigop validation, economic validation edge cases); **release workflow gated on fuzz-build**. **Removed vendored Orange Paper tree**—canonical spec is repo **`blvm-spec`**. CI uses **BTCDecoded/rust-ci** compositing and spec-lock install paths.
-- **blvm-protocol:** **BIP155 (addrv2)**, **BIP324** v2 encrypted transport, **framed TCP P2P** refactor. **`economic-node` P2P messages and wire paths removed** (breaking cleanup). **Protocol fuzz crate** + sharded fuzz CI. UTXO commitments **integration tests** live here; dependency alignment (e.g. smallvec) for hyper stack.
-- **blvm-node:** **`economic-node` governance handlers and IPC hooks removed** (matches protocol). **RocksDB** backend upgrade, P2P parity fixes, IPC length codec. **Node fuzz crate** + sharded CI. UTXO commitments **integration tests** (Redb in tests). P2P **getdata**, selective withhold, module IPC policy. RPC/ZMQ and **QUIC JSON-RPC** docs; book links → **docs.thebitcoincommons.org**.
-- **blvm-stratum-v2:** Separate crate; integrates with node via NodeAPI (Stratum still **feature-gated** on `blvm-node`).
-- **blvm-sdk:** **Composition/macros** path, **WASM** modules, registry/tar tooling; **SDK fuzz** + CI. Crates.io deps on BLVM crates use **`>=0.1, <1`** with sibling patches for dev.
-- **blvm-commons:** **`economic-node` and `economic-veto` enforcement surfaces removed**; rust-ci alignment; manifest-only lockfile policy matches other repos.
-- **blvm-spec:** Orange Paper **TOC / display-math / spec-lock ID** hardening; **governance narrative removed from Orange Paper** (spec focuses on consensus/protocol); PROTOCOL sections expanded.
-- **governance:** Ruleset/docs aligned with **maintainer-only** governance narrative; Bitcoin Commons **Compact** doc; canonical links to tier repos and BLVM book.
+This section is **themes only**—not a substitute for per-repo history (avoids duplicating a changelog that goes stale).
+
+- **Spec & verification:** Canonical Orange Paper in **`blvm-spec`**; **`blvm-spec-lock`** ties consensus code to spec; consensus **release** path gated on **fuzz-build** where configured.
+- **P2P & transport:** **BIP155**, **BIP324**, framed TCP stack in protocol; node adds optional **QUIC/Iroh** transport and Core-oriented RPC surfaces (see component sections for BIP lists).
+- **Governance surface cleanup:** **`economic-node` / `economic-veto`** wire and enforcement hooks **removed** from protocol, node, and commons—enforcement is **tier/layer + GitHub** when Phase 2 is on.
+- **Hardening & CI:** Dedicated **fuzz** crates and sharded fuzz workflows on protocol, node, and SDK; **BTCDecoded/rust-ci** composites (toolchain, spec setup, patch stripping) shared across repos.
+- **Mining integration:** **`blvm-stratum-v2`** is a separate crate (node **`stratum-v2`** feature).
+
+**Per-repo detail:** `git log`, releases, or `CHANGELOG*` in each repository—not repeated here.
 
 ---
 
@@ -203,6 +204,8 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 
 **Source of truth:** YAML under `governance/config/` in repo **`governance`**—especially `action-tiers.yml`, `repository-layers.yml`, `emergency-tiers.yml`. Numbers below are a **summary**; if they drift, fix the YAML first, then this doc.
 
+**Emergency config duplication:** `action-tiers.yml` ends with a short **`emergency_tiers:`** map. The **full** emergency flow (activation criteria, evidence, post-activation, extensions) is in **`emergency-tiers.yml`**. If anything conflicts, treat **`emergency-tiers.yml`** as authoritative until the two are consolidated in the **governance** repo.
+
 **Key Features:**
 - ✅ 5-tier governance model configuration
 - ✅ Layer-based signature thresholds
@@ -285,7 +288,7 @@ blvm-commons (GitHub webhooks, signatures, DB; policy thresholds align with **go
 
 **Shared CI:** **`rust-ci`** — composite GitHub Actions (`install-rust-toolchain`, `strip-patch-crates-io`, `setup-blvm-spec`, verify composites, etc.) used across BTCDecoded repos.
 
-**Extended product repos (outside the minimal runtime graph):** `blvm-lightning`, `blvm-mesh`, `blvm-miningos`, `blvm-selective-sync`, `blvm-datum` — active; depend on or extend the stack (e.g. mesh routing, selective sync). Track releases separately.
+**Extended product repos (outside the minimal runtime graph):** `blvm-lightning`, `blvm-mesh`, `blvm-miningos`, `blvm-selective-sync`, `blvm-datum`, **`blvm-stratum-v2`** — active; depend on or extend the stack. Track releases separately.
 
 ### Version coordination
 
@@ -345,7 +348,7 @@ blvm-commons (GitHub webhooks, signatures, DB; policy thresholds align with **go
 ### Incomplete Features
 
 1. **UTXO commitments** (consensus + protocol + node)
-   - Consensus / protocol logic: ✅ in tree; **integration tests** in **blvm-protocol** and **blvm-node** (2026).
+   - Consensus / protocol logic: ✅ in tree; **integration tests** in **blvm-protocol** and **blvm-node**.
    - **Remaining:** live-network edge cases (e.g. async response / routing polish)—treat %-complete estimates as stale; use issues and tests as ground truth.
 
 2. **Stratum V2** (`blvm-stratum-v2`, integrated with `blvm-node`)
@@ -416,5 +419,5 @@ blvm-commons (GitHub webhooks, signatures, DB; policy thresholds align with **go
 
 **Phase 1:** Runtime stack, spec, fuzz/CI gates, governance **code**, and **governance** YAML are in place; **enforcement not activated** (test keys).
 
-**Follow:** **Recent engineering** above; each repo’s **`Cargo.toml`** / crates.io for versions; **`governance/config/*.yml`** for thresholds; **`VERIFICATION.md`** for proof scope; **docs.thebitcoincommons.org** + **thebitcoincommons.org** for public narrative.
+**Follow:** **Engineering trajectory** above; each repo’s **`Cargo.toml`** / crates.io for versions; **`governance/config/*.yml`** for thresholds; **`VERIFICATION.md`** for proof scope; **docs.thebitcoincommons.org** + **thebitcoincommons.org** for public narrative.
 
