@@ -263,17 +263,27 @@ Scope, limits, and methodology: `blvm-consensus/docs/VERIFICATION.md`. Spec-lock
 
 ### Dependency Graph (Verified)
 
-```
-blvm-consensus (no dependencies)
-    ↓
-blvm-protocol (depends on blvm-consensus)
-    ↓
-blvm-node (depends on blvm-protocol + blvm-consensus)
+**Bitcoin validation stack** (what ships in a node; versions from each repo `Cargo.toml` / workspace patches):
 
-blvm-sdk (no dependencies)
-    ↓
-blvm-commons (depends on blvm-sdk)
 ```
+blvm-primitives ──┐
+                  ├──► blvm-consensus ──► blvm-protocol ──► blvm-node
+blvm-muhash ──────┘
+```
+
+- **blvm-consensus** pulls **blvm-primitives** + **blvm-muhash** (and optional **blvm-spec-lock** for verification workflows).
+- **blvm-protocol** pulls **blvm-consensus** + **blvm-primitives**.
+- **blvm-node** pulls **blvm-protocol** + **blvm-consensus** + **blvm-muhash** (and optional **blvm-spec-lock**); **blvm-primitives** appears via sibling patches in the monorepo layout.
+
+**Governance enforcement service** (Phase 2 blocks merges; **not** on the block-validation hot path):
+
+```
+blvm-sdk (no BLVM crates; secp256k1 / bitcoin message standards + serde stack)
+    ↓
+blvm-commons (GitHub webhooks, signatures, DB; policy thresholds align with **governance** repo YAML)
+```
+
+**Policy config:** repo **`governance`** — `governance/config/*.yml` (tiers, layers, emergency). **`blvm-commons`** implements enforcement against that policy when deployed.
 
 **Satellite:** `blvm-spec` (Orange Paper), `blvm-spec-lock`, `blvm-bench` (differential / replay vs reference RPC). **`blvm-primitives`** shared types (published **0.1.7**).
 
@@ -311,13 +321,15 @@ blvm-commons (depends on blvm-sdk)
 
 ### Governance Tiers
 
-1. **Tier 1**: Routine Maintenance (3-of-5, 7 days)
-2. **Tier 2**: Feature Changes (4-of-5, 30 days)
-3. **Tier 3**: Consensus-Adjacent (5-of-5, 90 days)
-4. **Tier 4**: Emergency Actions (4-of-5, 0 days)
-5. **Tier 5**: Governance Changes (**5-of-5**, **180 days**) — see `action-tiers.yml` → `tier_5_governance`.
+(Routine numbered tiers — `action-tiers.yml` keys `tier_1_routine` … `tier_5_governance`.)
 
-**Additional action classes** (same file): e.g. **security_critical** (7-of-7, 180d), **cryptographic** (6-of-7, 90d) for high-risk paths—not the same as the five numbered routine tiers.
+1. **Tier 1**: Routine Maintenance (3-of-5, 7 days) — docs/perf/non-consensus fixes; no emergency override.
+2. **Tier 2**: Feature Changes (4-of-5, 30 days) — **requires_specification** (e.g. new RPC/P2P/config).
+3. **Tier 3**: Consensus-Adjacent (5-of-5, 90 days) — **requires_specification** + **requires_audit**.
+4. **Tier 4**: Emergency Actions (4-of-5, 0 days) — **emergency_override**; **requires_post_mortem** (routine fast path, distinct from `emergency-tiers.yml` activation flow).
+5. **Tier 5**: Governance Changes (**5-of-5**, **180 days**) — **requires_public_comment** + **requires_rationale**; see `tier_5_governance`.
+
+**Additional action classes** (same file, path-based / elevated scrutiny): **security_critical** (7-of-7, 180d), **cryptographic** (6-of-7, 90d), **security_enhancement** (5-of-7, 30d) — not the same as the five numbered routine tiers.
 
 **Emergency response** (separate): `emergency-tiers.yml` — e.g. critical path **4-of-7** signatures, **0-day** initial review window when emergency tier activated (distinct from routine Tier 4 “Emergency Actions” above).
 
