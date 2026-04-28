@@ -123,7 +123,7 @@ All community members must follow our [Code of Conduct](CODE_OF_CONDUCT.md). Vio
 
 - **GitHub Issues**: Bug reports and feature requests
 - **GitHub Discussions**: General discussion and questions
-- **Security Email**: security@btcdecoded.org for security issues
+- **Security Email**: security@thebitcoincommons.org for security issues
 - **Public Meetings**: Regular community meetings (when applicable)
 
 ## Funding and Resources

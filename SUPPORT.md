@@ -80,7 +80,7 @@ For bug reports and feature requests:
 
 For security vulnerabilities:
 - **DO NOT** create public issues
-- **Email**: security@btcdecoded.org
+- **Email**: security@thebitcoincommons.org
 - **See**: [Security Policy](SECURITY.md)
 
 ## Contributing
@@ -147,7 +147,7 @@ For security vulnerabilities:
 
 ### Security Issues
 
-- **Email**: security@btcdecoded.org
+- **Email**: security@thebitcoincommons.org
 - **PGP Key**: Available on request
 
 ### Governance Questions

@@ -18,7 +18,7 @@ Security vulnerabilities should be reported privately to avoid exposing users to
 
 ### 2. Report privately
 
-Send an email to: **security@btcdecoded.org**
+Send an email to: **security@thebitcoincommons.org**
 
 Include the following information:
 - Description of the vulnerability
@@ -111,7 +111,7 @@ We are committed to regular security audits:
 ## Contact
 
 For security-related questions or concerns:
-- **Email**: security@btcdecoded.org
+- **Email**: security@thebitcoincommons.org
 - **PGP Key**: [Available on request]
 - **Response Time**: Within 48 hours
 
