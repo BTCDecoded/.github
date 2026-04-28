@@ -1,139 +1,47 @@
 # Contributing to BTCDecoded
 
-Thank you for your interest in contributing to BTCDecoded! This guide covers how to contribute to any repository in the BTCDecoded organization.
+Thank you for your interest in contributing to Bitcoin Commons! This is a brief overview. For comprehensive contributing guidelines, see the [BLVM Documentation](https://docs.thebitcoincommons.org/development/contributing.html).
+
+## Quick Links
+
+- **[Complete Contributing Guide](https://docs.thebitcoincommons.org/development/contributing.html)** - Full developer workflow, testing, PR process
+- **[PR Process](https://docs.thebitcoincommons.org/development/pr-process.html)** - Governance tiers, review process, signature requirements
+- **[CI/CD Workflows](https://docs.thebitcoincommons.org/development/ci-cd-workflows.html)** - What happens when you push code
 
 ## Code of Conduct
 
 This project and everyone participating in it is governed by our [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
-## How to Contribute
+## Basic Workflow
 
-### Reporting Issues
-
-- Use the GitHub issue tracker for the specific repository
-- Provide clear, detailed descriptions
-- Include steps to reproduce for bugs
-- Use appropriate labels
-
-### Suggesting Enhancements
-
-- Open a discussion or issue to discuss the enhancement
-- Provide clear use cases and benefits
-- Consider the impact on the 5-tier architecture
-
-### Submitting Code
-
-1. **Fork the repository** (GitHub fork for code contributions)
-2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. **Make your changes**: Follow our coding standards
-4. **Add tests**: Ensure your changes are tested
+1. **Fork the repository** you want to contribute to
+2. **Create a feature branch** from `main`
+3. **Make your changes** following our coding standards
+4. **Add tests** for new functionality
 5. **Run the test suite**: `cargo test`
-6. **Commit your changes**: Use conventional commit messages
-7. **Push to your fork**: `git push origin feature/amazing-feature`
-8. **Open a Pull Request**: Provide a clear description
-
-> **Note**: This is about code forking (GitHub contributions). For information about the governance fork system (choosing different governance rulesets), see the [Governance Fork Guide](https://github.com/BTCDecoded/BTCDecoded/blob/main/docs/GOVERNANCE_FORK_GUIDE.md).
-
-## Development Standards
-
-### Code Style
-
-- Follow Rust conventions and idioms
-- Use `cargo fmt` to format code
-- Use `cargo clippy` to check for improvements
-- Write clear, self-documenting code
-
-### Testing
-
-- Write tests for all new functionality
-- Ensure existing tests continue to pass
-- Add integration tests for complex features
-- Aim for high test coverage
-
-### Documentation
-
-- Document all public APIs
-- Update README files when adding features
-- Include code examples in documentation
-- Follow Rust documentation conventions
-
-### Commit Messages
-
-Use conventional commit format:
-
-```
-type(scope): description
-
-[optional body]
-
-[optional footer]
-```
-
-Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
-
-Examples:
-- `feat(blvm-consensus): add new validation function`
-- `fix(blvm-node): resolve connection timeout issue`
-- `docs(readme): update installation instructions`
+6. **Open a Pull Request** with a clear description
 
 ## Repository-Specific Guidelines
 
-### blvm-consensus
-
-- **Exact Version Pinning**: All consensus-critical dependencies must be pinned to exact versions
-- **Mathematical Accuracy**: Changes must maintain mathematical correctness
-- **Pure Functions**: All functions must remain side-effect-free
-- **Comprehensive Testing**: All mathematical functions must be thoroughly tested
-
-### blvm-protocol
-
-- **Protocol Abstraction**: Changes must maintain clean abstraction
-- **Variant Support**: Ensure all Bitcoin variants continue to work
-- **Backward Compatibility**: Avoid breaking changes to protocol interfaces
-
-### blvm-node
-
-- **Consensus Integrity**: Never modify consensus rules
-- **Production Readiness**: Consider production deployment implications
-- **Performance**: Maintain reasonable performance characteristics
-
-## Review Process
-
-### Pull Request Requirements
-
-- [ ] All tests pass
-- [ ] Code follows style guidelines
-- [ ] Documentation is updated
-- [ ] Commit messages follow conventions
-- [ ] Changes are focused and atomic
-
-### Review Criteria
-
-- **Correctness**: Does the code work as intended?
-- **Performance**: Are there any performance implications?
-- **Security**: Are there any security concerns?
-- **Maintainability**: Is the code maintainable?
-- **Documentation**: Is the code well-documented?
+Each repository may have specific guidelines. Check the repository's `CONTRIBUTING.md` file for:
+- Component-specific requirements
+- Testing requirements
+- Build instructions
+- Special considerations
 
 ## Getting Help
 
-- **Discussions**: Use GitHub Discussions for questions
-- **Issues**: Use GitHub Issues for bugs and feature requests
-- **Security**: Use private channels for security issues (see SECURITY.md)
+- **Documentation**: [docs.thebitcoincommons.org](https://docs.thebitcoincommons.org)
+- **Issues**: Use GitHub issues for bugs and feature requests
+- **Discussions**: Use GitHub discussions for questions
+- **Security**: See [SECURITY.md](SECURITY.md) for security issues
 
-## Recognition
+## See Also
 
-Contributors will be recognized in:
-- Repository CONTRIBUTORS.md files
-- Release notes for significant contributions
-- Organization acknowledgments
-
-## Questions?
-
-If you have questions about contributing, please:
-1. Check existing discussions and issues
-2. Open a new discussion
-3. Contact maintainers privately for sensitive matters
+For detailed information, see the [BLVM Documentation](https://docs.thebitcoincommons.org):
+- [Contributing Guide](https://docs.thebitcoincommons.org/development/contributing.html) - Complete developer workflow
+- [PR Process](https://docs.thebitcoincommons.org/development/pr-process.html) - Pull request review process
+- [CI/CD Workflows](https://docs.thebitcoincommons.org/development/ci-cd-workflows.html) - Continuous integration
+- [Testing Infrastructure](https://docs.thebitcoincommons.org/development/testing.html) - Testing guides
 
 Thank you for contributing to BTCDecoded!
-
