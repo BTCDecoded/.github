@@ -13,17 +13,17 @@
 
 **Coordination Without Authority: An Architectural Solution**
 
-Bitcoin Commons applies cryptographic enforcement to Bitcoin development governance, making it as robust as Bitcoin's consensus layer. Built on the BLVM technology stack with formal verification and forkable governance.
+Bitcoin Commons applies intended cryptographic enforcement to Bitcoin development governance. Built on the **BLVM** stack (specs, consensus, protocol, node) with **BLVM Specification Lock**, tests, and related tooling—verify scope in **[System Status](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)** and per-repo READMEs.
 
 **🌐 [thebitcoincommons.org](https://thebitcoincommons.org)** | **📚 [Documentation](https://docs.thebitcoincommons.org)** | **📜 [Compact](https://github.com/BTCDecoded/governance/blob/main/COMPACT.md)** | **📊 [System Status](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)**
 
-## What We're Building
+## What we're building
 
-**BLVM** - Mathematical rigor through the Orange Paper specification and formal verification using blvm-spec-lock. Enables safe alternative Bitcoin implementations.
+**BLVM** - Specifications and implementations for alternative Bitcoin-compatible nodes: Orange Paper, **[blvm-consensus](https://github.com/BTCDecoded/blvm-consensus)**, **[blvm-spec-lock](https://github.com/BTCDecoded/blvm-spec-lock)**, and the rest of the tiered stack (see Architecture below).
 
-**Bitcoin Commons** - Forkable governance framework applying Elinor Ostrom's commons management principles. Enables coordination without civil war. Normative principles and legitimacy model: **[Bitcoin Commons Compact](https://github.com/BTCDecoded/governance/blob/main/COMPACT.md)** (technical rules live in the [governance](https://github.com/BTCDecoded/governance) repo).
+**Bitcoin Commons** - Forkable governance framework applying Elinor Ostrom's commons management principles. Normative principles: **[Bitcoin Commons Compact](https://github.com/BTCDecoded/governance/blob/main/COMPACT.md)** (technical rules live in the [governance](https://github.com/BTCDecoded/governance) repo).
 
-Together, they solve Bitcoin's governance asymmetry: making development governance 6x harder to capture than Bitcoin Core's current model, with complete transparency and user-protective mechanisms.
+Together, they target Bitcoin’s governance asymmetry through **transparent rules**, **forkable process**, and **cryptographic checks** where implemented—see the **[Compact](https://github.com/BTCDecoded/governance/blob/main/COMPACT.md)** and **[System Status](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)** for what is verified and active today.
 
 ## Architecture
 
@@ -31,7 +31,7 @@ Together, they solve Bitcoin's governance asymmetry: making development governan
 
 **6-Tier Architecture:**
 1. **Orange Paper** (blvm-spec) - Mathematical foundation
-2. **Consensus** (blvm-consensus) - Formally verified implementation with blvm-spec-lock
+2. **Consensus** ([blvm-consensus](https://github.com/BTCDecoded/blvm-consensus)) - Consensus implementation (BLVM Specification Lock, tests, and related assurance—see repo and **[System Status](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)**)
 3. **Protocol** (blvm-protocol) - Core protocol abstraction
 4. **Node** (blvm-node) - Full Bitcoin node
 5. **SDK** (blvm-sdk) - Tools and primitives
@@ -48,7 +48,7 @@ All core components implemented. Governance not yet activated. Production deploy
 ### Core Infrastructure
 - [`blvm-spec`](https://github.com/BTCDecoded/blvm-spec) - Orange Paper (mathematical foundation)
 - [`blvm-spec-lock`](https://github.com/BTCDecoded/blvm-spec-lock) - Formal verification tooling
-- [`blvm-consensus`](https://github.com/BTCDecoded/blvm-consensus) - Formally verified consensus implementation
+- [`blvm-consensus`](https://github.com/BTCDecoded/blvm-consensus) - Consensus layer ([blvm-spec-lock](https://github.com/BTCDecoded/blvm-spec-lock), tests, and related assurance—scope per repo and **System Status**)
 - [`blvm-protocol`](https://github.com/BTCDecoded/blvm-protocol) - Protocol abstraction layer
 - [`blvm-node`](https://github.com/BTCDecoded/blvm-node) - Full Bitcoin node implementation
 - [`blvm-sdk`](https://github.com/BTCDecoded/blvm-sdk) - Developer toolkit
@@ -66,8 +66,9 @@ All core components implemented. Governance not yet activated. Production deploy
 
 1. **Learn**: Visit [thebitcoincommons.org](https://thebitcoincommons.org) to understand the governance model and principles
 2. **Read**: [Documentation](https://docs.thebitcoincommons.org) for technical details
-3. **Explore**: Browse repository READMEs for component-specific information
-4. **Status**: Check [SYSTEM_STATUS.md](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md) for verified implementation status
+3. **Install**: Pre-built **`blvm`** binaries and packages — **[GitHub Releases (blvm)](https://github.com/BTCDecoded/blvm/releases)**; install walkthrough: [btcdecoded.org/install](https://btcdecoded.org/install)
+4. **Explore**: Browse repository READMEs for component-specific information
+5. **Status**: Check [SYSTEM_STATUS.md](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md) for verified implementation status
 
 ## Support
 
