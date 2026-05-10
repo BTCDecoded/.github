@@ -6,7 +6,7 @@ Use this checklist when reviewing pull requests that affect security-sensitive c
 
 - [ ] Identify affected security controls (check `security-control-mapping.yml`)
 - [ ] Determine security tier (P0/P1/P2/P3) based on affected controls
-- [ ] Check if PR requires security audit, formal verification, or cryptography expert
+- [ ] Check if PR requires security audit, **blvm-spec-lock** verification (consensus paths), or cryptography expert
 - [ ] Verify governance tier requirements (signatures, review period)
 
 ## Code Review
@@ -109,14 +109,14 @@ Use this checklist when reviewing pull requests that affect security-sensitive c
 ### P0 (Critical) Controls
 
 - [ ] Security audit is required and scheduled
-- [ ] Formal verification is required and completed
+- [ ] Spec-lock and test gates are satisfied for consensus-adjacent changes (per **blvm-consensus** / `security-control-mapping`)
 - [ ] Cryptography expert review is obtained (if required)
 - [ ] All P0 controls are verified
 
 ### P1 (High) Controls
 
 - [ ] Security review is completed
-- [ ] Formal verification is considered
+- [ ] **blvm-spec-lock** / spec-contract verification is considered for consensus-adjacent changes
 - [ ] Cryptography expert review is considered (if applicable)
 
 ### P2/P3 (Medium/Low) Controls
@@ -126,15 +126,15 @@ Use this checklist when reviewing pull requests that affect security-sensitive c
 
 ## Notes
 
-- For consensus-critical code, require formal verification (Kani proofs)
+- For consensus-critical code, require **blvm-spec-lock** verification (`cargo spec-lock verify`) and tests as defined in that repository’s CI and **security-control-mapping**
 - For cryptographic code, require cryptography expert review
 - For governance code, require economic node consideration
 - When in doubt, escalate to security team or maintainers
 
 ## Related Resources
 
-- [Developer Security Checklist](https://github.com/BTCDecoded/bllvm-docs/blob/main/src/security/DEVELOPER_SECURITY_CHECKLIST.md) (in bllvm-docs)
-- [Security Architecture Review Template](https://github.com/BTCDecoded/bllvm-docs/blob/main/src/security/ARCHITECTURE_REVIEW_TEMPLATE.md) (in bllvm-docs)
-- [Security Testing Template](https://github.com/BTCDecoded/bllvm-docs/blob/main/src/security/SECURITY_TESTING_TEMPLATE.md) (in bllvm-docs)
-- [Security Controls System](https://github.com/BTCDecoded/bllvm-docs/blob/main/src/security/security-controls.md) (in bllvm-docs)
+- [Developer Security Checklist](https://github.com/BTCDecoded/blvm-docs/blob/main/src/security/DEVELOPER_SECURITY_CHECKLIST.md) (in blvm-docs)
+- [Security Architecture Review Template](https://github.com/BTCDecoded/blvm-docs/blob/main/src/security/ARCHITECTURE_REVIEW_TEMPLATE.md) (in blvm-docs)
+- [Security Testing Template](https://github.com/BTCDecoded/blvm-docs/blob/main/src/security/SECURITY_TESTING_TEMPLATE.md) (in blvm-docs)
+- [Security Controls System](https://github.com/BTCDecoded/blvm-docs/blob/main/src/security/security-controls.md) (in blvm-docs)
 

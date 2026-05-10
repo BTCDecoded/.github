@@ -1,6 +1,6 @@
 # Bitcoin Commons System Status
 
-**Last Verified**: 2025-01-XX  
+**Last Verified**: 2026-05-10  
 **Status**: Phase 1 (Infrastructure Building) - Not Yet Activated
 
 ## Executive Summary
@@ -25,26 +25,26 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 ### Core Components (Tiers 1-6)
 
 The system is organized into 6 tiers:
-1. **bllvm-consensus** - Pure mathematical consensus implementation
-2. **bllvm-protocol** - Protocol abstraction layer
-3. **bllvm-node** - Full node implementation with module system
-4. **bllvm-sdk** - Developer SDK and governance primitives
-5. **governance-app** - Cryptographic governance enforcement (GitHub App)
+1. **blvm-consensus** - Pure mathematical consensus implementation
+2. **blvm-protocol** - Protocol abstraction layer
+3. **blvm-node** - Full node implementation with module system
+4. **blvm-sdk** - Developer SDK and governance primitives
+5. **blvm-commons** - Cryptographic governance enforcement (GitHub App)
 6. **governance** - Governance configuration
 
 ### Runtime Modules
 
-Runtime modules extend bllvm-node functionality via process-isolated components:
-- **bllvm-lightning** - Lightning Network payment processing
-- **bllvm-mesh** - Payment-gated routing and network state management
-- **bllvm-governance** - Governance webhook delivery and economic node tracking
-- **bllvm-stratum-v2** - Stratum V2 mining protocol support
+Runtime modules extend blvm-node functionality via process-isolated components:
+- **blvm-lightning** - Lightning Network payment processing
+- **blvm-mesh** - Payment-gated routing and network state management
+- **blvm-governance** - Governance webhook delivery and economic node tracking
+- **blvm-stratum-v2** - Stratum V2 mining protocol support
 
 See the [Runtime Modules](#runtime-modules) section for detailed information.
 
 ---
 
-### 1. bllvm-consensus (Consensus Proof)
+### 1. blvm-consensus (Consensus Proof)
 
 **Status**: ✅ **Implemented** - Core consensus functions complete
 
@@ -52,8 +52,8 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 - **Source Files**: 38 Rust files
 - **Test Files**: 97 Rust test files
 - **Modules Exported**: 20+ modules (constants, script, transaction, block, economic, pow, mempool, mining, segwit, taproot, utxo_commitments, etc.)
-- **Kani Proofs**: 176 `kani::proof` calls found (verified count)
-- **Formal Verification**: Active with Kani model checking
+- **Spec-lock verification**: Orange Paper contracts on `#[spec_locked]` functions via **blvm-spec-lock** (`cargo spec-lock verify`; optional Z3 for full contract checks)
+- **CI**: Consensus crate CI runs tests and spec-lock verification on the main pipeline
 
 **Key Features:**
 - ✅ Transaction validation (CheckTransaction)
@@ -73,11 +73,11 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 - Property-based tests: Using proptest
 - Fuzzing: Multiple fuzzing targets
 
-**Note**: Documentation claims vary (13 vs 51 vs 60 proofs). Verified actual count: **176 kani::proof calls** in source code.
+**Note**: Older docs sometimes cited model-checking counts; the **authoritative** consensus assurance story is **tests + blvm-spec-lock** on `#[spec_locked]` surfaces—see **blvm-consensus** README and **blvm-spec-lock**.
 
 ---
 
-### 2. bllvm-protocol (Protocol Engine)
+### 2. blvm-protocol (Protocol Engine)
 
 **Status**: ✅ **Implemented** - Protocol abstraction layer complete
 
@@ -94,11 +94,11 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 - ✅ Protocol-specific validation rules
 
 **Dependencies:**
-- bllvm-consensus (exact version pinning)
+- blvm-consensus (exact version pinning)
 
 ---
 
-### 3. bllvm-node (Reference Node)
+### 3. blvm-node (Reference Node)
 
 **Status**: ✅ **Implemented** - Full node implementation complete
 
@@ -108,14 +108,14 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 - **Modules Exported**: 10+ modules (storage, network, rpc, node, config, module, payment, governance, zmq, bip21, bech32m, bip157, bip158, bip70)
 
 **Key Features:**
-- ✅ Block validation (uses bllvm-consensus)
+- ✅ Block validation (uses blvm-consensus)
 - ✅ Storage layer (database abstraction with multiple backends, automatic fallback)
 - ✅ P2P networking (TCP, QUIC, Iroh transport abstraction)
 - ✅ RPC interface (JSON-RPC 2.0 + optional REST API)
 - ✅ Payment processing (Lightning, vaults, covenants)
 - ✅ Mining coordination (Stratum V2, merge mining)
 - ✅ Module system (process-isolated, IPC communication, hot reload, P2P registry)
-- ✅ Runtime modules (bllvm-lightning, bllvm-mesh, bllvm-governance, bllvm-stratum-v2)
+- ✅ Runtime modules (blvm-lightning, blvm-mesh, blvm-governance, blvm-stratum-v2)
 - ✅ Governance integration (webhooks, user signaling)
 - ✅ ZeroMQ notifications (optional)
 - ✅ BIP support (BIP21, BIP70, BIP157, BIP158)
@@ -131,12 +131,12 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 - ✅ Module registry (P2P module discovery)
 
 **Dependencies:**
-- bllvm-protocol (exact version)
-- bllvm-consensus (transitive via protocol)
+- blvm-protocol (exact version)
+- blvm-consensus (transitive via protocol)
 
 ---
 
-### 4. bllvm-sdk (Developer SDK)
+### 4. blvm-sdk (Developer SDK)
 
 **Status**: ✅ **Implemented** - Governance infrastructure complete
 
@@ -144,7 +144,7 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 - **Source Files**: 28 Rust files
 - **Test Files**: 9 Rust test files
 - **Modules Exported**: 3 modules (cli, governance, composition)
-- **CLI Tools**: 4 binaries (bllvm-keygen, bllvm-sign, bllvm-verify, bllvm-compose)
+- **CLI Tools**: Multiple binaries, including blvm-keygen, blvm-sign, blvm-verify, blvm-compose, blvm-registry, blvm-sign-binary, blvm-verify-binary, blvm-aggregate-signatures
 
 **Key Features:**
 - ✅ Cryptographic key management (BIP32, BIP39, BIP44)
@@ -164,7 +164,7 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 
 ---
 
-### 5. governance-app (GitHub App)
+### 5. blvm-commons (GitHub App)
 
 **Status**: ✅ **Implemented** - Governance enforcement engine complete
 
@@ -176,7 +176,7 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 
 **Key Features:**
 - ✅ GitHub webhook integration
-- ✅ Signature verification (uses bllvm-sdk)
+- ✅ Signature verification (uses blvm-sdk)
 - ✅ Status check posting
 - ✅ Merge blocking logic
 - ✅ Economic node registry and veto system
@@ -192,7 +192,7 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 - 9 migrations covering: initial schema, emergency mode, audit log, economic nodes, governance fork, key metadata, tier overrides, signature reasoning
 
 **Dependencies:**
-- bllvm-sdk (exact version)
+- blvm-sdk (exact version)
 
 ---
 
@@ -232,7 +232,7 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 
 ## Runtime Modules
 
-Runtime modules are process-isolated components that extend bllvm-node functionality. They communicate via IPC (Unix domain sockets) and run in separate processes for security and stability.
+Runtime modules are process-isolated components that extend blvm-node functionality. They communicate via IPC (Unix domain sockets) and run in separate processes for security and stability.
 
 ### Module System Architecture
 
@@ -242,20 +242,20 @@ Modules are process-isolated components that communicate with the node via IPC (
 ```rust
 // Load a module programmatically
 let metadata = ModuleMetadata {
-    name: "bllvm-lightning".to_string(),
+    name: "blvm-lightning".to_string(),
     version: "0.1.0".to_string(),
     description: "Lightning Network payment processor".to_string(),
     author: "Bitcoin Commons".to_string(),
     capabilities: vec!["read_blockchain".to_string(), "subscribe_events".to_string()],
     dependencies: HashMap::new(),
     optional_dependencies: HashMap::new(),
-    entry_point: "bllvm-lightning".to_string(),
+    entry_point: "blvm-lightning".to_string(),
 };
 
 node.module_manager_mut()
     .unwrap()
     .load_module(
-        "bllvm-lightning",
+        "blvm-lightning",
         &binary_path,
         metadata,
         config
@@ -263,7 +263,7 @@ node.module_manager_mut()
     .await?;
 ```
 
-**Code**: ```159:211:bllvm-node/src/module/manager.rs```
+**Code**: ```159:211:blvm-node/src/module/manager.rs```
 
 **Module Communication Interface:**
 Modules communicate with the node through the `NodeAPI` trait, which provides access to blockchain data, events, and node state:
@@ -294,16 +294,16 @@ while let Some(event) = event_rx.recv().await {
 }
 ```
 
-**Code**: ```176:429:bllvm-node/src/module/traits.rs```
+**Code**: ```176:429:blvm-node/src/module/traits.rs```
 
 **Module Manifest Example:**
 ```toml
 # module.toml
-name = "bllvm-lightning"
+name = "blvm-lightning"
 version = "0.1.0"
 description = "Lightning Network payment processor"
 author = "Bitcoin Commons Team"
-entry_point = "bllvm-lightning"
+entry_point = "blvm-lightning"
 
 capabilities = [
     "read_blockchain",
@@ -312,18 +312,18 @@ capabilities = [
 
 [dependencies]
 # Hard dependencies - module cannot load without these
-"bllvm-mesh" = ">=0.1.0"
+"blvm-mesh" = ">=0.1.0"
 
 [optional_dependencies]
 # Soft dependencies - module can work without these
-"bllvm-governance" = ">=0.1.0"
+"blvm-governance" = ">=0.1.0"
 ```
 
 Modules are discovered automatically from the `modules/` directory or can be installed via the P2P module registry.
 
 ### Available Runtime Modules
 
-#### 8. bllvm-lightning (Lightning Network Module)
+#### 8. blvm-lightning (Lightning Network Module)
 
 **Status**: ✅ **IPC Integration Complete** - Core Lightning logic pending
 
@@ -347,7 +347,7 @@ Modules are discovered automatically from the `modules/` directory or can be ins
 let mut client = ModuleClient::connect(
     socket_path,
     module_id,
-    "bllvm-lightning".to_string(),
+    "blvm-lightning".to_string(),
     version,
 ).await?;
 
@@ -377,7 +377,7 @@ tokio::spawn(async move {
 });
 ```
 
-**Code**: ```44:80:bllvm-lightning/src/main.rs```
+**Code**: ```44:80:blvm-lightning/src/main.rs```
 
 **Integration with Node:**
 The Lightning module integrates with the node's payment processing system and can query blockchain state:
@@ -394,7 +394,7 @@ let height = client.get_block_height().await?;
 
 ---
 
-#### 9. bllvm-mesh (Commons Mesh Module)
+#### 9. blvm-mesh (Commons Mesh Module)
 
 **Status**: ✅ **Fully Implemented** - Complete mesh networking module
 
@@ -441,7 +441,7 @@ manager.send_packet(
 ).await?;
 ```
 
-**Code**: ```47:80:bllvm-mesh/src/main.rs```
+**Code**: ```47:80:blvm-mesh/src/main.rs```
 
 **Payment Verification:**
 The mesh module verifies payments using Lightning invoices or CTV (CheckTemplateVerify) commitments:
@@ -467,7 +467,7 @@ let verified = verifier.verify_ctv_commitment(
 
 ---
 
-#### 10. bllvm-governance (Governance Module)
+#### 10. blvm-governance (Governance Module)
 
 **Status**: ✅ **IPC Integration Complete** - Core governance logic pending
 
@@ -481,7 +481,7 @@ let verified = verifier.verify_ctv_commitment(
 **Key Features:**
 - ✅ IPC connection and event subscription
 - ✅ Governance event handling (ProposalCreated, ProposalVoted, etc.)
-- ⏳ Webhook delivery to governance-app - pending
+- ⏳ Webhook delivery to blvm-commons - pending
 - ⏳ Economic node tracking - pending
 - ⏳ Veto threshold monitoring - pending
 
@@ -495,18 +495,18 @@ let mut event_rx = client.subscribe_events(vec![
     EventType::ChainTipUpdated, // For tracking block height
 ]).await?;
 
-// Process governance events and forward to governance-app
+// Process governance events and forward to blvm-commons
 while let Some(event) = event_rx.recv().await {
     match event.payload {
         EventPayload::GovernanceProposalCreated { proposal_id, tier } => {
-            // Send webhook to governance-app
+            // Send webhook to blvm-commons
             webhook_client.send_proposal_created(proposal_id, tier).await?;
         }
         EventPayload::EconomicNodeVeto { node_id, proposal_id } => {
             // Track veto and check threshold
             economic_nodes.record_veto(node_id, proposal_id).await?;
             if economic_nodes.check_veto_threshold(proposal_id).await? {
-                // Veto threshold reached - notify governance-app
+                // Veto threshold reached - notify blvm-commons
                 webhook_client.send_veto_threshold_reached(proposal_id).await?;
             }
         }
@@ -515,7 +515,7 @@ while let Some(event) = event_rx.recv().await {
 }
 ```
 
-**Code**: ```40:80:bllvm-governance/src/main.rs```
+**Code**: ```40:80:blvm-governance/src/main.rs```
 
 **Economic Node Tracking:**
 The governance module tracks economic nodes and their veto signals:
@@ -538,7 +538,7 @@ if veto_count >= threshold {
 
 ---
 
-#### 11. bllvm-stratum-v2 (Stratum V2 Module)
+#### 11. blvm-stratum-v2 (Stratum V2 Module)
 
 **Status**: ✅ **IPC Integration Complete** - Core Stratum V2 logic pending
 
@@ -556,7 +556,7 @@ if veto_count >= threshold {
 - ⏳ Mining pool management - pending
 - ⏳ Merge mining coordination - pending
 
-**Note**: bllvm-node has Stratum V2 code in `src/network/stratum_v2/` - this module provides a process-isolated wrapper.
+**Note**: blvm-node has Stratum V2 code in `src/network/stratum_v2/` - this module provides a process-isolated wrapper.
 
 **Example Usage:**
 ```rust
@@ -595,7 +595,7 @@ let server = StratumV2Server::new(
 server.start().await?;
 ```
 
-**Code**: ```44:80:bllvm-stratum-v2/src/main.rs```
+**Code**: ```44:80:blvm-stratum-v2/src/main.rs```
 
 **Merge Mining Support:**
 The Stratum V2 module supports merge mining for auxiliary chains:
@@ -620,7 +620,7 @@ Modules can be installed in several ways:
 **1. Local Installation:**
 ```bash
 # Copy module binary to modules directory
-cp target/release/bllvm-lightning modules/bllvm-lightning/target/release/
+cp target/release/blvm-lightning modules/blvm-lightning/target/release/
 # Create module.toml manifest
 # Node will auto-discover on startup
 ```
@@ -629,7 +629,7 @@ cp target/release/bllvm-lightning modules/bllvm-lightning/target/release/
 ```rust
 // Modules can be discovered and installed via P2P network
 let registry = node.module_registry().unwrap();
-let module = registry.fetch_module("bllvm-lightning", "0.1.0").await?;
+let module = registry.fetch_module("blvm-lightning", "0.1.0").await?;
 // Module is automatically verified and installed
 ```
 
@@ -638,7 +638,7 @@ let module = registry.fetch_module("bllvm-lightning", "0.1.0").await?;
 // Load module at runtime via RPC or API
 node.module_manager_mut()
     .unwrap()
-    .load_module("bllvm-lightning", &path, metadata, config)
+    .load_module("blvm-lightning", &path, metadata, config)
     .await?;
 ```
 
@@ -682,7 +682,7 @@ client.storage_insert(tree_id, key, value).await?;
 // Storage is isolated per module - cannot access other modules' data
 ```
 
-**Code**: ```1:45:bllvm-node/src/module/mod.rs```
+**Code**: ```1:45:blvm-node/src/module/mod.rs```
 
 **Security Features:**
 - ✅ Process isolation (separate memory space)
@@ -701,30 +701,28 @@ client.storage_insert(tree_id, key, value).await?;
 
 | Component | Source Files | Test Files | Total Files |
 |-----------|--------------|------------|-------------|
-| bllvm-consensus | 45 | 100+ | 145+ |
-| bllvm-protocol | 12 | 8 | 20 |
-| bllvm-node | 117+ | 61 | 178+ |
-| bllvm-sdk | 31 | 13 | 44 |
-| governance-app | 80 | 17 | 97 |
-| bllvm-lightning | 6 | - | 6 |
-| bllvm-mesh | 13 | - | 13 |
-| bllvm-governance | 6 | - | 6 |
-| bllvm-stratum-v2 | 11 | 3 | 14 |
+| blvm-consensus | 45 | 100+ | 145+ |
+| blvm-protocol | 12 | 8 | 20 |
+| blvm-node | 117+ | 61 | 178+ |
+| blvm-sdk | 31 | 13 | 44 |
+| blvm-commons | 80 | 17 | 97 |
+| blvm-lightning | 6 | - | 6 |
+| blvm-mesh | 13 | - | 13 |
+| blvm-governance | 6 | - | 6 |
+| blvm-stratum-v2 | 11 | 3 | 14 |
 | **Total** | **321+** | **202+** | **523+** |
 
-### Formal Verification
+### Formal and empirical verification
 
-**Kani Proofs** (Verified):
-- **Actual Count**: 176 `kani::proof` calls in bllvm-consensus source code
-- **Documentation Claims**: Vary (13, 51, 60, 99% coverage)
-- **Status**: Active formal verification with Kani model checking
+- **blvm-spec-lock**: Links Orange Paper section IDs to `#[spec_locked("…")]` implementations; `cargo spec-lock verify` in CI; optional Z3-backed contract checks when enabled.
+- **Tests**: Unit, integration (including historical replay / differential checks where applicable), property tests, fuzzing—see blvm-consensus CI and README.
 
-**Note**: Documentation contains conflicting claims about formal verification coverage. Verified actual implementation shows 176 proof calls, significantly more than most documentation claims.
+**Note**: Treat **spec-lock + tests** as the primary documented assurance path for consensus. Ignore stale references elsewhere to legacy model-checking storylines unless a given crate explicitly documents them.
 
 ### Test Coverage
 
-- **bllvm-consensus**: 95%+ target (consensus-critical)
-- **bllvm-sdk**: 77.30% verified
+- **blvm-consensus**: 95%+ target (consensus-critical)
+- **blvm-sdk**: 77.30% verified
 - **Other components**: Comprehensive test coverage
 
 ---
@@ -734,15 +732,15 @@ client.storage_insert(tree_id, key, value).await?;
 ### Dependency Graph (Verified)
 
 ```
-bllvm-consensus (no dependencies)
+blvm-consensus (no dependencies)
     ↓
-bllvm-protocol (depends on bllvm-consensus)
+blvm-protocol (depends on blvm-consensus)
     ↓
-bllvm-node (depends on bllvm-protocol + bllvm-consensus)
+blvm-node (depends on blvm-protocol + blvm-consensus)
 
-bllvm-sdk (no dependencies)
+blvm-sdk (no dependencies)
     ↓
-governance-app (depends on bllvm-sdk)
+blvm-commons (depends on blvm-sdk)
 ```
 
 ### Version Coordination
@@ -760,7 +758,7 @@ governance-app (depends on bllvm-sdk)
 **Status**: ✅ Infrastructure complete, not activated
 
 **What's Implemented:**
-- ✅ All governance components (governance-app, governance config)
+- ✅ All governance components (blvm-commons, governance config)
 - ✅ Database schema and migrations
 - ✅ Economic node system
 - ✅ GitHub integration
@@ -797,18 +795,18 @@ governance-app (depends on bllvm-sdk)
 
 ### Incomplete Features
 
-1. **UTXO Commitments** (bllvm-consensus)
+1. **UTXO Commitments** (blvm-consensus)
    - Core implementation: ✅ Complete
    - Network integration: ⏳ In progress (async response routing remaining)
    - Status: 90% complete
 
-2. **Runtime Modules** (bllvm-lightning, bllvm-governance, bllvm-stratum-v2)
+2. **Runtime Modules** (blvm-lightning, blvm-governance, blvm-stratum-v2)
    - IPC Integration: ✅ Complete for all modules
    - Core Logic: ⏳ Pending for lightning, governance, stratum-v2
-   - bllvm-mesh: ✅ Fully implemented
+   - blvm-mesh: ✅ Fully implemented
    - Status: Infrastructure ready, core implementations in progress
 
-3. **Module System** (bllvm-node)
+3. **Module System** (blvm-node)
    - Core: ✅ Complete
    - Module registry P2P discovery: ✅ Complete
    - Some TODOs remain in lifecycle management
@@ -820,7 +818,7 @@ governance-app (depends on bllvm-sdk)
 
 ### Documentation Gaps
 
-- **Formal Verification**: Conflicting documentation (13 vs 51 vs 60 vs 176 proofs)
+- **Verification narrative**: Consolidate on **blvm-spec-lock** + tests; remove stale references to obsolete proof counts
 - **Status Documents**: Multiple conflicting status documents need consolidation
 - **Test Coverage**: Some components lack published coverage reports
 
@@ -869,7 +867,7 @@ This status document was created by:
    - Counted actual Rust files per component
    - Verified module exports in `lib.rs` files
    - Counted test files
-   - Counted Kani proofs by searching source code
+   - Cross-checked **blvm-spec-lock** / `#[spec_locked]` usage and CI (`cargo spec-lock verify`)
 
 2. **Documentation Audit**: Reviewed all status/progress documents
    - Found 22+ status documents
@@ -878,7 +876,7 @@ This status document was created by:
    - Identified conflicts and discrepancies
 
 3. **Cross-Reference**: Compared documentation claims with actual code
-   - Resolved formal verification count conflicts
+   - Aligned verification story with spec-lock + tests (not legacy proof-count claims)
    - Verified component implementation status
    - Identified gaps between claims and reality
 
