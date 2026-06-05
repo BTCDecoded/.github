@@ -25,7 +25,7 @@ jobs:
             cache-key: nightly
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Install Rust
       uses: BTCDecoded/rust-ci/install-rust-toolchain@main
@@ -33,19 +33,19 @@ jobs:
         toolchain: ${{ matrix.rust }}
 
     - name: Cache cargo registry
-      uses: actions/cache@v3
+      uses: actions/cache@v5
       with:
         path: ~/.cargo/registry
         key: ${{ runner.os }}-cargo-registry-${{ matrix.cache-key }}
 
     - name: Cache cargo index
-      uses: actions/cache@v3
+      uses: actions/cache@v5
       with:
         path: ~/.cargo/git
         key: ${{ runner.os }}-cargo-index-${{ matrix.cache-key }}
 
     - name: Cache cargo build
-      uses: actions/cache@v3
+      uses: actions/cache@v5
       with:
         path: target
         key: ${{ runner.os }}-cargo-build-target-${{ matrix.cache-key }}-${{ hashFiles('**/Cargo.toml') }}
@@ -73,7 +73,7 @@ jobs:
     name: Clippy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Install Rust
       uses: BTCDecoded/rust-ci/install-rust-toolchain@main
@@ -82,19 +82,19 @@ jobs:
         components: rustfmt clippy
 
     - name: Cache cargo registry
-      uses: actions/cache@v3
+      uses: actions/cache@v5
       with:
         path: ~/.cargo/registry
         key: ${{ runner.os }}-cargo-registry-stable
 
     - name: Cache cargo index
-      uses: actions/cache@v3
+      uses: actions/cache@v5
       with:
         path: ~/.cargo/git
         key: ${{ runner.os }}-cargo-index-stable
 
     - name: Cache cargo build
-      uses: actions/cache@v3
+      uses: actions/cache@v5
       with:
         path: target
         key: ${{ runner.os }}-cargo-build-target-stable-${{ hashFiles('**/Cargo.toml') }}
@@ -109,7 +109,7 @@ jobs:
     name: Security Audit
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Install Rust
       uses: BTCDecoded/rust-ci/install-rust-toolchain@main
@@ -126,7 +126,7 @@ jobs:
     name: Documentation
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Install Rust
       uses: BTCDecoded/rust-ci/install-rust-toolchain@main
@@ -134,19 +134,19 @@ jobs:
         toolchain: stable
 
     - name: Cache cargo registry
-      uses: actions/cache@v3
+      uses: actions/cache@v5
       with:
         path: ~/.cargo/registry
         key: ${{ runner.os }}-cargo-registry-stable
 
     - name: Cache cargo index
-      uses: actions/cache@v3
+      uses: actions/cache@v5
       with:
         path: ~/.cargo/git
         key: ${{ runner.os }}-cargo-index-stable
 
     - name: Cache cargo build
-      uses: actions/cache@v3
+      uses: actions/cache@v5
       with:
         path: target
         key: ${{ runner.os }}-cargo-build-target-stable-${{ hashFiles('**/Cargo.toml') }}

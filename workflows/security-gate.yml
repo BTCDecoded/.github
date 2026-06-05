@@ -12,7 +12,7 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0  # Full history for diff analysis
           
@@ -26,7 +26,7 @@ jobs:
           components: rustfmt, clippy
 
       - name: Cache cargo dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: |
             ~/.cargo/registry
@@ -147,7 +147,7 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         
 
       - name: Strip [patch.crates-io] for crates.io-only CI
@@ -168,7 +168,7 @@ jobs:
           cargo run --bin security-gate -- generate-report > security-report.md
           
       - name: Upload Security Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v5
         with:
           name: security-report
           path: blvm-commons/security-report.md

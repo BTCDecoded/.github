@@ -19,7 +19,7 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         
 
       - name: Strip [patch.crates-io] for crates.io-only CI
@@ -31,7 +31,7 @@ jobs:
           components: rustfmt, clippy
           
       - name: Cache cargo dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: |
             ~/.cargo/registry
@@ -98,7 +98,7 @@ jobs:
           fi
           
       - name: Upload Verification Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: verification-proof-${{ github.run_id }}
           path: |

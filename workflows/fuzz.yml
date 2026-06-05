@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
 
       - name: Strip [patch.crates-io] for crates.io-only CI
@@ -94,7 +94,7 @@ jobs:
 
       - name: Upload crash artifacts
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: fuzz-crashes-${{ matrix.target }}
           path: blvm-consensus/fuzz/crashes/
@@ -102,7 +102,7 @@ jobs:
 
       - name: Upload corpus
         if: github.event_name == 'schedule'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: fuzz-corpus-${{ matrix.target }}
           path: blvm-consensus/fuzz/corpus/
