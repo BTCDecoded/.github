@@ -166,7 +166,7 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 
 ### 5. blvm-commons (GitHub App)
 
-**Status**: ✅ **Implemented** - Governance enforcement engine complete
+**Status**: The app is implemented. It posts a `governance/merge` status. A branch-protection update leaves admin enforcement off, and a failed update still returns success. That is not a completed enforcement engine.
 
 **Implementation Details:**
 - **Source Files**: 80 Rust files
