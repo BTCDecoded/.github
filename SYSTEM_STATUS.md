@@ -182,7 +182,7 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 - A node registry module exists. Vote aggregation sets `veto_blocks` to false, and the merge path is maintainer-only.
 - ✅ Governance fork capability
 - ✅ Audit logging (tamper-evident hash chains)
-- ✅ Nostr integration (real-time transparency)
+- Nostr status publishes on a timer. The default interval is 3600 seconds. That is not a live feed of every governance action.
 - `stamp()` writes a `MOCK_OTS_PROOF` and does not post the hash to a calendar. A non-mock proof verifies as pending.
 - ✅ Server authorization system
 
