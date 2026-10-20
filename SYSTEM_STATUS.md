@@ -183,7 +183,7 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 - ✅ Governance fork capability
 - ✅ Audit logging (tamper-evident hash chains)
 - ✅ Nostr integration (real-time transparency)
-- ✅ OpenTimestamps anchoring (Bitcoin blockchain proof)
+- `stamp()` writes a `MOCK_OTS_PROOF` and does not post the hash to a calendar. A non-mock proof verifies as pending.
 - ✅ Server authorization system
 
 **Database:**
@@ -767,7 +767,7 @@ blvm-commons (depends on blvm-sdk)
 - The app can post a failing `governance/merge` status. That status does not stop a merge.
 - ✅ Audit logging
 - ✅ Nostr integration
-- ✅ OpenTimestamps anchoring
+- `stamp()` writes a mock proof. It is not a Bitcoin confirmation.
 
 **What's NOT Active:**
 - ⚠️ Governance rules are not enforced
