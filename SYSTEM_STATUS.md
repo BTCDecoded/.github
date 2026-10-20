@@ -178,8 +178,8 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 - ✅ GitHub webhook integration
 - ✅ Signature verification (uses blvm-sdk)
 - ✅ Status check posting
-- ✅ Merge blocking logic
-- ✅ Economic node registry and veto system
+- The app can post a failing `governance/merge` status. That status does not stop a merge.
+- A node registry module exists. Vote aggregation sets `veto_blocks` to false, and the merge path is maintainer-only.
 - ✅ Governance fork capability
 - ✅ Audit logging (tamper-evident hash chains)
 - ✅ Nostr integration (real-time transparency)
@@ -764,7 +764,7 @@ blvm-commons (depends on blvm-sdk)
 - ✅ GitHub integration
 - ✅ Signature verification
 - ✅ Status checks
-- ✅ Merge blocking logic
+- The app can post a failing `governance/merge` status. That status does not stop a merge.
 - ✅ Audit logging
 - ✅ Nostr integration
 - ✅ OpenTimestamps anchoring
