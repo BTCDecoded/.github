@@ -714,7 +714,7 @@ client.storage_insert(tree_id, key, value).await?;
 
 ### Formal and empirical verification
 
-- **blvm-spec-lock**: Links Orange Paper section IDs to `#[spec_locked("…")]` implementations; `cargo spec-lock verify` in CI; optional Z3-backed contract checks when enabled.
+- **blvm-spec-lock**: Links Orange Paper section IDs to `#[spec_locked("…")]` implementations. Z3 checks the Rust in `cargo spec-lock verify`. Lean checks the spec model in the `lean-evidence` workflow and does not check the Rust.
 - **Tests**: Unit, integration (including historical replay / differential checks where applicable), property tests, fuzzing—see blvm-consensus CI and README.
 
 **Note**: Treat **spec-lock + tests** as the primary documented assurance path for consensus. Ignore stale references elsewhere to legacy model-checking storylines unless a given crate explicitly documents them.
