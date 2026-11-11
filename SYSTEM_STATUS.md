@@ -3,7 +3,7 @@
 **Last Verified**: 2026-05-10  
 **Status**: Phase 1 (Infrastructure Building) - Not Yet Activated
 
-The phase timeline below was revised on 2026-11-11. That revision did not re-verify the component inventory in the rest of this file.
+The phase timeline below was revised on 2026-11-11. The blvm-commons status line was checked the same day. That check did not re-verify the component inventory in the rest of this file. The Last Verified date above stays 2026-05-10.
 
 ## Executive Summary
 
@@ -29,7 +29,7 @@ The system is organized into 6 tiers:
 2. **blvm-protocol** - Protocol abstraction layer
 3. **blvm-node** - Full node implementation with module system
 4. **blvm-sdk** - Developer SDK and governance primitives
-5. **blvm-commons** - Cryptographic governance enforcement (GitHub App)
+5. **blvm-commons** - Governance App client. Enforcement is off. The app is one host for a Designed quorum, and that quorum is not Running.
 6. **governance** - Governance configuration
 
 ### Runtime Modules
