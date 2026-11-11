@@ -3,6 +3,8 @@
 **Last Verified**: 2026-05-10  
 **Status**: Phase 1 (Infrastructure Building) - Not Yet Activated
 
+The phase timeline below was revised on 2026-11-11. That revision did not re-verify the component inventory in the rest of this file.
+
 ## Executive Summary
 
 Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptographic governance. The system is in **Phase 1 (Infrastructure Building)** - all core components are implemented, but governance rules are **not yet enforced** and the system uses **test keys only**.
@@ -14,9 +16,7 @@ Bitcoin Commons is a comprehensive Bitcoin implementation ecosystem with cryptog
 - 🔧 **Test Keys Only**: No real cryptographic enforcement
 - 📋 **Development Phase**: System is in rapid AI-assisted development
 
-**Timeline:**
-- **Phase 2 Activation**: 3-6 months (governance enforcement begins)
-- **Phase 3 Full Operation**: 12+ months (mature, stable system)
+**Timeline:** Activation begins as BLVM moves from alpha to beta, on no fixed timeline. Phase 1 is current. Infrastructure is built, and governance rules are not enforced. Phase 2 begins with community validation and adoption, not on a calendar date. Phase 3 is later operation after that, with no fixed date.
 
 ---
 
@@ -855,7 +855,7 @@ blvm-commons (depends on blvm-sdk)
 - Battle testing
 - Community validation
 
-**Timeline**: 3-6 months
+**Timeline**: Activation begins as BLVM moves from alpha to beta, on no fixed timeline, and only with community validation and adoption.
 
 ---
 
