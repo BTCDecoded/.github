@@ -166,7 +166,7 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 
 ### 5. blvm-commons (GitHub App)
 
-**Status**: ✅ **Implemented** - Governance enforcement engine complete
+**Status**: The app is implemented. It posts a `governance/merge` status. A branch-protection update leaves admin enforcement off, and a failed update still returns success. That is not a completed enforcement engine.
 
 **Implementation Details:**
 - **Source Files**: 80 Rust files
@@ -178,12 +178,12 @@ See the [Runtime Modules](#runtime-modules) section for detailed information.
 - ✅ GitHub webhook integration
 - ✅ Signature verification (uses blvm-sdk)
 - ✅ Status check posting
-- ✅ Merge blocking logic
-- ✅ Economic node registry and veto system
+- The app can post a failing `governance/merge` status. That status does not stop a merge.
+- A node registry module exists. Vote aggregation sets `veto_blocks` to false, and the merge path is maintainer-only.
 - ✅ Governance fork capability
 - ✅ Audit logging (tamper-evident hash chains)
-- ✅ Nostr integration (real-time transparency)
-- ✅ OpenTimestamps anchoring (Bitcoin blockchain proof)
+- Nostr status publishes on a timer. The default interval is 3600 seconds. That is not a live feed of every governance action.
+- `stamp()` writes a `MOCK_OTS_PROOF` and does not post the hash to a calendar. A non-mock proof verifies as pending.
 - ✅ Server authorization system
 
 **Database:**
@@ -714,7 +714,7 @@ client.storage_insert(tree_id, key, value).await?;
 
 ### Formal and empirical verification
 
-- **blvm-spec-lock**: Links Orange Paper section IDs to `#[spec_locked("…")]` implementations; `cargo spec-lock verify` in CI; optional Z3-backed contract checks when enabled.
+- **blvm-spec-lock**: Links Orange Paper section IDs to `#[spec_locked("…")]` implementations. Z3 checks the Rust in `cargo spec-lock verify`. Lean checks the spec model in the `lean-evidence` workflow and does not check the Rust.
 - **Tests**: Unit, integration (including historical replay / differential checks where applicable), property tests, fuzzing—see blvm-consensus CI and README.
 
 **Note**: Treat **spec-lock + tests** as the primary documented assurance path for consensus. Ignore stale references elsewhere to legacy model-checking storylines unless a given crate explicitly documents them.
@@ -764,10 +764,10 @@ blvm-commons (depends on blvm-sdk)
 - ✅ GitHub integration
 - ✅ Signature verification
 - ✅ Status checks
-- ✅ Merge blocking logic
+- The app can post a failing `governance/merge` status. That status does not stop a merge.
 - ✅ Audit logging
 - ✅ Nostr integration
-- ✅ OpenTimestamps anchoring
+- `stamp()` writes a mock proof. It is not a Bitcoin confirmation.
 
 **What's NOT Active:**
 - ⚠️ Governance rules are not enforced
