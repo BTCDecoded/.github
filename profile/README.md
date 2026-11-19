@@ -1,81 +1,50 @@
-# Bitcoin Commons
+# BTCDecoded
 
-> ## 🚨 **WARNING: UNRELEASED SOFTWARE**
-> 
-> **This governance system is currently UNRELEASED and UNTESTED in production.**
-> 
-> - ⚠️ **Not Yet Activated**: Governance rules are not enforced
-> - 🔧 **Test Keys Only**: No real cryptographic enforcement  
-> - 📋 **Development Phase**: System is in rapid AI-assisted development
-> - ⚡ **Use at Your Own Risk**: This is experimental software
-> 
-> **Do not deploy in production until Phase 2 activation.** See [System Status](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md) for details.
+Don't take our word for it.
 
-**Coordination Without Authority: An Architectural Solution**
+Cited Bitcoin reference and intelligence. Site: [btcdecoded.org](https://btcdecoded.org)
 
-Bitcoin Commons applies intended cryptographic enforcement to Bitcoin development governance. Built on the **BLVM** stack (specs, consensus, protocol, node) with **BLVM Specification Lock**, tests, and related tooling—verify scope in **[System Status](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)** and per-repo READMEs.
+This organization also hosts two related, separate products:
 
-**🌐 [thebitcoincommons.org](https://thebitcoincommons.org)** | **📚 [Documentation](https://docs.thebitcoincommons.org)** | **📜 [Compact](https://github.com/BTCDecoded/governance/blob/main/COMPACT.md)** | **📊 [System Status](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)**
+- **Bitcoin Commons** is the open consensus specification and coordination for independent implementation. Bitcoin belongs to no one. Site: [thebitcoincommons.org](https://thebitcoincommons.org)
+- **BLVM** is one implementation of those written rules, not the rules themselves. Docs: [docs.btcdecoded.org/blvm](https://docs.btcdecoded.org/blvm/)
 
-## What we're building
+The governance system hosted here is unreleased and untested in production. Governance rules are not enforced. The keys are test keys. Do not deploy it in production. See [System Status](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md) for what is verified today.
 
-**BLVM** - Specifications and implementations for alternative Bitcoin-compatible nodes: Orange Paper, **[blvm-consensus](https://github.com/BTCDecoded/blvm-consensus)**, **[blvm-spec-lock](https://github.com/BTCDecoded/blvm-spec-lock)**, and the rest of the tiered stack (see Architecture below).
+## Bitcoin Commons
 
-**Bitcoin Commons** - Forkable governance framework applying Elinor Ostrom's commons management principles. Normative principles: **[Bitcoin Commons Compact](https://github.com/BTCDecoded/governance/blob/main/COMPACT.md)** (technical rules live in the [governance](https://github.com/BTCDecoded/governance) repo).
+Primary action: review a specified rule or test and submit informed technical feedback.
 
-Together, they target Bitcoin’s governance asymmetry through **transparent rules**, **forkable process**, and **cryptographic checks** where implemented—see the **[Compact](https://github.com/BTCDecoded/governance/blob/main/COMPACT.md)** and **[System Status](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)** for what is verified and active today.
+- [`commons-website`](https://github.com/BTCDecoded/commons-website) - Source for [thebitcoincommons.org](https://thebitcoincommons.org)
+- [`governance`](https://github.com/BTCDecoded/governance) - Governance configuration and the [Bitcoin Commons Compact](https://github.com/BTCDecoded/governance/blob/main/COMPACT.md)
+- [`docs-commons-redirect`](https://github.com/BTCDecoded/docs-commons-redirect) - Redirects `docs.thebitcoincommons.org` to [docs.btcdecoded.org/blvm](https://docs.btcdecoded.org/blvm/)
 
-## Architecture
+## BLVM
 
-![BLVM Stack Architecture](https://thebitcoincommons.org/assets/images/stack.png)
+BLVM is a Bitcoin-compatible node stack. It is an implementation, not the written rule.
 
-**6-Tier Architecture:**
-1. **Orange Paper** (blvm-spec) - Mathematical foundation
-2. **Consensus** ([blvm-consensus](https://github.com/BTCDecoded/blvm-consensus)) - Consensus implementation (BLVM Specification Lock, tests, and related assurance—see repo and **[System Status](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)**)
-3. **Protocol** (blvm-protocol) - Core protocol abstraction
-4. **Node** (blvm-node) - Full Bitcoin node
-5. **SDK** (blvm-sdk) - Tools and primitives
-6. **Governance** (governance) - Forkable governance framework
-
-## Current Status
-
-**Phase 1: Infrastructure Complete** ✅
-
-All core components implemented. Governance not yet activated. Production deployment pending Phase 2 activation.
-
-## Repositories
-
-### Core Infrastructure
-- [`blvm-spec`](https://github.com/BTCDecoded/blvm-spec) - Orange Paper (mathematical foundation)
+- [`blvm-spec`](https://github.com/BTCDecoded/blvm-spec) - Orange Paper (specification text used by the implementation)
 - [`blvm-spec-lock`](https://github.com/BTCDecoded/blvm-spec-lock) - Formal verification tooling
-- [`blvm-consensus`](https://github.com/BTCDecoded/blvm-consensus) - Consensus layer ([blvm-spec-lock](https://github.com/BTCDecoded/blvm-spec-lock), tests, and related assurance—scope per repo and **System Status**)
-- [`blvm-protocol`](https://github.com/BTCDecoded/blvm-protocol) - Protocol abstraction layer
-- [`blvm-node`](https://github.com/BTCDecoded/blvm-node) - Full Bitcoin node implementation
+- [`blvm-consensus`](https://github.com/BTCDecoded/blvm-consensus) - Consensus implementation
+- [`blvm-protocol`](https://github.com/BTCDecoded/blvm-protocol) - Protocol abstraction
+- [`blvm-node`](https://github.com/BTCDecoded/blvm-node) - Node library
+- [`blvm`](https://github.com/BTCDecoded/blvm) - Main `blvm` binary
 - [`blvm-sdk`](https://github.com/BTCDecoded/blvm-sdk) - Developer toolkit
-- [`blvm-commons`](https://github.com/BTCDecoded/blvm-commons) - Cryptographic governance enforcement
-- [`governance`](https://github.com/BTCDecoded/governance) - Governance configuration and fork registry
-- [`blvm`](https://github.com/BTCDecoded/blvm) - Binary wrapper
+- [`blvm-docs`](https://github.com/BTCDecoded/blvm-docs) - Unified documentation, published at [docs.btcdecoded.org/blvm](https://docs.btcdecoded.org/blvm/)
 
-### Official Modules
-- [`blvm-governance`](https://github.com/BTCDecoded/blvm-governance) - Governance module ([docs](https://docs.thebitcoincommons.org/modules/governance.html))
-- [`blvm-lightning`](https://github.com/BTCDecoded/blvm-lightning) - Lightning Network integration ([docs](https://docs.thebitcoincommons.org/modules/lightning.html))
-- [`blvm-mesh`](https://github.com/BTCDecoded/blvm-mesh) - Mesh networking module ([docs](https://docs.thebitcoincommons.org/modules/mesh.html))
-- [`blvm-stratum-v2`](https://github.com/BTCDecoded/blvm-stratum-v2) - Stratum V2 mining protocol ([docs](https://docs.thebitcoincommons.org/modules/stratum-v2.html))
+Other `blvm-*` modules live in this same organization. Check each repository README and [System Status](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md) for what has shipped.
 
-## Getting Started
+## BTCDecoded
 
-1. **Learn**: Visit [thebitcoincommons.org](https://thebitcoincommons.org) to understand the governance model and principles
-2. **Read**: [Documentation](https://docs.thebitcoincommons.org) for technical details
-3. **Install**: Pre-built **`blvm`** binaries and packages — **[GitHub Releases (blvm)](https://github.com/BTCDecoded/blvm/releases)**; install walkthrough: [btcdecoded.org/install](https://btcdecoded.org/install)
-4. **Explore**: Browse repository READMEs for component-specific information
-5. **Status**: Check [SYSTEM_STATUS.md](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md) for verified implementation status
+- [`website`](https://github.com/BTCDecoded/website) - Source for [btcdecoded.org](https://btcdecoded.org)
 
-## Support
+## Getting started
 
-- **Issues**: GitHub issues for bugs and feature requests
-- **Discussions**: GitHub discussions for questions
-- **Security**: Report security issues privately to maintainers
+1. Bitcoin Commons: [thebitcoincommons.org](https://thebitcoincommons.org)
+2. BLVM docs and installs: [docs.btcdecoded.org/blvm](https://docs.btcdecoded.org/blvm/) and [btcdecoded.org/install](https://btcdecoded.org/install)
+3. Pre-built `blvm` binaries: [GitHub Releases (blvm)](https://github.com/BTCDecoded/blvm/releases)
+4. Status: [SYSTEM_STATUS.md](https://github.com/BTCDecoded/.github/blob/main/SYSTEM_STATUS.md)
 
 ## License
 
-MIT License - see individual repository LICENSE files for details.
+MIT License. See individual repository LICENSE files for details.
