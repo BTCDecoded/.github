@@ -45,6 +45,6 @@ This repository serves as the central location for:
 ## See Also
 
 - **[Organization Profile](./profile/README.md)** - The GitHub organization front page
-- **[📚 Unified Documentation](https://docs.thebitcoincommons.org)** - Complete technical documentation (installation, architecture, API reference, troubleshooting)
+- **[📚 Unified Documentation](https://docs.btcdecoded.org/blvm/)** - Complete technical documentation (installation, architecture, API reference, troubleshooting)
 - **[Bitcoin Commons Website](https://thebitcoincommons.org)** - Learn about the governance framework
 - **[System Status](./SYSTEM_STATUS.md)** - Verified implementation status
