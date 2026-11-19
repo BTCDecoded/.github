@@ -29,10 +29,10 @@ The implementation and governance pieces are organized as follows:
 2. **blvm-protocol** - Protocol abstraction layer
 3. **blvm-node** - Full node implementation with module system
 4. **blvm-sdk** - Developer SDK and governance primitives
-5. **blvm-commons** - Governance app client. Enforcement is off. The app is one host for a Designed quorum, and that quorum is not Running.
+5. **blvm-commons** - GitHub App. Enforcement is off. The app is one host for a Designed quorum, and that quorum is not Running.
 6. **governance** - Governance configuration
 
-### Runtime Modules
+### Runtime Modules overview
 
 Runtime modules extend blvm-node functionality via process-isolated components:
 
@@ -187,7 +187,7 @@ File counts below are `.rs` files under each repository's primary `src/` and `te
 - Signature verification (uses blvm-sdk)
 - Status check posting
 - The app can post a failing `governance/merge` status. That status does not stop a merge.
-- A node registry module exists. Vote aggregation sets `veto_blocks` to false, and the merge path is maintainer-only.
+- A node registry module exists. Vote aggregation sets `veto_blocks` to false, and the merge path is maintainer-only. Zap veto votes are reported only and do not block.
 - Governance fork module
 - Audit logging (tamper-evident hash chains)
 - Nostr status publishes on a timer. The default interval is 3600 seconds. That is not a live feed of every governance action.
@@ -202,6 +202,8 @@ File counts below are `.rs` files under each repository's primary `src/` and `te
 **Dependencies:**
 
 - blvm-sdk (`>=0.1, <1`, not an exact-version pin)
+- blvm-protocol (`>=0.1, <1`)
+- crates.io `secp256k1 = "0.28"`
 
 ---
 
@@ -491,7 +493,8 @@ blvm-node (depends on blvm-protocol, pin >=0.1, <1;
 
 blvm-sdk (depends on blvm-secp256k1; default `node` feature depends on blvm-node)
     ↓
-blvm-commons (depends on blvm-sdk, pin >=0.1, <1)
+blvm-commons (depends on blvm-sdk, pin >=0.1, <1;
+              also blvm-protocol >=0.1, <1 and crates.io secp256k1 = "0.28")
 ```
 
 ### Version Coordination

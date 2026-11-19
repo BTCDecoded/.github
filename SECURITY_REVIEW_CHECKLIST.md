@@ -94,7 +94,7 @@ Use this checklist when reviewing pull requests that affect security-sensitive c
 - [ ] Appropriate governance tier is selected
 - [ ] Required signatures are obtained
 - [ ] Review period is respected
-- [ ] Economic node veto is considered (if Tier 3+)
+- [ ] Tier 3+ extras from `action-tiers.yml` are met (specification and audit for Tier 3; post-mortem for Tier 4; public comment and rationale for Tier 5)
 - [ ] Security control mapping is updated (if new controls added)
 
 ## Post-Review
@@ -128,7 +128,7 @@ Use this checklist when reviewing pull requests that affect security-sensitive c
 
 - For consensus-critical code, require **blvm-spec-lock** verification (`cargo spec-lock verify`) and tests as defined in that repository’s CI and **security-control-mapping**
 - For cryptographic code, require cryptography expert review
-- For governance code, require economic node consideration
+- For governance-rule changes, require the Tier 5 extras (public comment and rationale); there is no economic-node veto
 - When in doubt, escalate to security team or maintainers
 
 ## Related Resources
