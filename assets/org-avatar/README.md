@@ -18,7 +18,7 @@ Merging this pull request does not change the live organization avatar. Step 3 b
 
 The live organization avatar is a retired pictorial "BITCOIN COMMONS" mark: a teal building, an orange arc, a ₿ coin, and the words BITCOIN COMMONS on a black field. It is not in the official BTCDecoded v15 kit.
 
-The image below is the capture taken 2026-11-19 18:49:58 America/Paramaribo (UTC-3) from `https://avatars.githubusercontent.com/u/233664438?v=4` (460x460, sha256 `00f84c82291288695a9427ec2aeb19e19c49fc6689870c152acff65f011ac1be`).
+The image below is the capture taken 2026-11-19 4:49:58 PM ET from `https://avatars.githubusercontent.com/u/233664438?v=4` (460x460, sha256 `00f84c82291288695a9427ec2aeb19e19c49fc6689870c152acff65f011ac1be`).
 
 ![Current BTCDecoded org avatar, retired Bitcoin Commons building-and-coin mark](btcdecoded_org_avatar_current_retired.png)
 
